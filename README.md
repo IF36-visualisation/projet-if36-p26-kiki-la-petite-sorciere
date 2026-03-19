@@ -10,7 +10,7 @@
 - https://www.reddit.com/r/ValorantCompetitive/comments/1odnm63/large_scale_valorant_dataset_20202024/
 - https://www.vlr.gg/stats
 - https://www.kaggle.com/datasets/ryanluong1/valorant-champion-tour-2021-2023-data?select=all_ids
-### Overwatch
+### Overwatch (ne pas faire)
 - https://www.kaggle.com/datasets/mykhailokachan/overwatch-2-statistics
 - https://www.kaggle.com/datasets/stlze8/owcs-faceit-match-data-emea-and-na-2025
 - https://www.kaggle.com/datasets/krpouncy/ow2-s10-ranked-leaderboard-snapshot-data
