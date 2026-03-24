@@ -37,7 +37,7 @@ Plan d'analyse :
 19. Synergies entre joueurs
 20. Joueurs les plus adaptables
 
-# Visualisation des données
+# Données
 ## Valorant
 ### 1. Valorant Esports Top Earnings
 
