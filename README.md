@@ -36,3 +36,27 @@ Plan d'analyse :
 18. Changement de joueurs -> gagner ?
 19. Synergies entre joueurs
 20. Joueurs les plus adaptables
+
+# Visualisation des données
+## Valorant
+### 1. Valorant Esports Top Earnings
+
+Les récompenses des joueurs professionnels de Valorant, entre 2020 et 2022.
+
+https://www.kaggle.com/datasets/evangower/valorant-esports-top-earnings
+
+1 variable (Rank) 
+
+6 observations (Player, Gold, Silver, Bronze, S-Tier, Earnings)
+
+| Nom | Format | Description |
+|------|------|---------|
+| Rank | nombre | Rang du joueur en fonction des médailles qu'il a gagné |
+| Player | chaîne de caractères | Nom du joueur |
+| Gold | nombre | Médaille d'or. Première place dans une compétition |
+| Silver | nombre | Médaille d'argent. Deuxième place dans une compétition |
+| Bronze | nombre | Médaille de bronze. Troisième place dans une compétition |
+| S-Tier | nombre | Première place dans une compétition majeure internationale |
+| Earnings | nombre | Total de l'argent gagné en tournoi |
+
+Nous avons choisi ce dataset pour observer les meilleurs joueurs des premières années du jeu. Il sera surtout utile pour observer les changements par rapport avec un moment plus récent. On pourra voir si les meilleurs joueurs de 2022 sont les mêmes que les meilleurs joueurs de 2026, et si les récompenses des tournois ont augmenté drastiquement ou juste un peu.
