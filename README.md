@@ -41,9 +41,12 @@ Plan d'analyse :
 ## Valorant
 ### 1. Valorant Esports Top Earnings
 
-Les récompenses des joueurs professionnels de Valorant, entre 2020 et 2022.
+Les récompenses des joueurs professionnels de Valorant, entre 2020 et 2025.
+Le dataset est divisé en 2 tableaux : un pour les équipes et un pour les joueurs
 
 https://www.kaggle.com/datasets/evangower/valorant-esports-top-earnings
+
+#### Joueurs
 
 1 variable (Rank) 
 
@@ -57,9 +60,21 @@ https://www.kaggle.com/datasets/evangower/valorant-esports-top-earnings
 | Silver | nombre | Médaille d'argent. Deuxième place dans une compétition |
 | Bronze | nombre | Médaille de bronze. Troisième place dans une compétition |
 | S-Tier | nombre | Première place dans une compétition majeure internationale |
-| Earnings | nombre | Total de l'argent gagné en tournoi |
+| Earnings | chaîne de caractères | Total de l'argent gagné en tournoi |
 
-Nous avons choisi ce dataset pour observer les meilleurs joueurs des premières années du jeu. Il sera surtout utile pour observer les changements par rapport avec un moment plus récent. On pourra voir si les meilleurs joueurs de 2022 sont les mêmes que les meilleurs joueurs de 2025, et si les récompenses des tournois ont augmenté drastiquement ou juste un peu.
+#### Équipes 
+
+| Nom | Format | Description |
+|------|------|---------|
+| Rank | nombre | Rang de l'équipe en fonction des médailles qu'elle a gagné |
+| Team | chaîne de caractères | Nom de l'équipe |
+| Gold | nombre | Médaille d'or. Première place dans une compétition |
+| Silver | nombre | Médaille d'argent. Deuxième place dans une compétition |
+| Bronze | nombre | Médaille de bronze. Troisième place dans une compétition |
+| S-Tier | nombre | Première place dans une compétition majeure internationale |
+| Earnings | chaîne de caractères | Total de l'argent gagné en tournoi |
+
+Nous avons choisi ce dataset pour observer les meilleurs joueurs et équipes professionnels. On ne peut pas voir l'évolution en fonction du temps, alors l'intérêt est surtout de pouvoir observer quels sont les joueurs et équipes dominants depuis la sortie du jeu. On pourra aussi comparer avec d'autres jeux de données plus complets pour étudier les statistiques d'un joueur ou d'une équipe précise.
 
 
 ### 2. My First 1000 Valorant Games
