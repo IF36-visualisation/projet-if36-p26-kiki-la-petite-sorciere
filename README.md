@@ -81,7 +81,7 @@ https://www.kaggle.com/datasets/mitchellharrison/my-first-1000-valorant-games
 | date | date | La date à laquelle la partie est jouée |
 | agent | chaîne de caractères | Le personnage joué |
 | map | chaîne de caractères | La carte sur laquelle la partie est jouée |
-| outcome | nombre | Le résultat de la partie (défaite/victoire/égalité) |
+| outcome | chaîne de caractères | Le résultat de la partie (défaite/victoire/égalité) |
 | round_wins | nombre | Nombre de manches gagnées |
 | round_losses | nombre | Nombre de manches perdues |
 | kills | nombre | Nombre d'éliminations |
