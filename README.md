@@ -4,9 +4,9 @@
 ### Valorant
 - https://blitz.gg/valorant/stats/agents
 - https://stackedit.io/app
-- https://www.kaggle.com/datasets/evangower/valorant-esports-top-earnings
+- FAIT https://www.kaggle.com/datasets/evangower/valorant-esports-top-earnings
 - https://www.kaggle.com/datasets/notnguyen/valorant-dataset-v3
-- https://www.kaggle.com/datasets/mitchellharrison/my-first-1000-valorant-games
+- FAIT https://www.kaggle.com/datasets/mitchellharrison/my-first-1000-valorant-games
 - https://www.reddit.com/r/ValorantCompetitive/comments/1odnm63/large_scale_valorant_dataset_20202024/
 - https://www.vlr.gg/stats
 - https://www.kaggle.com/datasets/ryanluong1/valorant-champion-tour-2021-2023-data?select=all_ids
@@ -59,4 +59,39 @@ https://www.kaggle.com/datasets/evangower/valorant-esports-top-earnings
 | S-Tier | nombre | Première place dans une compétition majeure internationale |
 | Earnings | nombre | Total de l'argent gagné en tournoi |
 
-Nous avons choisi ce dataset pour observer les meilleurs joueurs des premières années du jeu. Il sera surtout utile pour observer les changements par rapport avec un moment plus récent. On pourra voir si les meilleurs joueurs de 2022 sont les mêmes que les meilleurs joueurs de 2026, et si les récompenses des tournois ont augmenté drastiquement ou juste un peu.
+Nous avons choisi ce dataset pour observer les meilleurs joueurs des premières années du jeu. Il sera surtout utile pour observer les changements par rapport avec un moment plus récent. On pourra voir si les meilleurs joueurs de 2022 sont les mêmes que les meilleurs joueurs de 2025, et si les récompenses des tournois ont augmenté drastiquement ou juste un peu.
+
+
+### 2. My First 1000 Valorant Games
+
+Les statistiques détaillées des 1000 premiers match compétitifs d'un nouveau joueur de Valorant.
+
+https://www.kaggle.com/datasets/mitchellharrison/my-first-1000-valorant-games
+
+4 variables (game_id, kdr, avg_dmg_delta, acs) 
+
+15 observations (episode, act, rank, date, agent, map, outcome, round_wins, round_losses, kills, deaths, assists, headshot_pct, avg_dmg, num_frag)
+
+| Nom | Format | Description |
+|------|------|---------|
+| game_id | nombre | Numéro de la partie (de la plus ancienne à la plus récente) |
+| episode | chaîne de caractères | Fenêtre de temps (divisée en 3 actes) |
+| act | chaîne de caractères | Fenêtre de temps de quelques mois (3 par épisode) |
+| rank | nombre | Rang du joueur au début de la partie |
+| date | date | La date à laquelle la partie est jouée |
+| agent | chaîne de caractères | Le personnage joué |
+| map | chaîne de caractères | La carte sur laquelle la partie est jouée |
+| outcome | nombre | Le résultat de la partie (défaite/victoire/égalité) |
+| round_wins | nombre | Nombre de manches gagnées |
+| round_losses | nombre | Nombre de manches perdues |
+| kills | nombre | Nombre d'éliminations |
+| deaths | nombre | Nombre de morts |
+| assists | nombre | Nombre d'assistances |
+| kdr | nombre | Ratio d'éliminations/morts |
+| avg_dmg_delta | nombre | Différence de dégâts reçus et infligés en moyenne à chaque manche |
+| headshot_pct | nombre | Pourcentage de tirs dans la tête touchés |
+| avg_dmg | nombre | Moyenne des dégâts infligés aux ennemis par manche |
+| acs | nombre | Moyenne du score de combat de chaque manche (calculé par le jeu) |
+| num_frag | nombre | Rang interne à l'équipe en fonction du nombre d'éliminations (1 = plus d'éliminations, 5 = moins d'éliminations) |
+
+Nous avons choisi ce dataset car il représente l'évolution d'un joueur représentatif du jeu. Les données sont très complètes, ce qui nous permettra d'étudier les comportements du joueur, sa stratégie, ainsi que les éléments les plus corrélés à une victoire.
