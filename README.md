@@ -253,3 +253,5 @@ Ce dataset ne contient qu'une seule table:
 | matches | nombre | Nombre de matchs joués |
 | deaths | nombre | Nombre de morts du joueur |
 | damage | nombre | Quantité totale de dégâts portés à d'autres joueurs |
+
+Ce dataset peut être très intéressant car nous avons une répartition de joueurs de tous niveaux. Il peut être utile pour s'intéresser à de possibles corrélations entre l'expérience d'un joueur et certaines statistiques. Aussi, il serait intéressant de voir si certains joueurs sortent exceptionnellement du lot sur certains points, comme un nombre de parties très réduit pour un rang élevé, ou à l'inverse de très grosses statistiques générales pour un rang médiocre.
