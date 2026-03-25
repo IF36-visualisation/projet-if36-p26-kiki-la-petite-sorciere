@@ -2,13 +2,13 @@
 
 ## Datasets : 
 ### Valorant
-- https://blitz.gg/valorant/stats/agents
-- https://stackedit.io/app
+- FAIT https://blitz.gg/valorant/stats/agents
+- PAS UN DATASET https://stackedit.io/app
 - FAIT https://www.kaggle.com/datasets/evangower/valorant-esports-top-earnings
 - FAIT https://www.kaggle.com/datasets/notnguyen/valorant-dataset-v3
 - FAIT https://www.kaggle.com/datasets/mitchellharrison/my-first-1000-valorant-games
 - FAIT https://www.reddit.com/r/ValorantCompetitive/comments/1odnm63/large_scale_valorant_dataset_20202024/
-- https://www.vlr.gg/stats
+- FAIT https://www.vlr.gg/stats
 - FAIT https://www.kaggle.com/datasets/ryanluong1/valorant-champion-tour-2021-2023-data?select=all_ids
 ### Overwatch (ne pas faire)
 - https://www.kaggle.com/datasets/mykhailokachan/overwatch-2-statistics
@@ -341,6 +341,77 @@ Seperator Bit('!)
 
 Ce dataset contient énormément de données différentes. Elles ne sont donc pas toutes utiles, mais on pourrait par exemple analyser l’impact des statistiques avancées (ACS, K/D,...) sur la victoire, ou comparer l’efficacité attaque/défense selon les maps pour identifier des tendances de gameplay et quelles maps seraient plus avantageuses que d'autres pour un camp. On pourrait aussi s'intéresser à la probabilité initiale qu'une équipe gagne contre une autre et le résultat final.
 
+### 6. VALORANT Agents/Weapons/Maps Stats
+
+### Agents
+Statistiques sur les différents personnages jouables (agents) du jeu lors des compétitions en Diamond+.*
+https://blitz.gg/valorant/stats/agents
+
+| Nom | Format | Description |
+|-----|--------|-------------|
+| Rank | int | Identifiant du personnage |
+| Agent | str | Nom du personnage |
+| KD | float | Nombre de personnages tués en fonction du nombre de morts |
+| KDA | str : "int/int/int" | Nombre de personnages tués en partie / Nombre de fois où le personnage est mort en partie / Nombre de personnages tués par assistance |
+| Win % | "float%" | Pourcentage de gains avec ce personnage |
+| Pick % | "float%" | Pourcentage de choix de ce personnage lors d'une partie |
+| Avg.Score | int | Score moyen effectué avec ce personnage|
+| Matches | int | nombre de matches joués avec ce personnage 
+
+### Weapons
+Statistiques sur les différentes armes du jeu jouables (weapons) du jeu lors des compétitions en Diamond+.
+https://blitz.gg/valorant/stats/weapons
+| Nom | Format | Description |
+|-----|--------|-------------|
+| Rank | int | Identifiant de l'arme |
+| Weapon | str | Nom de l'arme |
+| Kills per Round | float | Nombre de personanges tués / Nombre de rounds effectués |
+| All kills per Round | float | [HELP] |
+| Headshot % | "float%" | Pourcentage de tirs dans la tête |
+| Bodyshot % | "float%" | Pourcentage de tirs dans le haut du corps |
+| Legshot % | "float%" | Pourcentage de tirs dans les jambes |
+| Avg Damage | int | Nombre de dégats moyens effectués durant une partie |
+
+### Maps
+Statistiques sur les différentes cartes du jeu lors des compétitions en Diamond+.
+https://blitz.gg/valorant/stats/maps
+
+| Nom | Format | Description |
+|-----|--------|-------------|
+| Rank | int | Identifiant de la carte |
+| Map | str | Nom de la carte |
+| Play Rate | "float%" | Pourcentages des parties effectuées dans cette carte. |
+| Attacking Round Won | "float%" | Pourcentage des rounds gagnés sur cette carte par les attaquants |
+| Defending Round Won | "float%" | Pourcentage des rounds gagnés sur cette carte par les défenseurs |
+| Matches Played | int | Nombre de matchs joués sur cette cartes |
+
+
+### 7. Statistiques des performances des joueurs professionnels
+https://www.vlr.gg/stats
+
+| Nom | Format | Description |
+|-----|--------|-------------|
+| Player | str | Nom du joueur |
+| Agents | HELP | Nom des personnages joués par ce joueur |
+| Rnd | int | Nombre de manches jouées |
+| R^2.0 | float | [HELP] |
+| ACS | float | Score moyen de combat du joueur (Moyenne des points gagnés par round |
+| K:D | float |  Nombre de joueurs tués en fonction du nombre de morts |
+| KAST | int% | Pourcentage de manches au cours desquelles un joueur a réalisé au moins l'une de ces quatre actions : Tuer, Tuer par assistance, Survivre, Échanger |
+| ADR | float | Dégats moyens effectués par manche |
+| KPR | float | Nombre moyen de joueurs tués par manche |
+| APR | float | Nombre moyen de joueurs tués par assistance par manche |
+| FKPR | float | Nombre moyen de premiers kills obtenus par manche par un joueur |
+| FDPR | float | Nombre moyen de premières morts d'un joueur |
+| HS% | int% | Pourcentages de tirs dans la tête effectués par ce joueur |
+| CL% | int% | Pourcentage des manches gagnées où le joueur était le dernier de son équipe encore en vie |
+| CL | int/int | Manches où le joueur était le dernier de son équipe encore en vie : Gagnées/Jouées |
+| KMAX | int | Nombre de joueurs tués maximum dans une seule carte |
+| K | int | Nombre de joueurs tués |
+| D | int | Nombre de morts |
+| A | int | Nombre de joueurs tués par assistance |
+| FK | int | Nombre de première personne tuée de la manche |
+| FD | int | Nombre de fois où le joueur a été le premier joueur tué de la manche |
 
 
 # Plan d'analyse
@@ -385,3 +456,33 @@ On peut étudier la différence entre des joueurs normaux et pros.
 ### 10. Comment la visée ou le KDA influe sur le rang ?
 
 Sans compter les joueurs pros, qui ont une visée nettement supérieure à celle des joueurs normaux, on verra si augmenter son KDA (ratio d'éliminations sur morts) et sa visée influe sur le rang. On pourra potentiellement créer un modèle qui attribuerait un rang à un joueur en entrant ces statistiques.
+
+### 11. Impact des parties précédentes sur l'actuelle
+
+
+### 12. Meilleures équipes / personnages en attaque / défense
+L'idée est d'identifier si certains personnages et/ou certaines configurations d'équipes sont plus performante en attaque ou en défense, afin de savoir comment l'équilibre du jeu est impacté par la composition de l'équipe.
+
+### 13. Identifier les stratégies
+
+
+### 14. Explication d'un ban (joueur ou carte)
+
+
+### 15. Travail d'équipe (assists/kill)
+
+
+### 16. Quels joueurs performent le mieux malgré une défaite ?
+
+
+### 17. Nemesis (pire ennemi des joueurs)
+
+
+### 18. Changement de joueurs -> gagner ?
+
+
+### 19. Synergies entre joueurs
+Nous souhaiterions savoir si certains types de joueurs ont tendance à mieux gagner accompagnés de quel type de joueur. Exemple : Un joueur agressif est il plus à même de gagner avec d'autres joueurs agressifs ou avec des joueurs plus tempérés ?
+
+### 20. Joueurs les plus adaptables
+Nous souhaiterions identifier s'il y a des joueurs qui ont une très bonne adaptabilité en jeu, c'est à dire qui s'intègrent bien dans n'importe quelle configuration d'équipe sans que les performances en soient impactées
