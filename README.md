@@ -233,3 +233,7 @@ Les méthodes de victoire et de défaite des équipes par manche (élimination, 
 Nous avons choisi ce dataset car il contient des données complètes sur les tournois Valorant récents, et qu'il permet de les analyser dans ce contexte précis (avec les mêmes méthodes de collecte statistique et le même format).
 L'intérêt de ce dataset est de pouvoir ensuite se pencher sur une évolution du jeu à travers les années (Pick/Ban), une comparaison statistique approfondie multi-critères, et une étude de corrélation pertinente sans devoir utiliser plusieurs datasets indépendants
 
+### 4. Stats and Ranks of 2600 Valorant Players
+
+- https://www.kaggle.com/datasets/notnguyen/valorant-dataset-v3
+- 
