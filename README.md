@@ -255,3 +255,75 @@ Ce dataset ne contient qu'une seule table:
 | damage | nombre | Quantité totale de dégâts portés à d'autres joueurs |
 
 Ce dataset peut être très intéressant car nous avons une répartition de joueurs de tous niveaux. Il peut être utile pour s'intéresser à de possibles corrélations entre l'expérience d'un joueur et certaines statistiques. Aussi, il serait intéressant de voir si certains joueurs sortent exceptionnellement du lot sur certains points, comme un nombre de parties très réduit pour un rang élevé, ou à l'inverse de très grosses statistiques générales pour un rang médiocre.
+
+### 5. Large Scale Valorant Dataset 2020-2024
+
+| Colonne | Type | Description |
+|---|---|---|
+| MatchID | int | Identifiant unique du match (série complète entre deux équipes) |
+| GameID | int | Identifiant unique d'une map individuelle au sein d'un match |
+| EventID | int | Identifiant de l'événement / tournoi auquel appartient le match |
+| Date | date | Date du match (format YYYY-MM-DD) |
+| Team1ID | int | Identifiant unique de l'équipe 1 |
+| Team2ID | int | Identifiant unique de l'équipe 2 |
+| Team1 Name | str | Nom de l'équipe 1 |
+| Team2 Name | str | Nom de l'équipe 2 |
+| Series Odds | float | Cote de pari sur la série (victoire de l'équipe 1) — 0 si non disponible |
+| Team1 Map Odds | float | Cote de pari sur cette map spécifique pour l'équipe 1 — 0 si non disponible |
+| Map | int | Identifiant numérique de la map jouée (ex. 1 = Bind, 3 = Haven, etc.) |
+| Team1 Rounds | int | Nombre total de rounds remportés par l'équipe 1 sur cette map |
+| Team2 Rounds | int | Nombre total de rounds remportés par l'équipe 2 sur cette map |
+| Team1 Atk Rounds | int | Rounds remportés par l'équipe 1 en phase d'attaque |
+| Team2 Atk Rounds | int | Rounds remportés par l'équipe 2 en phase d'attaque |
+| Team1 Def Rounds | int | Rounds remportés par l'équipe 1 en phase de défense |
+| Team2 Def Rounds | int | Rounds remportés par l'équipe 2 en phase de défense |
+| Team1 Rating | float | Rating moyen de l'équipe 1 (indice de performance global, ~1.0 = neutre) |
+| Team2 Rating | float | Rating moyen de l'équipe 2 |
+| Team1 ACS | float | Average Combat Score moyen de l'équipe 1 (score de combat par round) |
+| Team2 ACS | float | Average Combat Score moyen de l'équipe 2 |
+| Team1 Kills | float | Total de kills de l'équipe 1 sur la map |
+| Team2 Kills | float | Total de kills de l'équipe 2 |
+| Team1 Deaths | float | Total de morts de l'équipe 1 |
+| Team2 Deaths | float | Total de morts de l'équipe 2 |
+| Team1 Assists | float | Total d'assistances de l'équipe 1 |
+| Team2 Assists | float | Total d'assistances de l'équipe 2 |
+| Team1 DeltaK/D | float | Différentiel Kills − Deaths de l'équipe 1 (positif = plus de kills que de morts) |
+| Team2 DeltaK/D | float | Différentiel K/D de l'équipe 2 |
+| Team1 KAST | float | % de rounds où l'équipe 1 a eu au moins un Kill, Assist, Survived ou Trade |
+| Team2 KAST | float | KAST de l'équipe 2 |
+| Team1 ADR | float | Average Damage per Round de l'équipe 1 (dégâts moyens infligés par round) |
+| Team2 ADR | float | ADR de l'équipe 2 |
+| Team1 HS | float | % de kills en headshot de l'équipe 1 |
+| Team2 HS | float | % de kills en headshot de l'équipe 2 |
+| Team1 FK | float | Nombre de First Kills (premier kill du round) obtenus par l'équipe 1 |
+| Team2 FK | float | First Kills de l'équipe 2 |
+| Team1 FD | float | Nombre de First Deaths (premier mort du round) subis par l'équipe 1 |
+| Team2 FD | float | First Deaths de l'équipe 2 |
+| Team1 DeltaFK/FD | float | Différentiel FK − FD de l'équipe 1 (avantage en ouverture de round) |
+| Team2 DeltaFK/FD | float | Différentiel FK/FD de l'équipe 2 |
+| Team1 Pistols | int | Rounds de pistolet (rounds 1 et 13) remportés par l'équipe 1 |
+| Team2 Pistols | int | Rounds de pistolet remportés par l'équipe 2 |
+| Team1 EcosWon | int | Éco-rounds remportés par l'équipe 1 (rounds avec budget très limité) |
+| Team2 EcosWon | int | Éco-rounds remportés par l'équipe 2 |
+| Team1 Ecos | int | Nombre total d'éco-rounds joués par l'équipe 1 |
+| Team2 Ecos | int | Éco-rounds joués par l'équipe 2 |
+| Team1 Semibuys Won | int | Semi-achats (force buys) remportés par l'équipe 1 |
+| Team2 Semibuys Won | int | Semi-achats remportés par l'équipe 2 |
+| Team1 Semibuys | int | Total de semi-achats joués par l'équipe 1 |
+| Team2 Semibuys | int | Semi-achats joués par l'équipe 2 |
+| Team1 Fullbuys Won | int | Full-buys remportés par l'équipe 1 (rounds avec achat complet) |
+| Team2 Fullbuys Won | int | Full-buys remportés par l'équipe 2 |
+| Team1 Fullbuys | int | Total de full-buys joués par l'équipe 1 |
+| Team2 Fullbuys | int | Total de full-buys joués par l'équipe 2 |
+| Round Breakdown | str | Données détaillées round par round encodées en chaîne (résultat, temps de plant/défuse, probabilités de victoire) |
+| Team1Game1 | int | ID du joueur 1 de l'équipe 1 sur cette map |
+| Team1Game2 | int | ID du joueur 2 de l'équipe 1 sur cette map |
+| Team1Game3 | int | ID du joueur 3 de l'équipe 1 sur cette map |
+| Team1Game4 | int | ID du joueur 4 de l'équipe 1 sur cette map |
+| Team1Game5 | int | ID du joueur 5 de l'équipe 1 sur cette map |
+| Team2Game1 | int | ID du joueur 1 de l'équipe 2 sur cette map |
+| Team2Game2 | int | ID du joueur 2 de l'équipe 2 sur cette map |
+| Team2Game3 | int | ID du joueur 3 de l'équipe 2 sur cette map |
+| Team2Game4 | int | ID du joueur 4 de l'équipe 2 sur cette map |
+| Team2Game5 | int | ID du joueur 5 de l'équipe 2 sur cette map |
+| VOD Link | str | Lien YouTube vers le VOD de la map (avec timestamp), peut être vide |
