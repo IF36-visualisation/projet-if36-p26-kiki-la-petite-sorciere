@@ -330,13 +330,13 @@ Ce dataset peut être très intéressant car nous avons une répartition de joue
 | VOD Link | str | Lien YouTube vers le VOD de la map (avec timestamp), peut être vide |
 
 L'encodage pour la colonne Round Breakdown est le suivant:
-Bit 1: Winning team(T1, T2), (0, 1)
-Bit 2: Winning side(ATK, DEF), (0, 1)
-Bit 3 + 4: Amount Spent(T1, T2), (0-4, 0-4)
-Bit 5: Seperator Bit('!)
-Number : Team 1 Bank Amount (in thousands)
-Seperator Bit('!)
-Number : Team 2 Bank Amount (in thousands)
+- Bit 1: Winning team(T1, T2), (0, 1)
+- Bit 2: Winning side(ATK, DEF), (0, 1)
+- Bit 3 + 4: Amount Spent(T1, T2), (0-4, 0-4)
+- Bit 5: Seperator Bit('!)
+- Number : Team 1 Bank Amount (in thousands)
+- Seperator Bit('!)
+- Number : Team 2 Bank Amount (in thousands)
 Seperator Bit('!) 
 
 Ce dataset contient énormément de données différentes. Elles ne sont donc pas toutes utiles, mais on pourrait par exemple analyser l’impact des statistiques avancées (ACS, K/D,...) sur la victoire, ou comparer l’efficacité attaque/défense selon les maps pour identifier des tendances de gameplay et quelles maps seraient plus avantageuses que d'autres pour un camp. On pourrait aussi s'intéresser à la probabilité initiale qu'une équipe gagne contre une autre et le résultat final.
