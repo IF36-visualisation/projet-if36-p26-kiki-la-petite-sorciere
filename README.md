@@ -5,7 +5,7 @@
 - https://blitz.gg/valorant/stats/agents
 - https://stackedit.io/app
 - FAIT https://www.kaggle.com/datasets/evangower/valorant-esports-top-earnings
-- https://www.kaggle.com/datasets/notnguyen/valorant-dataset-v3
+- FAIT https://www.kaggle.com/datasets/notnguyen/valorant-dataset-v3
 - FAIT https://www.kaggle.com/datasets/mitchellharrison/my-first-1000-valorant-games
 - https://www.reddit.com/r/ValorantCompetitive/comments/1odnm63/large_scale_valorant_dataset_20202024/
 - https://www.vlr.gg/stats
@@ -235,5 +235,21 @@ L'intérêt de ce dataset est de pouvoir ensuite se pencher sur une évolution d
 
 ### 4. Stats and Ranks of 2600 Valorant Players
 
+Statistiques détaillées et rang de plus de 2600 joueurs de Valorant de tous niveaux. Toutes ces statistiques sont le total du compte du joueur depuis sa création.
+
 - https://www.kaggle.com/datasets/notnguyen/valorant-dataset-v3
-- 
+
+Ce dataset ne contient qu'une seule table:
+
+| Nom | Format | Description |
+|-----|--------|-------------|
+| player | chaîne de caractères | Pseudo du joueur |
+| assists | nombre | Nombre d'assists au total |
+| damage_received | nombre | Quantité totale de dégâts reçue |
+| headshots | nombre | Nombre de tirs portés à la tête d'autres joueurs |
+| tier | chaîne de caractères | Rang en compétitif du joueur au moment de la création des données |
+| traded | nombre | jsp |
+| kills | nombre | Nombre de joueurs tués |
+| matches | nombre | Nombre de matchs joués |
+| deaths | nombre | Nombre de morts du joueur |
+| damage | nombre | Quantité totale de dégâts portés à d'autres joueurs |
