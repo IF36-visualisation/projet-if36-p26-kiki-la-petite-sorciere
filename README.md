@@ -7,7 +7,7 @@
 - FAIT https://www.kaggle.com/datasets/evangower/valorant-esports-top-earnings
 - FAIT https://www.kaggle.com/datasets/notnguyen/valorant-dataset-v3
 - FAIT https://www.kaggle.com/datasets/mitchellharrison/my-first-1000-valorant-games
-- https://www.reddit.com/r/ValorantCompetitive/comments/1odnm63/large_scale_valorant_dataset_20202024/
+- FAIT https://www.reddit.com/r/ValorantCompetitive/comments/1odnm63/large_scale_valorant_dataset_20202024/
 - https://www.vlr.gg/stats
 - FAIT https://www.kaggle.com/datasets/ryanluong1/valorant-champion-tour-2021-2023-data?select=all_ids
 ### Overwatch (ne pas faire)
@@ -258,7 +258,9 @@ Ce dataset peut être très intéressant car nous avons une répartition de joue
 
 ### 5. Large Scale Valorant Dataset 2020-2024
 
-| Colonne | Type | Description |
+- https://www.reddit.com/r/ValorantCompetitive/comments/1odnm63/large_scale_valorant_dataset_20202024/
+
+| Nom | Format | Description |
 |---|---|---|
 | MatchID | int | Identifiant unique du match (série complète entre deux équipes) |
 | GameID | int | Identifiant unique d'une map individuelle au sein d'un match |
@@ -268,7 +270,7 @@ Ce dataset peut être très intéressant car nous avons une répartition de joue
 | Team2ID | int | Identifiant unique de l'équipe 2 |
 | Team1 Name | str | Nom de l'équipe 1 |
 | Team2 Name | str | Nom de l'équipe 2 |
-| Series Odds | float | Cote de pari sur la série (victoire de l'équipe 1) — 0 si non disponible |
+| Series Odds | float | Cote de pari initiale (donnée par VLR.gg) sur la victoire de l'équipe gagnante — 0 si non disponible |
 | Team1 Map Odds | float | Cote de pari sur cette map spécifique pour l'équipe 1 — 0 si non disponible |
 | Map | int | Identifiant numérique de la map jouée (ex. 1 = Bind, 3 = Haven, etc.) |
 | Team1 Rounds | int | Nombre total de rounds remportés par l'équipe 1 sur cette map |
@@ -327,3 +329,15 @@ Ce dataset peut être très intéressant car nous avons une répartition de joue
 | Team2Game4 | int | ID du joueur 4 de l'équipe 2 sur cette map |
 | Team2Game5 | int | ID du joueur 5 de l'équipe 2 sur cette map |
 | VOD Link | str | Lien YouTube vers le VOD de la map (avec timestamp), peut être vide |
+
+L'encodage pour la colonne Round Breakdown est le suivant:
+Bit 1: Winning team(T1, T2), (0, 1)
+Bit 2: Winning side(ATK, DEF), (0, 1)
+Bit 3 + 4: Amount Spent(T1, T2), (0-4, 0-4)
+Bit 5: Seperator Bit('!)
+Number : Team 1 Bank Amount (in thousands)
+Seperator Bit('!)
+Number : Team 2 Bank Amount (in thousands)
+Seperator Bit('!) 
+
+Ce dataset contient énormément de données différentes. Elles ne sont donc pas toutes utiles, mais on pourrait par exemple analyser l’impact des statistiques avancées (ACS, K/D,...) sur la victoire, ou comparer l’efficacité attaque/défense selon les maps pour identifier des tendances de gameplay et quelles maps seraient plus avantageuses que d'autres pour un camp. On pourrait aussi s'intéresser à la probabilité initiale qu'une équipe gagne contre une autre et le résultat final.
