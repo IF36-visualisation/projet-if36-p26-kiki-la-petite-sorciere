@@ -110,3 +110,126 @@ https://www.kaggle.com/datasets/mitchellharrison/my-first-1000-valorant-games
 | num_frag | nombre | Rang interne à l'équipe en fonction du nombre d'éliminations (1 = plus d'éliminations, 5 = moins d'éliminations) |
 
 Nous avons choisi ce dataset car il représente l'évolution d'un joueur représentatif du jeu. Les données sont très complètes, ce qui nous permettra d'étudier les comportements du joueur, sa stratégie, ainsi que les éléments les plus corrélés à une victoire.
+
+
+### 3. Valorant Champion Tour 2021-2025 Data
+
+- https://www.kaggle.com/datasets/ryanluong1/valorant-champion-tour-2021-2023-data
+
+#### Métadonnées
+
+Les métadonnées d'identification des tournois, stages, matchs et cartes joués dans le VCT de 2021 à 2025.
+
+| Nom | Format | Description |
+|-----|--------|-------------|
+| Tournament ID | nombre | L'identifiant du tournoi |
+| Stage ID | nombre | L'identifiant de la phase du tournoi |
+| Match Type ID | nombre | L'identifiant du type de match |
+| Match ID | nombre | L'identifiant du match |
+| Game ID | nombre | L'identifiant de la carte jouée dans le match |
+| Duration | durée (hh:mm:ss) | La durée du match en heures, minutes et secondes |
+
+#### Map + Performance / Map
+
+Les statistiques de performance des équipes et agents par carte.
+
+| Nom | Format | Description |
+|-----|--------|-------------|
+| Pick Rate | nombre | Nombre de fois qu'un agent a été sélectionné |
+| Total Maps Played | nombre | Nombre de fois qu'une carte a été jouée |
+| Attacker Side Win Percentage | nombre (%) | Pourcentage de manches gagnées par le côté attaquant sur cette carte |
+| Defender Side Win Percentage | nombre (%) | Pourcentage de manches gagnées par le côté défenseur sur cette carte |
+| Total Wins By Map | nombre | Nombre de fois que l'équipe a gagné avec un agent donné sur cette carte |
+| Total Loss By Map | nombre | Nombre de fois que l'équipe a perdu avec un agent donné sur cette carte |
+| Total Maps Played (team) | nombre | Nombre total de fois que l'équipe a joué sur cette carte |
+| Team Score | nombre | Score total accumulé par l'équipe dans un match |
+| Team Attacker Score | nombre | Score accumulé par l'équipe en phase attaque |
+| Team Defender Score | nombre | Score accumulé par l'équipe en phase défense |
+| Team Overtime Score | nombre | Score accumulé par l'équipe en prolongation |
+
+#### Économie
+
+Les données d'économie par round, avec les dépenses et types d'achats des équipes.
+
+| Nom | Format | Description |
+|-----|--------|-------------|
+| Loadout Value | nombre | Valeur totale de l'équipement acheté par tous les joueurs de l'équipe dans une manche |
+| Remaining Credits | nombre | Crédits restants après les achats |
+| Type | chaîne de caractères | Type économique de la manche (eco, semi-eco, semi-buy, full buy) |
+| Pistol Round | booléen | L'équipe a remporté la manche au pistolet |
+| Eco (won) | nombre | Manches gagnées en ayant dépensé 0–5k crédits |
+| $ (Semi-eco) | nombre | Manches gagnées en ayant dépensé 5–10k crédits |
+| $$ (Semi-buy) | nombre | Manches gagnées en ayant dépensé 10–20k crédits |
+| $$$ (Full buy) | nombre | Manches gagnées en ayant dépensé plus de 20k crédits |
+| Initiated | nombre | Nombre de fois que l'équipe a initié un type économique donné |
+| Won | nombre | Nombre de fois que l'équipe a gagné avec un type économique donné |
+| Econ | nombre | Évaluation économique du joueur (dégâts infligés pour 1000 crédits dépensés) |
+
+#### Combat et éliminations
+
+Les données détaillées des éliminations entre joueurs, incluant les clutches et multi-kills.
+
+| Nom | Format | Description |
+|-----|--------|-------------|
+| Eliminator Team | chaîne de caractères | L'équipe du joueur ayant effectué l'élimination |
+| Eliminator | chaîne de caractères | Le joueur ayant effectué l'élimination |
+| Eliminator Agent | chaîne de caractères | L'agent joué par l'éliminateur |
+| Eliminated Team | chaîne de caractères | L'équipe du joueur éliminé |
+| Eliminated | chaîne de caractères | Le joueur éliminé |
+| Eliminated Agent | chaîne de caractères | L'agent joué par le joueur éliminé |
+| Kills | nombre | Nombre de fois qu'un joueur a éliminé un adversaire spécifique avec son agent |
+| 2k | nombre | Nombre de doubles éliminations réalisées dans une manche |
+| 3k | nombre | Nombre de triples éliminations réalisées dans une manche |
+| 4k | nombre | Nombre de quadruples éliminations réalisées dans une manche |
+| 5k | nombre | Nombre de quintuples éliminations réalisées dans une manche |
+| 1v1 | nombre | Nombre de situations 1v1 remportées |
+| 1v2 | nombre | Nombre de situations 1v2 remportées |
+| 1v3 | nombre | Nombre de situations 1v3 remportées |
+| 1v4 | nombre | Nombre de situations 1v4 remportées |
+
+#### Performance des joueurs & statistiques personnelles
+
+Les statistiques individuelles des joueurs professionnels sur l'ensemble des matchs du VCT.
+
+| Nom | Format | Description |
+|-----|--------|-------------|
+| Rating (R) | nombre | Évaluation globale de la performance d'un joueur intégrant toutes les statistiques disponibles (voir https://www.vlr.gg/160667/vlr-gg-player-rating-explained) |
+| Average Combat Score (ACS) | nombre | Score de combat moyen sur l'ensemble du match, calculé à partir des dégâts, éliminations, multi-kills et assists sans dégâts |
+| Kills | nombre | Nombre d'éliminations dans un match |
+| Deaths | nombre | Nombre de morts dans un match |
+| Assists | nombre | Nombre d'assistances dans un match |
+| Kills - Deaths (KD) | nombre | Différentiel éliminations/morts |
+| KAST % | nombre (%) | Pourcentage de manches où le joueur a obtenu un kill, une assistance, survécu ou tradé un kill |
+| Average Damage Per Round (ADR) | nombre | Dégâts moyens infligés par manche |
+| Kills Per Round (KPR) | nombre | Moyenne d'éliminations par manche |
+| Assists Per Round (APR) | nombre | Moyenne d'assistances par manche |
+| First Kills Per Round (FKPR) | nombre | Moyenne de premiers kills par manche |
+| First Deaths Per Round (FDPR) | nombre | Moyenne de premières morts par manche |
+| Headshot % | nombre (%) | Pourcentage de tirs réussis dans la tête |
+| Clutch Success % | nombre (%) | Pourcentage de clutches remportés |
+| Clutches (won/played) | nombre | Ratio clutches gagnés / clutches joués |
+| Maximum Kills in a Single Map | nombre | Nombre maximum d'éliminations réalisées sur une seule carte |
+| First Kills | nombre | Nombre total de premiers kills réalisés |
+| First Deaths | nombre | Nombre total de premières morts |
+| Kills - Deaths (FKD) | nombre | Différentiel premiers kills / premières morts |
+| Spike Plants | nombre | Nombre de fois que le joueur a planté la spike |
+| Spike Defuse | nombre | Nombre de fois que le joueur a désamorcé la spike |
+
+#### Victoire/défaite & méthodes (élim. / bombe)
+
+Les méthodes de victoire et de défaite des équipes par manche (élimination, bombe, expiration du temps).
+
+| Nom | Format | Description |
+|-----|--------|-------------|
+| Elimination | nombre | Nombre de manches gagnées en éliminant tous les ennemis |
+| Detonated | nombre | Nombre de manches gagnées en faisant exploser la spike |
+| Defuse | nombre | Nombre de manches gagnées en désamorçant la spike |
+| Time Expiry (No Plant) | nombre | Nombre de manches gagnées car l'adversaire n'a pas planté à temps |
+| Eliminated | nombre | Nombre de manches perdues suite à l'élimination de toute l'équipe |
+| Defuse Failed | nombre | Nombre de manches perdues suite à un échec de désamorçage |
+| Detonation Denied | nombre | Nombre de manches perdues car l'adversaire a désamorcé la spike |
+| Time Expiry (Failed to Plant) | nombre | Nombre de manches perdues car l'équipe n'a pas planté à temps |
+
+Nous avons choisi ce dataset car il contient des données complètes sur les tournois Valorant récents, et qu'il permet de les analyser dans ce contexte précis (avec les mêmes méthodes de collecte statistique et le même format).
+L'intérêt de ce dataset est de pouvoir ensuite se pencher sur une évolution du jeu à travers les années (Pick/Ban), une comparaison statistique approfondie multi-critères, et une étude de corrélation pertinente sans devoir utiliser plusieurs datasets indépendants
+
