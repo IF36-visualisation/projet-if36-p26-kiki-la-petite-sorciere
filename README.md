@@ -38,7 +38,6 @@ Plan d'analyse :
 20. Joueurs les plus adaptables
 
 # Données
-## Valorant
 ### 1. Valorant Esports Top Earnings
 
 Les récompenses des joueurs professionnels de Valorant, entre 2020 et 2025.
@@ -341,3 +340,48 @@ Number : Team 2 Bank Amount (in thousands)
 Seperator Bit('!) 
 
 Ce dataset contient énormément de données différentes. Elles ne sont donc pas toutes utiles, mais on pourrait par exemple analyser l’impact des statistiques avancées (ACS, K/D,...) sur la victoire, ou comparer l’efficacité attaque/défense selon les maps pour identifier des tendances de gameplay et quelles maps seraient plus avantageuses que d'autres pour un camp. On pourrait aussi s'intéresser à la probabilité initiale qu'une équipe gagne contre une autre et le résultat final.
+
+
+
+# Plan d'analyse
+### 1. Quelles sont les différences majeures entre les joueurs pros et non pros ?
+
+Il s'agit d'une question globale, qu'on peut prendre sous de nombreux aspects. On va étudier les statistiques qu'on peut prendre chez les joueurs pros, et les comparer avec celles des non pros, comme par exemple les agents joués, le pourcentage de victoire sur chaque carte, la gestion de l'économie... On pourra établir des tendances différentes pour voir en quoi les pros sont meilleurs.
+
+### 2. Quels personnages sont les plus meurtriers ?
+
+En prenant en compte seulement les joueurs non pros, on veut voir si un agent dont les compétences sont orientées vers l'agression vont avoir une quantité d'élimination largement supérieure ou non, comparée à des agents plus axés soutien ou contrôle. On pourra également observer le nombre de morts et assistances pour étayer notre conclusion.
+
+### 3. Quels joueurs pros ont la carrière la plus prolifique ?
+
+En utilisant les tableaux liés aux pros, on pourra voir les joueurs ayant la carrière la plus longue, ceux qui ont eu une ascension fulgurante, ceux qui se sont essouflés, et d'autres évolutions de carrière. Cette question servira surtout à observer les joueurs prometteurs pour voir où est-ce qu'on les retrouvera dans d'autres analyses.
+
+### 4. Quelles sont les meilleures situations de clutch ?
+
+Un clutch est une situation où une équipe arrive à renverser une situation en gagnant une manche avec un seul joueur en vie contre plusieurs adversaires. On pourra voir si le rang, l'agent ou l'arme influe sur le potentiel de clutch, ou si c'est équitablement réparti.
+On pourra aussi voir avec les joueurs pros si certains d'entre eux sont particulièrement habitués aux clutchs.
+
+### 5. Quelles cartes sont orientées attaque ou défense ?
+
+Les cartes ne sont pas toujours équilibrées pour les attaquants ou les défenseurs. Si l'une d'entre elles favorise les défenseurs, on pourra expliquer en partie leurs victoires répétées. On étudiera d'abord pour les joueurs normaux, puis on verra si les pros sont aussi sujets à ces déséquilibres.
+
+### 6. Qu'est-ce qui compte le plus pour gagner une partie ?
+
+On sait déjà que tuer tous les adversaires permet de gagner une manche, mais on veut étudier si les autres facteurs comme un choix d'agents optimal, ue stratégie précise, ou une bonne gestion de l'économie permet de faire pencher la balance. Il faut faire attention avec ces données car certaines peuvent découler directement des autres. Par exemple, gagner une manche permet d'avoir plus de crédits à dépenser pour gagner le suivant. On pourra voir si ces critères changent entre les joueurs normaux et les pros.
+
+### 7. Quelles sont les meilleures équipes ?
+
+Quelles sont les équipes professionnelles ayant résisté au temps ? Celles qui émergent ? Celles qui forment les meilleurs talents ? Notre réponse sera évidemment subjective, mais on pourra l'argumenter de nombreuses façons.
+
+### 8. Quelles sont les meilleures équipes par année ?
+
+Complémentaire à la question précédente, on pourra ainsi voir l'évolution des équipes, et la corréler aux changements de joueurs ou de coachs, ou bien d'ajouts de cartes ou d'agents, pour voir les causes de ces évolutions.
+
+### 9. Quel est le lien entre first blood et victoire ?
+
+Le first blood est le joueur ayant tué en premier dans une manche. On veut voir si il y a un lien entre le first blood et gagner la manche, ou si il est pluôt lié à un agent, un joueur ou une carte précis.
+On peut étudier la différence entre des joueurs normaux et pros.
+
+### 10. Comment la visée ou le KDA influe sur le rang ?
+
+Sans compter les joueurs pros, qui ont une visée nettement supérieure à celle des joueurs normaux, on verra si augmenter son KDA (ratio d'éliminations sur morts) et sa visée influe sur le rang. On pourra potentiellement créer un modèle qui attribuerait un rang à un joueur en entrant ces statistiques.
