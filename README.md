@@ -392,7 +392,7 @@ https://www.vlr.gg/stats
 | Nom | Format | Description |
 |-----|--------|-------------|
 | Player | str | Nom du joueur |
-| Agents | HELP | Nom des personnages joués par ce joueur |
+| Agents | str | Nom des personnages joués par ce joueur |
 | Rnd | int | Nombre de manches jouées |
 | R^2.0 | float | [HELP] |
 | ACS | float | Score moyen de combat du joueur (Moyenne des points gagnés par round |
