@@ -247,7 +247,7 @@ Ce dataset ne contient qu'une seule table:
 | damage_received | nombre | Quantité totale de dégâts reçue |
 | headshots | nombre | Nombre de tirs portés à la tête d'autres joueurs |
 | tier | chaîne de caractères | Rang en compétitif du joueur au moment de la création des données |
-| traded | nombre | jsp |
+| traded | nombre | Nombre de fois où un allié venge la mort du joueur |
 | kills | nombre | Nombre de joueurs tués |
 | matches | nombre | Nombre de matchs joués |
 | deaths | nombre | Nombre de morts du joueur |
