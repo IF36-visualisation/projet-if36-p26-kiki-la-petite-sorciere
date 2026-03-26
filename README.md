@@ -458,16 +458,20 @@ On peut étudier la différence entre des joueurs normaux et pros.
 Sans compter les joueurs pros, qui ont une visée nettement supérieure à celle des joueurs normaux, on verra si augmenter son KDA (ratio d'éliminations sur morts) et sa visée influe sur le rang. On pourra potentiellement créer un modèle qui attribuerait un rang à un joueur en entrant ces statistiques.
 
 ### 11. Impact des parties précédentes sur l'actuelle
-
+Pouvoir étudier l'influence du résultat des parties précédentes sur le winrate de la partie n. L'intérêt serait pouvoir de créer un tableau 2x4 surles parties n-1 et n-2 (Depuis Victoire, Victoire / Victoire, Défaite, etc.. vers Victoire/Défaite)
 
 ### 12. Meilleures équipes / personnages en attaque / défense
 L'idée est d'identifier si certains personnages et/ou certaines configurations d'équipes sont plus performante en attaque ou en défense, afin de savoir comment l'équilibre du jeu est impacté par la composition de l'équipe.
 
 ### 13. Identifier les stratégies
-
+Réussir à comprendre les stratégies par joueur et / ou par équipe. C'est à dire comment se comporte(nt) le(s) joueur(s), de façon aggressive ? passive ? et comment cela impacte leurs performances.
 
 ### 14. Explication d'un ban (joueur ou carte)
-
+Essayer de comprendre ce qui a poussé une équipe à bannir certains personnages en étudiant les points suivants : 
+- Est-ce à cause d'un joueur en particulier ?
+- Est-ce à cause de la map ?
+- Une synergie problématique ?
+- Un personnage META ?
 
 ### 15. Travail d'équipe (assists/kill)
 Nous aimerions étudier si la performance d'une équipe est liée à la quantité de travail en équipe, ou si des joueurs indépendants permettent d'accomplir des victoires.
