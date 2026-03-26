@@ -470,16 +470,16 @@ L'idée est d'identifier si certains personnages et/ou certaines configurations 
 
 
 ### 15. Travail d'équipe (assists/kill)
-
+Nous aimerions étudier si la performance d'une équipe est liée à la quantité de travail en équipe, ou si des joueurs indépendants permettent d'accomplir des victoires.
 
 ### 16. Quels joueurs performent le mieux malgré une défaite ?
-
+Nous souhaiterions étudier si les séries de défaites impactent négativement les performances individuelles, et identifier les exceptions (joueurs qui performent de façon constante malgré les défaites)
 
 ### 17. Nemesis (pire ennemi des joueurs)
-
+Identifier les joueurs qui sont le plus tués par d'autres joueurs, et identifier des counters potentiels (couple agent/map)
 
 ### 18. Changement de joueurs -> gagner ?
-
+L'intérêt est de savoir si une équipe qui change souvent de joueurs (roster) subit des modifications importantes sur sa performance, donc identifier l'impact des équipes autour des joueurs(coachs, spécialistes, etc.)
 
 ### 19. Synergies entre joueurs
 Nous souhaiterions savoir si certains types de joueurs ont tendance à mieux gagner accompagnés de quel type de joueur. Exemple : Un joueur agressif est il plus à même de gagner avec d'autres joueurs agressifs ou avec des joueurs plus tempérés ?
