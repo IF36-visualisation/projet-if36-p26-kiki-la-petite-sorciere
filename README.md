@@ -1,43 +1,7 @@
 # Fiche projet IF36 - Groupe Kiki la Petite Sorcière
 
-## Datasets : 
-### Valorant
-- FAIT https://blitz.gg/valorant/stats/agents
-- PAS UN DATASET https://stackedit.io/app
-- FAIT https://www.kaggle.com/datasets/evangower/valorant-esports-top-earnings
-- FAIT https://www.kaggle.com/datasets/notnguyen/valorant-dataset-v3
-- FAIT https://www.kaggle.com/datasets/mitchellharrison/my-first-1000-valorant-games
-- FAIT https://www.reddit.com/r/ValorantCompetitive/comments/1odnm63/large_scale_valorant_dataset_20202024/
-- FAIT https://www.vlr.gg/stats
-- FAIT https://www.kaggle.com/datasets/ryanluong1/valorant-champion-tour-2021-2023-data?select=all_ids
-### Overwatch (ne pas faire)
-- https://www.kaggle.com/datasets/mykhailokachan/overwatch-2-statistics
-- https://www.kaggle.com/datasets/stlze8/owcs-faceit-match-data-emea-and-na-2025
-- https://www.kaggle.com/datasets/krpouncy/ow2-s10-ranked-leaderboard-snapshot-data
 
-Plan d'analyse :
-1. Comparer stats globales joueur normal / pro
-2. Quels personnages sont les plus meurtriers
-3. Quels joueurs pros ont la carrière la plus prolifique
-4. Quels joueurs clutch le plus
-5. Quelles cartes sont orientées attaque / défense
-6. Qu'est-ce qui influe le plus la victoire dans une partie
-7. Identifier les meilleures équipes
-8. Meilleures équipes par années / changements de classement entre les années
-9. First blood -> victoire ?
-10. Aim / KDA influe sur le rang ?
-11. Impact des parties précédentes sur l'actuelle
-12. Meilleures équipes / persos en attaque / défense
-13. Identifier les stratégies
-14. Explication d'un ban (joueur ou carte)
-15. Travail d'équipe (assists/kill)
-16. Quels joueurs performent le mieux malgré une défaite ?
-17. Nemesis (pire ennemi des joueurs)
-18. Changement de joueurs -> gagner ?
-19. Synergies entre joueurs
-20. Joueurs les plus adaptables
-
-# Données
+## Données
 ### 1. Valorant Esports Top Earnings
 
 Les récompenses des joueurs professionnels de Valorant, entre 2020 et 2025.
@@ -53,24 +17,24 @@ https://www.kaggle.com/datasets/evangower/valorant-esports-top-earnings
 
 | Nom | Format | Description |
 |------|------|---------|
-| Rank | nombre | Rang du joueur en fonction des médailles qu'il a gagné |
+| Rank | nombre entier | Rang du joueur en fonction des médailles qu'il a gagné |
 | Player | chaîne de caractères | Nom du joueur |
-| Gold | nombre | Médaille d'or. Première place dans une compétition |
-| Silver | nombre | Médaille d'argent. Deuxième place dans une compétition |
-| Bronze | nombre | Médaille de bronze. Troisième place dans une compétition |
-| S-Tier | nombre | Première place dans une compétition majeure internationale |
+| Gold | nombre entier | Médaille d'or. Première place dans une compétition |
+| Silver | nombre entier | Médaille d'argent. Deuxième place dans une compétition |
+| Bronze | nombre entier | Médaille de bronze. Troisième place dans une compétition |
+| S-Tier | nombre entier | Première place dans une compétition majeure internationale |
 | Earnings | chaîne de caractères | Total de l'argent gagné en tournoi |
 
 #### Équipes 
 
 | Nom | Format | Description |
 |------|------|---------|
-| Rank | nombre | Rang de l'équipe en fonction des médailles qu'elle a gagné |
+| Rank | nombre entier | Rang de l'équipe en fonction des médailles qu'elle a gagné |
 | Team | chaîne de caractères | Nom de l'équipe |
-| Gold | nombre | Médaille d'or. Première place dans une compétition |
-| Silver | nombre | Médaille d'argent. Deuxième place dans une compétition |
-| Bronze | nombre | Médaille de bronze. Troisième place dans une compétition |
-| S-Tier | nombre | Première place dans une compétition majeure internationale |
+| Gold | nombre entier | Médaille d'or. Première place dans une compétition |
+| Silver | nombre entier | Médaille d'argent. Deuxième place dans une compétition |
+| Bronze | nombre entier | Médaille de bronze. Troisième place dans une compétition |
+| S-Tier | nombre entier | Première place dans une compétition majeure internationale |
 | Earnings | chaîne de caractères | Total de l'argent gagné en tournoi |
 
 Nous avons choisi ce dataset pour observer les meilleurs joueurs et équipes professionnels. On ne peut pas voir l'évolution en fonction du temps, alors l'intérêt est surtout de pouvoir observer quels sont les joueurs et équipes dominants depuis la sortie du jeu. On pourra aussi comparer avec d'autres jeux de données plus complets pour étudier les statistiques d'un joueur ou d'une équipe précise.
@@ -88,25 +52,25 @@ https://www.kaggle.com/datasets/mitchellharrison/my-first-1000-valorant-games
 
 | Nom | Format | Description |
 |------|------|---------|
-| game_id | nombre | Numéro de la partie (de la plus ancienne à la plus récente) |
+| game_id | nombre entier | Numéro de la partie (de la plus ancienne à la plus récente) |
 | episode | chaîne de caractères | Fenêtre de temps (divisée en 3 actes) |
 | act | chaîne de caractères | Fenêtre de temps de quelques mois (3 par épisode) |
-| rank | nombre | Rang du joueur au début de la partie |
+| rank | nombre entier | Rang du joueur au début de la partie |
 | date | date | La date à laquelle la partie est jouée |
 | agent | chaîne de caractères | Le personnage joué |
 | map | chaîne de caractères | La carte sur laquelle la partie est jouée |
 | outcome | chaîne de caractères | Le résultat de la partie (défaite/victoire/égalité) |
-| round_wins | nombre | Nombre de manches gagnées |
-| round_losses | nombre | Nombre de manches perdues |
-| kills | nombre | Nombre d'éliminations |
-| deaths | nombre | Nombre de morts |
-| assists | nombre | Nombre d'assistances |
-| kdr | nombre | Ratio d'éliminations/morts |
-| avg_dmg_delta | nombre | Différence de dégâts reçus et infligés en moyenne à chaque manche |
-| headshot_pct | nombre | Pourcentage de tirs dans la tête touchés |
-| avg_dmg | nombre | Moyenne des dégâts infligés aux ennemis par manche |
+| round_wins | nombre entier | Nombre de manches gagnées |
+| round_losses | nombre entier | Nombre de manches perdues |
+| kills | nombre entier | Nombre d'éliminations |
+| deaths | nombre entier | Nombre de morts |
+| assists | nombre entier | Nombre d'assistances |
+| kdr | nombre décimal | Ratio d'éliminations/morts |
+| avg_dmg_delta | nombre décimal | Différence de dégâts reçus et infligés en moyenne à chaque manche |
+| headshot_pct | nombre décimal | Pourcentage de tirs dans la tête touchés |
+| avg_dmg | nombre décimal | Moyenne des dégâts infligés aux ennemis par manche |
 | acs | nombre | Moyenne du score de combat de chaque manche (calculé par le jeu) |
-| num_frag | nombre | Rang interne à l'équipe en fonction du nombre d'éliminations (1 = plus d'éliminations, 5 = moins d'éliminations) |
+| num_frag | nombre entier | Rang interne à l'équipe en fonction du nombre d'éliminations (1 = plus d'éliminations, 5 = moins d'éliminations) |
 
 Nous avons choisi ce dataset car il représente l'évolution d'un joueur représentatif du jeu. Les données sont très complètes, ce qui nous permettra d'étudier les comportements du joueur, sa stratégie, ainsi que les éléments les plus corrélés à une victoire.
 
@@ -261,73 +225,73 @@ Ce dataset peut être très intéressant car nous avons une répartition de joue
 
 | Nom | Format | Description |
 |---|---|---|
-| MatchID | int | Identifiant unique du match (série complète entre deux équipes) |
-| GameID | int | Identifiant unique d'une map individuelle au sein d'un match |
-| EventID | int | Identifiant de l'événement / tournoi auquel appartient le match |
+| MatchID | nombre entier | Identifiant unique du match (série complète entre deux équipes) |
+| GameID | nombre entier | Identifiant unique d'une map individuelle au sein d'un match |
+| EventID | nombre entier | Identifiant de l'événement / tournoi auquel appartient le match |
 | Date | date | Date du match (format YYYY-MM-DD) |
-| Team1ID | int | Identifiant unique de l'équipe 1 |
-| Team2ID | int | Identifiant unique de l'équipe 2 |
-| Team1 Name | str | Nom de l'équipe 1 |
-| Team2 Name | str | Nom de l'équipe 2 |
-| Series Odds | float | Cote de pari initiale (donnée par VLR.gg) sur la victoire de l'équipe gagnante — 0 si non disponible |
-| Team1 Map Odds | float | Cote de pari sur cette map spécifique pour l'équipe 1 — 0 si non disponible |
-| Map | int | Identifiant numérique de la map jouée (ex. 1 = Bind, 3 = Haven, etc.) |
-| Team1 Rounds | int | Nombre total de rounds remportés par l'équipe 1 sur cette map |
-| Team2 Rounds | int | Nombre total de rounds remportés par l'équipe 2 sur cette map |
-| Team1 Atk Rounds | int | Rounds remportés par l'équipe 1 en phase d'attaque |
-| Team2 Atk Rounds | int | Rounds remportés par l'équipe 2 en phase d'attaque |
-| Team1 Def Rounds | int | Rounds remportés par l'équipe 1 en phase de défense |
-| Team2 Def Rounds | int | Rounds remportés par l'équipe 2 en phase de défense |
-| Team1 Rating | float | Rating moyen de l'équipe 1 (indice de performance global, ~1.0 = neutre) |
-| Team2 Rating | float | Rating moyen de l'équipe 2 |
-| Team1 ACS | float | Average Combat Score moyen de l'équipe 1 (score de combat par round) |
-| Team2 ACS | float | Average Combat Score moyen de l'équipe 2 |
-| Team1 Kills | float | Total de kills de l'équipe 1 sur la map |
-| Team2 Kills | float | Total de kills de l'équipe 2 |
-| Team1 Deaths | float | Total de morts de l'équipe 1 |
-| Team2 Deaths | float | Total de morts de l'équipe 2 |
-| Team1 Assists | float | Total d'assistances de l'équipe 1 |
-| Team2 Assists | float | Total d'assistances de l'équipe 2 |
-| Team1 DeltaK/D | float | Différentiel Kills − Deaths de l'équipe 1 (positif = plus de kills que de morts) |
-| Team2 DeltaK/D | float | Différentiel K/D de l'équipe 2 |
-| Team1 KAST | float | % de rounds où l'équipe 1 a eu au moins un Kill, Assist, Survived ou Trade |
-| Team2 KAST | float | KAST de l'équipe 2 |
-| Team1 ADR | float | Average Damage per Round de l'équipe 1 (dégâts moyens infligés par round) |
-| Team2 ADR | float | ADR de l'équipe 2 |
-| Team1 HS | float | % de kills en headshot de l'équipe 1 |
-| Team2 HS | float | % de kills en headshot de l'équipe 2 |
-| Team1 FK | float | Nombre de First Kills (premier kill du round) obtenus par l'équipe 1 |
-| Team2 FK | float | First Kills de l'équipe 2 |
-| Team1 FD | float | Nombre de First Deaths (premier mort du round) subis par l'équipe 1 |
-| Team2 FD | float | First Deaths de l'équipe 2 |
-| Team1 DeltaFK/FD | float | Différentiel FK − FD de l'équipe 1 (avantage en ouverture de round) |
-| Team2 DeltaFK/FD | float | Différentiel FK/FD de l'équipe 2 |
-| Team1 Pistols | int | Rounds de pistolet (rounds 1 et 13) remportés par l'équipe 1 |
-| Team2 Pistols | int | Rounds de pistolet remportés par l'équipe 2 |
-| Team1 EcosWon | int | Éco-rounds remportés par l'équipe 1 (rounds avec budget très limité) |
-| Team2 EcosWon | int | Éco-rounds remportés par l'équipe 2 |
-| Team1 Ecos | int | Nombre total d'éco-rounds joués par l'équipe 1 |
-| Team2 Ecos | int | Éco-rounds joués par l'équipe 2 |
-| Team1 Semibuys Won | int | Semi-achats (force buys) remportés par l'équipe 1 |
-| Team2 Semibuys Won | int | Semi-achats remportés par l'équipe 2 |
-| Team1 Semibuys | int | Total de semi-achats joués par l'équipe 1 |
-| Team2 Semibuys | int | Semi-achats joués par l'équipe 2 |
-| Team1 Fullbuys Won | int | Full-buys remportés par l'équipe 1 (rounds avec achat complet) |
-| Team2 Fullbuys Won | int | Full-buys remportés par l'équipe 2 |
-| Team1 Fullbuys | int | Total de full-buys joués par l'équipe 1 |
-| Team2 Fullbuys | int | Total de full-buys joués par l'équipe 2 |
-| Round Breakdown | str | Données détaillées round par round encodées en chaîne (résultat, temps de plant/défuse, probabilités de victoire) |
-| Team1Game1 | int | ID du joueur 1 de l'équipe 1 sur cette map |
-| Team1Game2 | int | ID du joueur 2 de l'équipe 1 sur cette map |
-| Team1Game3 | int | ID du joueur 3 de l'équipe 1 sur cette map |
-| Team1Game4 | int | ID du joueur 4 de l'équipe 1 sur cette map |
-| Team1Game5 | int | ID du joueur 5 de l'équipe 1 sur cette map |
-| Team2Game1 | int | ID du joueur 1 de l'équipe 2 sur cette map |
-| Team2Game2 | int | ID du joueur 2 de l'équipe 2 sur cette map |
-| Team2Game3 | int | ID du joueur 3 de l'équipe 2 sur cette map |
-| Team2Game4 | int | ID du joueur 4 de l'équipe 2 sur cette map |
-| Team2Game5 | int | ID du joueur 5 de l'équipe 2 sur cette map |
-| VOD Link | str | Lien YouTube vers le VOD de la map (avec timestamp), peut être vide |
+| Team1ID | nombre entier | Identifiant unique de l'équipe 1 |
+| Team2ID | nombre entier | Identifiant unique de l'équipe 2 |
+| Team1 Name | chaîne de caractères | Nom de l'équipe 1 |
+| Team2 Name | chaîne de caractères | Nom de l'équipe 2 |
+| Series Odds | nombre décimal | Cote de pari initiale (donnée par VLR.gg) sur la victoire de l'équipe gagnante — 0 si non disponible |
+| Team1 Map Odds | nombre décimal | Cote de pari sur cette map spécifique pour l'équipe 1 — 0 si non disponible |
+| Map | nombre entier | Identifiant numérique de la map jouée (ex. 1 = Bind, 3 = Haven, etc.) |
+| Team1 Rounds | nombre entier | Nombre total de rounds remportés par l'équipe 1 sur cette map |
+| Team2 Rounds | nombre entier | Nombre total de rounds remportés par l'équipe 2 sur cette map |
+| Team1 Atk Rounds | nombre entier | Rounds remportés par l'équipe 1 en phase d'attaque |
+| Team2 Atk Rounds | nombre entier | Rounds remportés par l'équipe 2 en phase d'attaque |
+| Team1 Def Rounds | nombre entier | Rounds remportés par l'équipe 1 en phase de défense |
+| Team2 Def Rounds | nombre entier | Rounds remportés par l'équipe 2 en phase de défense |
+| Team1 Rating | nombre décimal | Rating moyen de l'équipe 1 (indice de performance global, ~1.0 = neutre) |
+| Team2 Rating | nombre décimal | Rating moyen de l'équipe 2 |
+| Team1 ACS | nombre décimal | Average Combat Score moyen de l'équipe 1 (score de combat par round) |
+| Team2 ACS | nombre décimal | Average Combat Score moyen de l'équipe 2 |
+| Team1 Kills | nombre décimal | Total de kills de l'équipe 1 sur la map |
+| Team2 Kills | nombre décimal | Total de kills de l'équipe 2 |
+| Team1 Deaths | nombre décimal | Total de morts de l'équipe 1 |
+| Team2 Deaths | nombre décimal | Total de morts de l'équipe 2 |
+| Team1 Assists | nombre décimal | Total d'assistances de l'équipe 1 |
+| Team2 Assists | nombre décimal | Total d'assistances de l'équipe 2 |
+| Team1 DeltaK/D | nombre décimal | Différentiel Kills − Deaths de l'équipe 1 (positif = plus de kills que de morts) |
+| Team2 DeltaK/D | nombre décimal | Différentiel K/D de l'équipe 2 |
+| Team1 KAST | nombre décimal | % de rounds où l'équipe 1 a eu au moins un Kill, Assist, Survived ou Trade |
+| Team2 KAST | nombre décimal | KAST de l'équipe 2 |
+| Team1 ADR | nombre décimal | Average Damage per Round de l'équipe 1 (dégâts moyens infligés par round) |
+| Team2 ADR | nombre décimal | ADR de l'équipe 2 |
+| Team1 HS | nombre décimal | % de kills en headshot de l'équipe 1 |
+| Team2 HS | nombre décimal | % de kills en headshot de l'équipe 2 |
+| Team1 FK | nombre décimal | Nombre de First Kills (premier kill du round) obtenus par l'équipe 1 |
+| Team2 FK | nombre décimal | First Kills de l'équipe 2 |
+| Team1 FD | nombre décimal | Nombre de First Deaths (premier mort du round) subis par l'équipe 1 |
+| Team2 FD | nombre décimal | First Deaths de l'équipe 2 |
+| Team1 DeltaFK/FD | nombre décimal | Différentiel FK − FD de l'équipe 1 (avantage en ouverture de round) |
+| Team2 DeltaFK/FD | nombre décimal | Différentiel FK/FD de l'équipe 2 |
+| Team1 Pistols | nombre entier | Rounds de pistolet (rounds 1 et 13) remportés par l'équipe 1 |
+| Team2 Pistols | nombre entier | Rounds de pistolet remportés par l'équipe 2 |
+| Team1 EcosWon | nombre entier | Éco-rounds remportés par l'équipe 1 (rounds avec budget très limité) |
+| Team2 EcosWon | nombre entier | Éco-rounds remportés par l'équipe 2 |
+| Team1 Ecos | nombre entier | Nombre total d'éco-rounds joués par l'équipe 1 |
+| Team2 Ecos | nombre entier | Éco-rounds joués par l'équipe 2 |
+| Team1 Semibuys Won | nombre entier | Semi-achats (force buys) remportés par l'équipe 1 |
+| Team2 Semibuys Won | nombre entier | Semi-achats remportés par l'équipe 2 |
+| Team1 Semibuys | nombre entier | Total de semi-achats joués par l'équipe 1 |
+| Team2 Semibuys | nombre entier | Semi-achats joués par l'équipe 2 |
+| Team1 Fullbuys Won | nombre entier | Full-buys remportés par l'équipe 1 (rounds avec achat complet) |
+| Team2 Fullbuys Won | nombre entier | Full-buys remportés par l'équipe 2 |
+| Team1 Fullbuys | nombre entier | Total de full-buys joués par l'équipe 1 |
+| Team2 Fullbuys | nombre entier | Total de full-buys joués par l'équipe 2 |
+| Round Breakdown | chaîne de caractères | Données détaillées round par round encodées en chaîne (résultat, temps de plant/défuse, probabilités de victoire) |
+| Team1Game1 | nombre entier | ID du joueur 1 de l'équipe 1 sur cette map |
+| Team1Game2 | nombre entier | ID du joueur 2 de l'équipe 1 sur cette map |
+| Team1Game3 | nombre entier | ID du joueur 3 de l'équipe 1 sur cette map |
+| Team1Game4 | nombre entier | ID du joueur 4 de l'équipe 1 sur cette map |
+| Team1Game5 | nombre entier | ID du joueur 5 de l'équipe 1 sur cette map |
+| Team2Game1 | nombre entier | ID du joueur 1 de l'équipe 2 sur cette map |
+| Team2Game2 | nombre entier | ID du joueur 2 de l'équipe 2 sur cette map |
+| Team2Game3 | nombre entier | ID du joueur 3 de l'équipe 2 sur cette map |
+| Team2Game4 | nombre entier | ID du joueur 4 de l'équipe 2 sur cette map |
+| Team2Game5 | nombre entier | ID du joueur 5 de l'équipe 2 sur cette map |
+| VOD Link | chaîne de caractères | Lien YouTube vers le VOD de la map (avec timestamp), peut être vide |
 
 L'encodage pour la colonne Round Breakdown est le suivant:
 - Bit 1: Winning team(T1, T2), (0, 1)
@@ -349,28 +313,28 @@ https://blitz.gg/valorant/stats/agents
 
 | Nom | Format | Description |
 |-----|--------|-------------|
-| Rank | int | Identifiant du personnage |
-| Agent | str | Nom du personnage |
-| KD | float | Nombre de personnages tués en fonction du nombre de morts |
-| KDA | str : "int/int/int" | Nombre de personnages tués en partie / Nombre de fois où le personnage est mort en partie / Nombre de personnages tués par assistance |
+| Rank | nombre entier | Identifiant du personnage |
+| Agent | chaîne de caractères | Nom du personnage |
+| KD | nombre décimal | Nombre de personnages tués en fonction du nombre de morts |
+| KDA | chaîne de caractères : "int/int/int" | Nombre de personnages tués en partie / Nombre de fois où le personnage est mort en partie / Nombre de personnages tués par assistance |
 | Win % | "float%" | Pourcentage de gains avec ce personnage |
 | Pick % | "float%" | Pourcentage de choix de ce personnage lors d'une partie |
-| Avg.Score | int | Score moyen effectué avec ce personnage|
-| Matches | int | nombre de matches joués avec ce personnage 
+| Avg.Score | nombre entier | Score moyen effectué avec ce personnage|
+| Matches | nombre entier | nombre de matches joués avec ce personnage 
 
 ### Weapons
 Statistiques sur les différentes armes du jeu jouables (weapons) du jeu lors des compétitions en Diamond+.
 https://blitz.gg/valorant/stats/weapons
 | Nom | Format | Description |
 |-----|--------|-------------|
-| Rank | int | Identifiant de l'arme |
-| Weapon | str | Nom de l'arme |
-| Kills per Round | float | Nombre de personanges tués / Nombre de rounds effectués |
-| All kills per Round | float | [HELP] |
+| Rank | nombre entier | Identifiant de l'arme |
+| Weapon | chaîne de caractères | Nom de l'arme |
+| Kills per Round | nombre décimal | Nombre de personanges tués / Nombre de rounds effectués |
+| All kills per Round | nombre décimal | [HELP] |
 | Headshot % | "float%" | Pourcentage de tirs dans la tête |
 | Bodyshot % | "float%" | Pourcentage de tirs dans le haut du corps |
 | Legshot % | "float%" | Pourcentage de tirs dans les jambes |
-| Avg Damage | int | Nombre de dégats moyens effectués durant une partie |
+| Avg Damage | nombre entier | Nombre de dégats moyens effectués durant une partie |
 
 ### Maps
 Statistiques sur les différentes cartes du jeu lors des compétitions en Diamond+.
@@ -378,12 +342,12 @@ https://blitz.gg/valorant/stats/maps
 
 | Nom | Format | Description |
 |-----|--------|-------------|
-| Rank | int | Identifiant de la carte |
-| Map | str | Nom de la carte |
+| Rank | nombre entier | Identifiant de la carte |
+| Map | chaîne de caractères | Nom de la carte |
 | Play Rate | "float%" | Pourcentages des parties effectuées dans cette carte. |
 | Attacking Round Won | "float%" | Pourcentage des rounds gagnés sur cette carte par les attaquants |
 | Defending Round Won | "float%" | Pourcentage des rounds gagnés sur cette carte par les défenseurs |
-| Matches Played | int | Nombre de matchs joués sur cette cartes |
+| Matches Played | nombre entier | Nombre de matchs joués sur cette cartes |
 
 
 ### 7. Statistiques des performances des joueurs professionnels
@@ -391,30 +355,30 @@ https://www.vlr.gg/stats
 
 | Nom | Format | Description |
 |-----|--------|-------------|
-| Player | str | Nom du joueur |
-| Agents | str | Nom des personnages joués par ce joueur |
-| Rnd | int | Nombre de manches jouées |
-| R^2.0 | float | [HELP] |
-| ACS | float | Score moyen de combat du joueur (Moyenne des points gagnés par round |
-| K:D | float |  Nombre de joueurs tués en fonction du nombre de morts |
+| Player | chaîne de caractères | Nom du joueur |
+| Agents | chaîne de caractères | Nom des personnages joués par ce joueur |
+| Rnd | nombre entier | Nombre de manches jouées |
+| R^2.0 | nombre décimal | [HELP] |
+| ACS | nombre décimal | Score moyen de combat du joueur (Moyenne des points gagnés par round |
+| K:D | nombre décimal |  Nombre de joueurs tués en fonction du nombre de morts |
 | KAST | int% | Pourcentage de manches au cours desquelles un joueur a réalisé au moins l'une de ces quatre actions : Tuer, Tuer par assistance, Survivre, Échanger |
-| ADR | float | Dégats moyens effectués par manche |
-| KPR | float | Nombre moyen de joueurs tués par manche |
-| APR | float | Nombre moyen de joueurs tués par assistance par manche |
-| FKPR | float | Nombre moyen de premiers kills obtenus par manche par un joueur |
-| FDPR | float | Nombre moyen de premières morts d'un joueur |
+| ADR | nombre décimal | Dégats moyens effectués par manche |
+| KPR | nombre décimal | Nombre moyen de joueurs tués par manche |
+| APR | nombre décimal | Nombre moyen de joueurs tués par assistance par manche |
+| FKPR | nombre décimal | Nombre moyen de premiers kills obtenus par manche par un joueur |
+| FDPR | nombre décimal | Nombre moyen de premières morts d'un joueur |
 | HS% | int% | Pourcentages de tirs dans la tête effectués par ce joueur |
 | CL% | int% | Pourcentage des manches gagnées où le joueur était le dernier de son équipe encore en vie |
 | CL | int/int | Manches où le joueur était le dernier de son équipe encore en vie : Gagnées/Jouées |
-| KMAX | int | Nombre de joueurs tués maximum dans une seule carte |
-| K | int | Nombre de joueurs tués |
-| D | int | Nombre de morts |
-| A | int | Nombre de joueurs tués par assistance |
-| FK | int | Nombre de première personne tuée de la manche |
-| FD | int | Nombre de fois où le joueur a été le premier joueur tué de la manche |
+| KMAX | nombre entier | Nombre de joueurs tués maximum dans une seule carte |
+| K | nombre entier | Nombre de joueurs tués |
+| D | nombre entier | Nombre de morts |
+| A | nombre entier | Nombre de joueurs tués par assistance |
+| FK | nombre entier | Nombre de première personne tuée de la manche |
+| FD | nombre entier | Nombre de fois où le joueur a été le premier joueur tué de la manche |
 
 
-# Plan d'analyse
+## Plan d'analyse
 ### 1. Quelles sont les différences majeures entre les joueurs pros et non pros ?
 
 Il s'agit d'une question globale, qu'on peut prendre sous de nombreux aspects. On va étudier les statistiques qu'on peut prendre chez les joueurs pros, et les comparer avec celles des non pros, comme par exemple les agents joués, le pourcentage de victoire sur chaque carte, la gestion de l'économie... On pourra établir des tendances différentes pour voir en quoi les pros sont meilleurs.
