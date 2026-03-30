@@ -317,8 +317,8 @@ https://blitz.gg/valorant/stats/agents
 | Agent | chaîne de caractères | Nom du personnage |
 | KD | nombre décimal | Nombre de personnages tués en fonction du nombre de morts |
 | KDA | chaîne de caractères : "int/int/int" | Nombre de personnages tués en partie / Nombre de fois où le personnage est mort en partie / Nombre de personnages tués par assistance |
-| Win % | "float%" | Pourcentage de gains avec ce personnage |
-| Pick % | "float%" | Pourcentage de choix de ce personnage lors d'une partie |
+| Win % | "nombre décimal%" | Pourcentage de gains avec ce personnage |
+| Pick % | "nombre décimal%" | Pourcentage de choix de ce personnage lors d'une partie |
 | Avg.Score | nombre entier | Score moyen effectué avec ce personnage|
 | Matches | nombre entier | nombre de matches joués avec ce personnage 
 
@@ -331,9 +331,9 @@ https://blitz.gg/valorant/stats/weapons
 | Weapon | chaîne de caractères | Nom de l'arme |
 | Kills per Round | nombre décimal | Nombre de personanges tués / Nombre de rounds effectués |
 | All kills per Round | nombre décimal | [HELP] |
-| Headshot % | "float%" | Pourcentage de tirs dans la tête |
-| Bodyshot % | "float%" | Pourcentage de tirs dans le haut du corps |
-| Legshot % | "float%" | Pourcentage de tirs dans les jambes |
+| Headshot % | "nombre décimal%" | Pourcentage de tirs dans la tête |
+| Bodyshot % | "nombre décimal%" | Pourcentage de tirs dans le haut du corps |
+| Legshot % | "nombre décimal%" | Pourcentage de tirs dans les jambes |
 | Avg Damage | nombre entier | Nombre de dégats moyens effectués durant une partie |
 
 ### Maps
@@ -344,9 +344,9 @@ https://blitz.gg/valorant/stats/maps
 |-----|--------|-------------|
 | Rank | nombre entier | Identifiant de la carte |
 | Map | chaîne de caractères | Nom de la carte |
-| Play Rate | "float%" | Pourcentages des parties effectuées dans cette carte. |
-| Attacking Round Won | "float%" | Pourcentage des rounds gagnés sur cette carte par les attaquants |
-| Defending Round Won | "float%" | Pourcentage des rounds gagnés sur cette carte par les défenseurs |
+| Play Rate | "nombre décimal%" | Pourcentages des parties effectuées dans cette carte. |
+| Attacking Round Won | "nombre décimal%" | Pourcentage des rounds gagnés sur cette carte par les attaquants |
+| Defending Round Won | "nombre décimal%" | Pourcentage des rounds gagnés sur cette carte par les défenseurs |
 | Matches Played | nombre entier | Nombre de matchs joués sur cette cartes |
 
 
@@ -361,15 +361,15 @@ https://www.vlr.gg/stats
 | R^2.0 | nombre décimal | [HELP] |
 | ACS | nombre décimal | Score moyen de combat du joueur (Moyenne des points gagnés par round |
 | K:D | nombre décimal |  Nombre de joueurs tués en fonction du nombre de morts |
-| KAST | int% | Pourcentage de manches au cours desquelles un joueur a réalisé au moins l'une de ces quatre actions : Tuer, Tuer par assistance, Survivre, Échanger |
+| KAST | nombre entier% | Pourcentage de manches au cours desquelles un joueur a réalisé au moins l'une de ces quatre actions : Tuer, Tuer par assistance, Survivre, Échanger |
 | ADR | nombre décimal | Dégats moyens effectués par manche |
 | KPR | nombre décimal | Nombre moyen de joueurs tués par manche |
 | APR | nombre décimal | Nombre moyen de joueurs tués par assistance par manche |
 | FKPR | nombre décimal | Nombre moyen de premiers kills obtenus par manche par un joueur |
 | FDPR | nombre décimal | Nombre moyen de premières morts d'un joueur |
-| HS% | int% | Pourcentages de tirs dans la tête effectués par ce joueur |
-| CL% | int% | Pourcentage des manches gagnées où le joueur était le dernier de son équipe encore en vie |
-| CL | int/int | Manches où le joueur était le dernier de son équipe encore en vie : Gagnées/Jouées |
+| HS% | nombre entier% | Pourcentages de tirs dans la tête effectués par ce joueur |
+| CL% | nombre entier% | Pourcentage des manches gagnées où le joueur était le dernier de son équipe encore en vie |
+| CL | nombre entier/nombre entier | Manches où le joueur était le dernier de son équipe encore en vie : Gagnées/Jouées |
 | KMAX | nombre entier | Nombre de joueurs tués maximum dans une seule carte |
 | K | nombre entier | Nombre de joueurs tués |
 | D | nombre entier | Nombre de morts |
