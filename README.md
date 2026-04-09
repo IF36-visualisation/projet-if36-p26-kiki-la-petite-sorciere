@@ -5,13 +5,15 @@
 Dans le cadre de l'UE d'IF36, nous souhaitons utiliser des données nombreuses et variées sur un thème précis afin d'étudier des corrélations, des tendances et autres liens.
 Pour ce faire, nous utiliserons différents outils pour créer des graphiques simples à comprendre et à lire.
 
+> Tous les datasets que nous utiliserons se trouvent dans le dossier `/data/`
+
 
 ## Valorant
 
 ![Image de présentation de Valorant](/valorant_img_readme.jpg "Valorant")
 
-Valorant sera le support de nos données. Il s'agit d'un jeu de tir par équipe. Il existe de nombreux personnages uniques, ainsi que des cartes et des armes variées. Il existe également une scène compétitive très développée, avec des milliers de joueurs professionnels. 
-Nous allons exploîter toutes ces données afin de répondre aux questions que vous verrez plus bas.
+Valorant sera le support de nos données. Il s'agit d'un jeu de tir par équipe. Il existe de nombreux personnages uniques, ainsi que des cartes et des armes variées. On y trouve également également une scène compétitive très développée, avec des milliers de joueurs professionnels. 
+Ces innombrables données permettront de répondre à toutes les questions que nous avons sur le jeu et ses joueurs. 
 
 
 ## Données
