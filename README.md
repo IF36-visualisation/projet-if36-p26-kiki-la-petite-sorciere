@@ -15,6 +15,12 @@ Pour ce faire, nous utiliserons différents outils pour créer des graphiques si
 Valorant sera le support de nos données. Il s'agit d'un jeu de tir par équipe. Il existe de nombreux personnages uniques, ainsi que des cartes et des armes variées. On y trouve également également une scène compétitive très développée, avec des milliers de joueurs professionnels. 
 Ces innombrables données permettront de répondre à toutes les questions que nous avons sur le jeu et ses joueurs. 
 
+## Membres
+
+- BRAGA Louis
+- VIALA Morgane
+- CHOUHIB Ilias
+- LAFAYE DE MICHEAUX Elio
 
 ## Données
 
