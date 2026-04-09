@@ -1,7 +1,24 @@
 # Fiche projet IF36 - Groupe Kiki la Petite Sorcière
 
+## Préambule
+
+Dans le cadre de l'UE d'IF36, nous souhaitons utiliser des données nombreuses et variées sur un thème précis afin d'étudier des corrélations, des tendances et autres liens.
+Pour ce faire, nous utiliserons différents outils pour créer des graphiques simples à comprendre et à lire.
+
+---
+
+## Valorant
+
+![Image de présentation de Valorant](/valorant_img_readme.jpg "Valorant")
+
+Valorant sera le support de nos données. Il s'agit d'un jeu de tir par équipe. Il existe de nombreux personnages uniques, ainsi que des cartes et des armes variées. Il existe également une scène compétitive très développée, avec des milliers de joueurs professionnels. 
+Nous allons exploîter toutes ces données afin de répondre aux questions que vous verrez plus bas.
+
+---
 
 ## Données
+
+
 ### 1. Valorant Esports Top Earnings
 
 Les récompenses des joueurs professionnels de Valorant, entre 2020 et 2025.
@@ -377,6 +394,7 @@ https://www.vlr.gg/stats
 | FK | nombre entier | Nombre de première personne tuée de la manche |
 | FD | nombre entier | Nombre de fois où le joueur a été le premier joueur tué de la manche |
 
+---
 
 ## Plan d'analyse
 ### 1. Quelles sont les différences majeures entre les joueurs pros et non pros ?
