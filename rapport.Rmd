@@ -10,7 +10,7 @@ editor_options:
 
 ```{r setup, include=FALSE}
 
-knitr::opts_chunk$set(echo=TRUE)
+knitr::opts_chunk$set(echo=FALSE)
 
 # Librairies
 library(readr)
@@ -21,6 +21,27 @@ library(ggplot2)
 library(magrittr)
 library(stringr)
 ```
+# Introduction
+
+...
+
+
+# 1. Quelles sont les différences majeures entre les joueurs pros et non pros ?
+
+...
+
+
+# 2. Quels personnages sont les plus meurtriers ?
+
+En prenant en compte seulement les joueurs non pros pour plus de "réalisme", on veut voir si des agents vont avoir une quantité d'éliminations / de dégâts largement supérieure, et voir à l'inverse quels agents mettent le moins de dégâts et font le moins de kills. On pourra éventuellement faire le lien ensuite avec les compétences de ces agents, pour voir si le résultat s'explique ou non.
+
+Pour éviter les données de joueurs pros, nous allons commencer par utiliser le dataset ["My First 1000 Valorant Games"](https://www.kaggle.com/datasets/mitchellharrison/my-first-1000-valorant-games) dans lequel on a des stats de kills, morts, assists par match avec l'agent qui a été joué, ce qui peut nous permettre d'étudier des stats variées et précises pour plusieurs agents.
+
+```{r}
+dataset5 <- read_csv("data/2. My First 1000 Valorant Games.csv")
+dataset5
+```
+
 
 # 3. Quels joueurs pros ont la carrière la plus prolifique ?
 
