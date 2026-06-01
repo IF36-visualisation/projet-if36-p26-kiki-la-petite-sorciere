@@ -1,0 +1,368 @@
+---
+title: "Projet_IF36"
+author: "kiki la petite sorcière"
+date: "2026-04-20"
+output: html_document
+editor_options:
+  markdown:
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo=TRUE)
+
+# Librairies
+library(readr)
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(ggplot2)
+library(magrittr)
+library(stringr)
+```
+
+# 3. Quels joueurs pros ont la carrière la plus prolifique ?
+
+## Introduction
+
+Dans cette partie, nous allons tenter de répondre à la question suivante : **Quels joueurs pros ont la carrière la plus prolifique ?** L'idée de cette question est d'observer les joueurs prometteurs pour voir où est ce qu'on les retrouvera dans d'autres analyses.
+
+## Démarche envisagée
+
+Dans l'idée, nous souhaitons réaliser un barchart permettant de voir les 10 meilleurs joueurs de chaque année, afin d'en observer l'évolution.
+
+## Réalisation
+
+### Chargement des datasets
+
+```{r}
+perfs_2021 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2021/players_stats/players_stats.csv")
+perfs_2022 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2022/players_stats/players_stats.csv")
+perfs_2023 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2023/players_stats/players_stats.csv")
+perfs_2024 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2024/players_stats/players_stats.csv")
+perfs_2025 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2025/players_stats/players_stats.csv")
+```
+
+### Réalisation des graphiques
+
+```{r}
+# Graphique 2021
+unique_players_2021 <- perfs_2021 %>% filter(!duplicated(Player)) #Suppression des doublons
+top_players_2021 <- head(unique_players_2021 %>% arrange(desc(Rating)), 10) # Récupération des meilleurs joueurs
+ggplot(top_players_2021, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity") + labs(title = "Bar chart des meilleurs joueurs de 2021", x = "Joueur", y = "Rating") #Graphique
+
+```
+
+```{r}
+# Graphique 2022
+unique_players_2022 <- perfs_2022 %>% filter(!duplicated(Player)) #Suppression des doublons
+top_players_2022 <- head(unique_players_2022 %>% arrange(desc(Rating)), 10) # Récupération des meilleurs joueurs
+ggplot(top_players_2022, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity") + labs(title = "Bar chart des meilleurs joueurs de 2022", x = "Joueur", y = "Rating") #Graphique
+
+```
+
+```{r}
+# Graphique 2023
+unique_players_2023 <- perfs_2023 %>% filter(!duplicated(Player)) #Suppression des doublons
+top_players_2023 <- head(unique_players_2023 %>% arrange(desc(Rating)), 10) # Récupération des meilleurs joueurs
+ggplot(top_players_2023, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity") + labs(title = "Bar chart des meilleurs joueurs de 2023", x = "Joueur", y = "Rating")#Graphique
+```
+
+```{r}
+# Graphique 2024
+unique_players_2024 <- perfs_2024 %>% filter(!duplicated(Player)) #Suppression des doublons
+top_players_2024 <- head(unique_players_2024 %>% arrange(desc(Rating)), 10) # Récupération des meilleurs joueurs
+ggplot(top_players_2024, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity") + labs(title = "Bar chart des meilleurs joueurs de 2024", x = "Joueur", y = "Rating") #Graphique
+
+```
+
+```{r}
+# Graphique 2025
+unique_players_2025 <- perfs_2025 %>% filter(!duplicated(Player)) #Suppression des doublons
+top_players_2025 <- head(unique_players_2025 %>% arrange(desc(Rating)), 10) # Récupération des meilleurs joueurs
+ggplot(top_players_2025, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity") +
+labs(title = "Bar chart des meilleurs joueurs de 2025", x = "Joueur", y = "Rating") #Graphique
+```
+
+### Line Chart de l'évolution des meilleurs joueurs
+
+Voyant que les 10 meilleurs joueurs changent régulièrement, nous avons souhaité vérifier si les meilleurs joueurs restent dans le top 10 plusieurs années d'affilée
+
+```{r}
+top_players <- bind_rows(
+  top_players_2021 %>% mutate(annee = 2021),
+  top_players_2022 %>% mutate(annee = 2022),
+  top_players_2023 %>% mutate(annee = 2023),
+  top_players_2024 %>% mutate(annee = 2024),
+  top_players_2025 %>% mutate(annee = 2025)
+)
+```
+
+```{r}
+ggplot(top_players, aes(x = annee, y = Rating, group = Player)) + geom_line(aes(color=Player)) + geom_point(aes(color=Player)) +
+labs(title = "Bar chart des meilleurs joueurs de 2025", x = "Joueur", y = "Rating", colour = "Player") #Graphique
+```
+
+## Observations
+
+Le choix de représentation nous amène à observer que les premiers joueurs changent chaque année et que donc il est très difficile d'observer la progression de seulement les meilleurs joueurs.
+Le dernier graphique montre d'ailleurs que chaque joueur n'apparait jamais plusieurs fois dans le top 10.
+Il est donc impossible d'en percevoir l'évolution.
+
+
+# 4. Qui sont les joueurs les plus forts en clutch ? 
+
+Être capable de retourner une situation désespérée est un atout considérable pour un joueur professionnel de Valorant.
+Le clutch est le fait de remporter une manche en étant le dernier membre de son équipe, tout en devant se battre contre plusieurs adversaires.
+Nous allons voir quels joueurs se retrouvent le plus souvent en situation de clutch (seul contre tous), et lesquels s'en sortent le mieux.
+Nous utiliserons la [source n°3](https://www.kaggle.com/datasets/ryanluong1/valorant-champion-tour-2021-2023-data)
+
+```{r préparation des données, include=FALSE, echo=FALSE}
+# Récupérer les données
+df2021 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2021/players_stats/players_stats.csv")
+df2022 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2022/players_stats/players_stats.csv")
+df2023 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2023/players_stats/players_stats.csv")
+df2024 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2024/players_stats/players_stats.csv")
+df2025 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2025/players_stats/players_stats.csv")
+df2026 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2026/players_stats/players_stats.csv")
+
+# Unification des données
+df <- bind_rows(
+  df2021 %>% mutate(annee = 2021),
+  df2022 %>% mutate(annee = 2022),
+  df2023 %>% mutate(annee = 2023),
+  df2024 %>% mutate(annee = 2024),
+  df2025 %>% mutate(annee = 2025),
+  df2026 %>% mutate(annee = 2026),
+)
+
+# Nettoyage des données
+df <- df %>% mutate(`Clutch Success %` = as.numeric(str_remove(`Clutch Success %`, "%")))
+df <- df %>% separate(`Clutches (won/played)`, into = c("Clutches won","Clutches played"), sep = "/", convert = TRUE)
+df <- df %>% group_by(Player, annee) %>% summarize(`Clutches won` = sum(`Clutches won`, na.rme = TRUE), `Clutches played` = sum(`Clutches played`, na.rme = TRUE)) %>% mutate(`Clutch Success %` = `Clutches won` / `Clutches played`)
+df <- df %>% arrange(desc(`Clutch Success %`))
+df <- df %>% mutate(`Clutches lost` = `Clutches played` - `Clutches won`)
+```
+
+```{r visu1}
+top5 <- df %>%
+  group_by(annee, Player) %>%
+  summarise(
+    `Clutches played` = sum(`Clutches played`, na.rm = TRUE),
+    `Clutches won` = sum(`Clutches won`, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  group_by(annee) %>%
+  slice_max(`Clutches played`, n = 5, with_ties = FALSE) %>%
+  ungroup()
+
+plot_year <- function(y) {
+  df <- top5 %>% filter(annee == y)
+  ggplot(df, aes(x = reorder(Player, -`Clutches played`))) +
+    geom_col(aes(y = `Clutches played`, fill = "Clutches perdus"), fill = "steelblue") +
+    geom_col(aes(y = `Clutches won`, fill = "Clutches gagnés"), fill = "gold")+
+    labs(
+      title = paste("Top 5 joueurs qui clutchent le plus en", y),
+      x = "Joueur",
+      y = "Nombre de clutchs"
+    ) +
+    theme_minimal()
+}
+
+plot_year(2021)
+plot_year(2022)
+plot_year(2023)
+plot_year(2024)
+plot_year(2025)
+plot_year(2026)
+```
+
+## Interprétation
+
+On a beaucoup d'informations intéressantes sur ces graphes.
+Déjà, on voit que d'une année à l'autre, les joueurs ne sont pas les mêmes.
+On voit donc qu'il n'existe pas de joueur spécialement meilleur que les autres dans ces situations.
+On voit également que la quantité de clutchs varie grandement d'une année à l'autre.
+Ce n'est pas parce que ces situations sont plus ou moins rares, mais parce que dans certaines années, il y a eu moins de matchs.
+En 2021, car le jeu venait de sortir, et donc la scène compétitive comptait moins de joueurs, et en 2025 et 2026 car le dataset ne répertorie pas tous les matchs de ces années.
+On remarque cependant un point commun chez tous les joueurs présents dans ce tableau : ils jouent principalement des contrôleurs ou sentinelles, c'est à dire des agents servant de soutien aux duellistes.
+On peut expliquer cela car ces personnages sont souvent placés en retrait, et survivent généralement plus longtemps que ceux qui cherchent à se battre.
+
+
+# 5. Quelles cartes sont orientées attaque ou défense ?
+
+Les cartes ne sont pas toujours équilibrées pour les attaquants ou les défenseurs.
+Si l'une d'entre elles favorise les défenseurs, on pourra expliquer en partie leurs victoires répétées.
+
+On étudiera d'abord pour les joueurs normaux, puis on verra si les pros sont aussi sujets à ces déséquilibres. Pour cela, on va étudier les winrates propres à chaque map en fonction des deux camps possibles (Attacker ou Defender).
+
+## Tous les joueurs
+
+Commençons par étudier les données concernant les joueurs lambda grâce à [cette ressource](https://blitz.gg/valorant/stats/maps?act=ev25actvi) qui nous donne les taux de victoire pour les côtés attaquant et défenseur sur chaque map pour toute une saison de 2025.
+
+```{r donnees, include=FALSE}
+donnees = tibble(
+  Map = c("Abyss","Corrode","Pearl","Haven","Sunset","Split","Bind"),
+  attacking_rounds_won = c(50.6, 49.5, 48.8, 48.8, 48.1, 47.5, 46.7),
+  defending_rounds_won = c(49.7, 50.8, 51.5, 51.4, 52.2, 52.7, 53.5)
+)
+donnees <- donnees %>%
+  rename(Attacker = attacking_rounds_won,
+         Defender = defending_rounds_won) %>%
+  pivot_longer(
+    cols = c(Attacker, Defender),
+    names_to = "Side",
+    values_to = "WinRate"
+  )
+
+```
+
+Faisons une visualisation:
+
+```{r}
+ggplot(donnees, aes(x = Map, y = WinRate, fill = Side)) +
+  geom_col(width = 0.75, position = "dodge") +
+  scale_y_continuous(breaks = seq(0, 100, by = 5)) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1, vjust = .5, face = "bold"))
+```
+
+Finalement, les maps disponibles semblent assez équilibrées car toutes les valeurs sont entre 45 et 55%, même si on peut tout de même constater quelques écarts.
+On remarque que la map Bind a le plus gros écart, avec un winrate en défense proche de 46%.
+A l'inverse, la map Abyss semble la plus équilibrée ici, suivie de près par Corrode.
+Elles semblent avoir tous leurs winrates entre 49 et 51%.
+
+## Joueurs professionnels
+
+Voyons maintenant si les joueurs professsionnels ont des résultats similaires, ou s'ils ont peut-être plus d'écarts.
+
+Ici on utilise un tableau relatif aux stats des maps de l'année 2025 des compétitions ESports.
+
+```{r data, echo=FALSE, include=FALSE}
+data = read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2025/agents/maps_stats.csv")
+
+data <- data %>%
+  select("Map","Attacker Side Win Percentage","Defender Side Win Percentage") %>%
+  filter(Map != "All Maps")
+
+data <- data %>%
+  mutate(`Attacker Side Win Percentage` =
+           as.numeric(gsub("%", "", `Attacker Side Win Percentage`)),
+         `Defender Side Win Percentage` =
+           as.numeric(gsub("%", "", `Defender Side Win Percentage`))) %>%
+  group_by(Map) %>%
+  summarise(
+    Attacker = mean(`Attacker Side Win Percentage`, na.rm = TRUE),
+    Defender = mean(`Defender Side Win Percentage`, na.rm = TRUE),
+  )
+
+data <- data %>%
+  pivot_longer(
+    cols = c(Attacker, Defender),
+    names_to = "Side",
+    values_to = "WinRate"
+  )
+```
+
+Faisons une visualisation similaire à la première:
+
+```{r}
+ggplot(data, aes(x = Map, y = WinRate, fill = Side)) +
+  geom_col(width = 0.75, position = "dodge") +
+  scale_y_continuous(breaks = seq(0, 100, by = 5)) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1, vjust = .5, face = "bold"))
+```
+
+On remarque qu'il y a plus de maps chez les pros que pour les joueurs publics. C'est sans doute car les maps tournent régulièrement en public comme en tournoi, donc on ne peut pas faire une comparaison pour chaque map ici. Mais c'est tout de même intéressant de toutes les garder pour constater si les écarts persistent ou sont plus impportants en règle générale.
+
+Etonnamment, la map Abyss qui semblait être la plus équilibrée pour les joueurs lambda, s'avère être bien plus largement déséquilibrée chez les pros, avec des winrates au dehors de la fourchette 45-55%.
+Globalement, il semble y avoir beaucoup plus de déséquilibres sur la scène sportive que dans le jeu en général.
+C'est un résultat surprenant, mais on peut imaginer que c'est parce que les joueurs professionnels ont des connaissances bien plus avancées et des tactiques très précises selon la map sur laquelle ils jouent qui leur permettent de tirer profit d'une position ou d'une autre au maximum.
+Par ailleurs, les stats concernant toutes les parties comprennent plusieurs millions de parties de joueurs de niveaux très différents, tandis que les données sur les joueurs pro concernent infiniment moins de parties jouées et de participants.
+Les résultats sont donc peut-être biaisés.
+
+
+
+
+
+# 8. Quelles sont les meilleures équipes par année ?
+
+Complémentaire à la question précédente, on pourra ainsi voir l'évolution des équipes, et la corréler aux changements de joueurs ou de coachs, ou bien d'ajouts de cartes ou d'agents, pour voir les causes de ces évolutions.
+
+## Import des données
+
+On importe les données des Valorant Champion 2021-2025 en récupérant:
+
+-   Le winrate par équipe
+
+-   Le nombre de changements au roster entre 2022 et 2025
+
+```{r}
+resultat_final <- map_df(2021:2025, \(an) {
+  read.csv(sprintf("data/3. Valorant Champion Tour 2021-2026 Data/vct_%d/matches/overview.csv", an)) %>%
+    filter(Tournament == paste("Valorant Champions", an)) %>%
+    distinct(Annee = an, Equipe = Team, Player)
+})
+
+roster_data <- resultat_final
+
+resultat_final <- roster_data %>%
+  group_by(Equipe) %>%
+  arrange(Annee) %>%
+  mutate(Changements = map_int(Annee, \(a) {
+    if (a == 2021) return(0)
+    curr <- roster_data$Player[roster_data$Annee == a & roster_data$Equipe == first(Equipe)]
+    prev <- roster_data$Player[roster_data$Annee == a - 1 & roster_data$Equipe == first(Equipe)]
+    if (length(prev) == 0) return(0)
+    length(setdiff(prev, curr))
+  })) %>%
+  distinct(Annee, Equipe, Changements) %>%
+  ungroup()
+
+tableau_final <- map_df(2021:2025, \(an) {
+  path <- sprintf("data/3. Valorant Champion Tour 2021-2026 Data/vct_%d/matches/scores.csv", an)
+  read.csv(path) %>%
+    filter(Tournament == paste("Valorant Champions", an)) %>%
+    reframe(Team = c(Team.A, Team.B), S_Self = c(Team.A.Score, Team.B.Score), S_Opp = c(Team.B.Score, Team.A.Score)) %>%
+    group_by(Team) %>%
+    summarise(WinRate = mean(S_Self > S_Opp), Année = an, .groups = "drop")
+})
+
+data_combinee <- tableau_final %>%
+  rename(Equipe = Team) %>%
+  left_join(resultat_final, by = c("Année" = "Annee", "Equipe")) %>%
+  mutate(Changements = replace_na(Changements, 0)) %>%
+  filter(Equipe %in% names(which(table(Equipe) >= 3)))
+
+```
+
+Affichage des données
+
+```{r}
+ggplot(data_combinee, aes(x = Année, group = Equipe)) +
+  geom_area(aes(y = Changements / 11), fill = "orchid4", alpha = 0.2) + 
+  geom_line(aes(y = Changements / 11), color = "orchid3", alpha = 0.8) +
+  geom_line(aes(y = WinRate, color = Equipe), linewidth = 1) +
+  geom_point(aes(y = WinRate, color = Equipe), size = 2.5) +
+  facet_wrap(~ Equipe) +
+  scale_y_continuous(
+    name = "Win Rate (%)",
+    limits = 0:1, labels = scales::percent,
+    sec.axis = sec_axis(~ . * 11, name = "Nombre de changements de joueurs")
+  ) +
+  scale_x_continuous(breaks = 2021:2025) +
+  theme_minimal() +
+  theme(legend.position = "none", 
+        axis.title.y.right = element_text(color = "orchid4", size = 9),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Évolution du winrate aux Valorant Champion (2021-2025, 3 participation min.)")
+```
+
+## Interprétation
+
+On a filtré les équipes pour n’afficher que les équipes avec le plus de longévité aux Valorant Champions (plus de 3 participations sur 2021-2025). On a choisi de représenter le Winrate (Matchs gagnés/Matchs joués) pour afficher directement la performance.
+
+Ce que l’on remarque, c’est que certaines équipes arrivent à se qualifier fréquemment, alors que la majorité des équipes qualifiées a 1-2 occurrences mais cela ne les empêche pas de remporter les Valorant Champion tout de même. Concernant les équipes qui se qualifient régulièrement, DRX, FNATIC et Paper Rex semblent se distinguer par des performances qualitatives assez stables à travers les années
+
+Le nombre de changement de joueurs semble indiquer que les changements de joueurs ont pour conséquence de faire baisser les performances de l'équipe, tandis qu'un taux de changement bas est souvent corrélé avec des performances stables sur le long terme.
+
