@@ -35,13 +35,79 @@ library(stringr)
 
 En prenant en compte seulement les joueurs non pros pour plus de "réalisme", on veut voir si des agents vont avoir une quantité d'éliminations / de dégâts largement supérieure, et voir à l'inverse quels agents mettent le moins de dégâts et font le moins de kills. On pourra éventuellement faire le lien ensuite avec les compétences de ces agents, pour voir si le résultat s'explique ou non.
 
-Pour éviter les données de joueurs pros, nous allons commencer par utiliser le dataset ["My First 1000 Valorant Games"](https://www.kaggle.com/datasets/mitchellharrison/my-first-1000-valorant-games) dans lequel on a des stats de kills, morts, assists par match avec l'agent qui a été joué, ce qui peut nous permettre d'étudier des stats variées et précises pour plusieurs agents.
+Pour éviter les données de joueurs pros, nous allons utiliser le dataset ["Agents Stats" de blitz.gg](https://blitz.gg/valorant/stats/agents). Pour exploiter les données du site, nous avons réussi à trouver [l'API interne](https://data.v2.iesdev.com/api/v1/query_objects/prod/val/agent_stats?tier=18%2B&queue=competitive&map=ALL&ep_act=ev26actiii) qui renvoie tout un tas de statistiques intéressantes qui ne sont d'ailleurs pas visibles sur la page. Ces statistiques concernent tous les agents sur toutes les maps, pour les matchs en mode compétitif pour les rangs Diamant et +, lors de la dernière saison.
 
 ```{r}
-dataset5 <- read_csv("data/2. My First 1000 Valorant Games.csv")
-dataset5
+blitzagents <- read_csv("data/blitz_agents_stats.csv")
+head(blitzagents)
 ```
 
+Commençons par comparer simplement le nombre de kills pour chaque agent.
+
+```{r}
+ggplot(blitzagents, aes(x = agent, y = kills)) +
+  geom_col() +
+  labs(
+    x = "Agent",
+    y = "Nombre de kills",
+    title = "Nombre de kills par agent"
+  ) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1, vjust = .5, face = "bold"))
+```
+
+On remarque que les écarts semblent énormes: plusieurs dizaines de millions de différence entre Jett qui en a le plus, et Cypher qui en a le moins.
+Cependant, il est très probable que certains agents soient beaucoup plus joués que d'autres (il y a une trentaine d'agents disponibles pour 5 joueurs par équipe). Cela serait à prendre en compte, car dans ce cas tout le reste des données serait biaisé. Faisons le même graphique mais en comptant cette fois le nombre de matchs joués pour chaque agent.
+
+```{r}
+ggplot(blitzagents, aes(x = agent, y = matchesPlayed)) +
+  geom_col() +
+  labs(
+    x = "Agent",
+    y = "Nombre de matchs",
+    title = "Nombre de matchs par agent"
+  ) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1, vjust = .5, face = "bold"))
+```
+
+Les deux graphiques semblent pratiquement identiques! Cela montre bien que les agents sont choisis de manière très inégale, et que l'on ne pourra pas tirer de conclusions intéressantes si on ne prend pas en compte le nombre de matchs pour chaque agent. Il faut se débrouiller pour observer des moyennes ou des ratios de plusieurs façons. Commençons par une statistique importante et connue: le Kills/Deaths ratio, qui nous permettra de voir quels agents meurent plus qu'ils ne tuent en moyenne.
+
+```{r}
+kdstat <- blitzagents %>%
+  mutate(kd = kills / deaths)
+
+ggplot(kdstat, aes(x = reorder(agent, -kd), y = kd)) +
+  geom_col() +
+  coord_cartesian(ylim = c(0.85, 1.15)) +
+  labs(
+    x = "Agent",
+    y = "K/D",
+    title = "Kills/Deaths Ratio pour chaque agent"
+  ) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1, vjust = .5, face = "bold"))
+```
+
+On remarque que le personnage de Jett a un bon KD, mais ce n'est pas le plus haut non plus. On remarque bien sûr le KD de Chamber, le plus haut et le seul supérieur à 1.1.
+
+Avec la stat matchesPlayed, on peut essayer de s'intéresser au nombre de kills par match en moyenne pour chaque agent. Cela peut nous permettre de mieux comprendre quels agents ont des styles de jeu plus agressifs. Nous verrons par la même occasion si les tendances précédentes se confirment.
+
+```{r}
+statrounds <- blitzagents %>%
+  mutate(killsPerRound = kills / matchesPlayed, deathsPerRound = deaths / matchesPlayed)
+
+ggplot(statrounds, aes(x = reorder(agent, -killsPerRound), y = killsPerRound)) +
+  geom_col() +
+  coord_cartesian(ylim = c(13, 18)) +
+  labs(
+    x = "Agent",
+    y = "Kills/match",
+    title = "Kills par match en moyenne de chaque agent"
+  ) +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1, vjust = .5, face = "bold"))
+```
+
+On retrouve encore une fois Jett dans le haut du classement. On a aussi Phoenix, Reyna et Chamber qui avaient tous de bons KD, tandis que Clove est plutôt une surprise puisqu'iel avait un KD dans la moitié la plus basse. Pourtant, Chamber ne se trouve même pas dans le top 5 alors qu'il avait le meilleur KD assez loin devant les autres. Il est probable que ce personnage meure beaucoup moins souvent que les autres, ou alors qu'il fasse assez souvent beaucoup de kills par round.
+
+En somme, Jett a des très bonnes stats dans toutes les données que nous avons explorées. On a remarqué aussi que c'est le personnage le plus populaire, et c'est probablement dû justement à son style de jeu agressif et qui génère des kills que nous avons pu le constater. Les autres personnages avec de bons KD et kills comme Chamber, Phoenix et Reyna font aussi partie des personnages les plus choisis. On peut donc se douter que ce qui fait leur popularité est précisément leur set de compétences qui leur permet d'être des personnages au coeur de l'action régulièrement.
 
 # 3. Quels joueurs pros ont la carrière la plus prolifique ?
 
