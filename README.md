@@ -435,9 +435,9 @@ Quelles sont les équipes professionnelles ayant résisté au temps ? Celles qui
 
 Complémentaire à la question précédente, on pourra ainsi voir l'évolution des équipes, et la corréler aux changements de joueurs ou de coachs, ou bien d'ajouts de cartes ou d'agents, pour voir les causes de ces évolutions.
 
-### 9. Quel est le lien entre first blood et victoire ?
+### 9. Quel est le lien entre nombre de kills et victoire ?
 
-Le first blood est le joueur ayant tué en premier dans une manche. On veut voir si il y a un lien entre le first blood et gagner la manche, ou si il est pluôt lié à un agent, un joueur ou une carte précis.
+On veut voir si il y a un lien entre le nombre de kills et gagner la manche, ou si la victoire est plutôt liée à la coordination autour de l'objectif.
 On peut étudier la différence entre des joueurs normaux et pros.
 
 ### 10. Comment la visée ou le KDA influe sur le rang ?
