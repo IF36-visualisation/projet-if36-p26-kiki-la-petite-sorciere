@@ -31,6 +31,9 @@ library(stringr)
 ...
 
 
+
+
+
 # 2. Quels personnages sont les plus meurtriers ?
 
 En prenant en compte seulement les joueurs non pros pour plus de "réalisme", on veut voir si des agents vont avoir une quantité d'éliminations / de dégâts largement supérieure, et voir à l'inverse quels agents mettent le moins de dégâts et font le moins de kills. On pourra éventuellement faire le lien ensuite avec les compétences de ces agents, pour voir si le résultat s'explique ou non.
@@ -108,6 +111,10 @@ ggplot(statrounds, aes(x = reorder(agent, -killsPerRound), y = killsPerRound)) +
 On retrouve encore une fois Jett dans le haut du classement. On a aussi Phoenix, Reyna et Chamber qui avaient tous de bons KD, tandis que Clove est plutôt une surprise puisqu'iel avait un KD dans la moitié la plus basse. Pourtant, Chamber ne se trouve même pas dans le top 5 alors qu'il avait le meilleur KD assez loin devant les autres. Il est probable que ce personnage meure beaucoup moins souvent que les autres, ou alors qu'il fasse assez souvent beaucoup de kills par round.
 
 En somme, Jett a des très bonnes stats dans toutes les données que nous avons explorées. On a remarqué aussi que c'est le personnage le plus populaire, et c'est probablement dû justement à son style de jeu agressif et qui génère des kills que nous avons pu le constater. Les autres personnages avec de bons KD et kills comme Chamber, Phoenix et Reyna font aussi partie des personnages les plus choisis. On peut donc se douter que ce qui fait leur popularité est précisément leur set de compétences qui leur permet d'être des personnages au coeur de l'action régulièrement.
+
+
+
+
 
 # 3. Quels joueurs pros ont la carrière la plus prolifique ?
 
@@ -198,6 +205,9 @@ Le dernier graphique montre d'ailleurs que chaque joueur n'apparait jamais plusi
 Il est donc impossible d'en percevoir l'évolution.
 
 
+
+
+
 # 4. Qui sont les joueurs les plus forts en clutch ? 
 
 Être capable de retourner une situation désespérée est un atout considérable pour un joueur professionnel de Valorant.
@@ -275,6 +285,9 @@ Ce n'est pas parce que ces situations sont plus ou moins rares, mais parce que d
 En 2021, car le jeu venait de sortir, et donc la scène compétitive comptait moins de joueurs, et en 2025 et 2026 car le dataset ne répertorie pas tous les matchs de ces années.
 On remarque cependant un point commun chez tous les joueurs présents dans ce tableau : ils jouent principalement des contrôleurs ou sentinelles, c'est à dire des agents servant de soutien aux duellistes.
 On peut expliquer cela car ces personnages sont souvent placés en retrait, et survivent généralement plus longtemps que ceux qui cherchent à se battre.
+
+
+
 
 
 # 5. Quelles cartes sont orientées attaque ou défense ?
@@ -453,3 +466,69 @@ Ce que l’on remarque, c’est que certaines équipes arrivent à se qualifier 
 
 Le nombre de changement de joueurs semble indiquer que les changements de joueurs ont pour conséquence de faire baisser les performances de l'équipe, tandis qu'un taux de changement bas est souvent corrélé avec des performances stables sur le long terme.
 
+
+
+
+
+# 12. Quelle est la meilleure composition d'équipe ?
+
+En tant que coach, il est très important d'être à jour sur la méta, c'est à dire savoir quels agents sont forts sur quelles cartes. Plus que cela, on peut observer quelles synergies d'agents sont forts, et à fortiori quelles compositions d'équipes sont à la fois populaires et puissants. Cela est notamment utile pour pouvoir analyser leur plan de jeu afin de le reproduire, ou de le contrer.
+
+## Import des données
+
+On importe les données des Valorant Champion 2021-2026 en récupérant:
+
+- Le score de chaque équipe sur chaque carte à chaque rencontre
+
+- Les statistiques de chaque joueur de chaque sur chaque carte et rencontre
+
+```{r}
+maps_scores <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2026/matches/maps_scores.csv")
+overview <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2026/matches/overview.csv")
+
+overview <- overview %>% 
+  filter(Side == "both") %>%
+  select(-"Rating", -"Average Combat Score", -"Kills", -"Deaths", -"Assists", -"Kills - Deaths (KD)", -"Kill, Assist, Trade, Survive %", -"Average Damage Per Round", -"Headshot %", -"First Kills", -"First Deaths", -"Kills - Deaths (FKD)", -"Side") %>% 
+  filter(Map != "All Maps")
+
+players_score <- full_join(maps_scores, overview)
+players_score <- players_score %>%
+  mutate(
+    Winner = if_else(
+      (Team == `Team A` & `Team A Score` == 13) |
+      (Team == `Team B` & `Team B Score` == 13),
+      "Yes",
+      "No"
+    )
+  ) %>% 
+  select(-`Team A Score`, -`Team B Score`) %>%
+  mutate(Match_ID = paste(Tournament, Stage, `Match Type`, `Match Name`, sep = " - ")) %>%
+  select(-Tournament, -Stage, -`Match Type`, -`Match Name`)
+
+comp_score <- players_score %>%
+  group_by(Match_ID, Team, Map) %>%
+  mutate(Agents = paste(Agents, collapse=", ")) %>%
+  ungroup() %>%
+  select(-Player) %>%
+  distinct(Match_ID, Team, Map, .keep_all = TRUE) %>% 
+  mutate(Agents = sapply(strsplit(Agents, ", "), function(x) {
+    paste(sort(x), collapse = ", ")
+  }))
+
+view(comp_score)
+```
+
+## Affichage des données
+
+```{r}
+comp_freq <- comp_score %>% select(Agents) %>% count(Agents, sort = TRUE) %>% group_by(Agents) %>% arrange(desc(n)) %>% head(15)
+ggplot(comp_freq, aes(x = reorder(Agents, n), y = n)) + 
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(
+    title = "Compositions d'équipes les plus récurrentes",
+    x = "Compositions",
+    y = "Nombre d'apparitions"
+  ) +
+  theme_minimal()
+```
