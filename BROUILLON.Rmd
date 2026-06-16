@@ -104,7 +104,7 @@ mock_matrix <- data.frame(
 ggplot(mock_matrix, aes(x = Next_Outcome, y = Outcome, fill = Prob)) +
   geom_tile(color = "white", size = 0.5) +
   geom_text(aes(label = sprintf("%.2f", Prob)), color = "black", size = 6, fontface = "bold") +
-  scale_fill_gradient2(low = "#FFB0C1", mid = "#FFFFFF", high = "#76ec2a", midpoint = 0.5) +
+  scale_fill_gradient2(low = "#FFFFFF", mid = "#BDF29B", high = "#76ec2a", midpoint = 0.45) +
   scale_y_discrete(limits = c("Loss", "Win"), labels = c("Loss" = "Depuis une défaite", "Win" = "Depuis une victoire")) +
   scale_x_discrete(limits = c("Win", "Loss"), labels = c("Win" = "Vers une victoire", "Loss" = "Vers une défaite")) +
   labs(
@@ -115,7 +115,7 @@ ggplot(mock_matrix, aes(x = Next_Outcome, y = Outcome, fill = Prob)) +
   ) +
   theme_minimal() +
   theme(
-    plot.title = element_text(face = "bold", size = 14, hjust = 0.5),
+    plot.title = element_text(face = "bold", size = 14, hjust = 0.35),
     axis.text = element_text(size = 12, face = "bold"),
     panel.grid = element_blank()
   )
@@ -141,7 +141,7 @@ true_matrix <- correct_sequence %>%
 ggplot(true_matrix, aes(x = Next_Outcome, y = Outcome, fill = Prob)) +
   geom_tile(color = "white", size = 0.5) +
   geom_text(aes(label = sprintf("%.2f", Prob)), color = "black", size = 6, fontface = "bold") +
-  scale_fill_gradient2(low = "#FFB0C1", mid = "#FFFFFF", high = "#76ec2a", midpoint = 0.5) +
+  scale_fill_gradient2(low = "#FFFFFF", mid = "#BDF29B", high = "#76ec2a", midpoint = 0.45) +
   scale_y_discrete(limits = c("Loss", "Win"), labels = c("Loss" = "Depuis une défaite", "Win" = "Depuis une victoire")) +
   scale_x_discrete(limits = c("Win", "Loss"), labels = c("Win" = "Vers une victoire", "Loss" = "Vers une défaite")) +
   labs(
