@@ -261,8 +261,8 @@ top5 <- df %>%
 plot_year <- function(y) {
   df <- top5 %>% filter(annee == y)
   ggplot(df, aes(x = reorder(Player, -`Clutches played`))) +
-    geom_col(aes(y = `Clutches played`, fill = "Clutches perdus"), fill = "steelblue") +
-    geom_col(aes(y = `Clutches won`, fill = "Clutches gagnés"), fill = "gold")+
+    geom_col(aes(y = `Clutches played`, fill = "Clutches perdus"), fill = rgb(0.17, 0.21, 0.35)) +
+    geom_col(aes(y = `Clutches won`, fill = "Clutches gagnés"), fill = "#ff4654")+
     labs(
       title = paste("Top 5 joueurs qui clutchent le plus en", y),
       x = "Joueur",
@@ -518,16 +518,17 @@ comp_score <- players_score %>%
   mutate(Agents = sapply(strsplit(Agents, ", "), function(x) {
     paste(sort(x), collapse = ", ")
   }))
-
-view(comp_score)
 ```
 
 ## Affichage des données
 
 ```{r}
-comp_freq <- comp_score %>% select(Agents) %>% count(Agents, sort = TRUE) %>% group_by(Agents) %>% arrange(desc(n)) %>% head(15)
+comp_freq <- comp_score %>% select(Agents, Map) %>% count(Agents, Map, sort = TRUE) %>% group_by(Agents) %>% arrange(desc(n)) %>% head(15)
+
+view(comp_freq)
+
 ggplot(comp_freq, aes(x = reorder(Agents, n), y = n)) + 
-  geom_col(fill = "steelblue") +
+  geom_col(fill = rgb(0.17, 0.21, 0.35)) +
   coord_flip() +
   labs(
     title = "Compositions d'équipes les plus récurrentes",
@@ -535,4 +536,9 @@ ggplot(comp_freq, aes(x = reorder(Agents, n), y = n)) +
     y = "Nombre d'apparitions"
   ) +
   theme_minimal()
+```
+
+
+```{r}
+rating <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2026/"
 ```
