@@ -23,7 +23,11 @@ library(stringr)
 ```
 # Introduction
 
-...
+Dans le cadre de l'UE d'IF36, nous souhaitons utiliser des données nombreuses et variées sur un thème précis afin d'étudier des corrélations, des tendances et autres liens. Pour ce faire, nous utiliserons différents outils pour créer des graphiques simples à comprendre et à lire.
+
+Valorant sera le support de nos données. Il s'agit d'un jeu de tir par équipe. Il existe de nombreux personnages uniques, ainsi que des cartes et des armes variées. On y trouve également également une scène compétitive très développée, avec des milliers de joueurs professionnels. Ces innombrables données permettront de répondre à toutes les questions que nous avons sur le jeu et ses joueurs.
+
+La description détaillée des datasets mobilisés est à retrouver dans le README.md de notre repo.
 
 
 # 1. Quelles sont les différences majeures entre les joueurs pros et non pros ?
@@ -536,9 +540,4 @@ ggplot(comp_freq, aes(x = reorder(Agents, n), y = n)) +
     y = "Nombre d'apparitions"
   ) +
   theme_minimal()
-```
-
-
-```{r}
-rating <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2026/"
 ```
