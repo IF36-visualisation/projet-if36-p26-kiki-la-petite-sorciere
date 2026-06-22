@@ -21,35 +21,45 @@ library(ggplot2)
 library(magrittr)
 library(stringr)
 ```
+
 # Introduction
 
-Dans le cadre de l'UE d'IF36, nous souhaitons utiliser des données nombreuses et variées sur un thème précis afin d'étudier des corrélations, des tendances et autres liens. Pour ce faire, nous utiliserons différents outils pour créer des graphiques simples à comprendre et à lire.
+Dans le cadre de l'UE d'IF36, nous souhaitons utiliser des données nombreuses et variées sur un thème précis afin d'étudier des corrélations, des tendances et autres liens.
+Pour ce faire, nous utiliserons différents outils pour créer des graphiques simples à comprendre et à lire.
 
-Valorant sera le support de nos données. Il s'agit d'un jeu de tir par équipe. Il existe de nombreux personnages uniques, ainsi que des cartes et des armes variées. On y trouve également également une scène compétitive très développée, avec des milliers de joueurs professionnels. Ces innombrables données permettront de répondre à toutes les questions que nous avons sur le jeu et ses joueurs.
+```{r, fig.align="center", out.width="100%"}
+knitr::include_graphics("valorant_img_readme.jpg")
+```
+
+Valorant sera le support de nos données.
+Il s'agit d'un jeu de tir par équipe.
+Il existe de nombreux personnages uniques, ainsi que des cartes et des armes variées.
+On y trouve également également une scène compétitive très développée, avec des milliers de joueurs professionnels.
+Ces innombrables données permettront de répondre à toutes les questions que nous avons sur le jeu et ses joueurs.
 
 La description détaillée des datasets mobilisés est à retrouver dans le README.md de notre repo.
-
 
 # 1. Quelles sont les différences majeures entre les joueurs pros et non pros ?
 
 ...
 
-
-
-
-
 # 2. Quels personnages sont les plus meurtriers ?
 
-En prenant en compte seulement les joueurs non pros pour plus de "réalisme", on veut voir si des agents vont avoir une quantité d'éliminations / de dégâts largement supérieure, et voir à l'inverse quels agents mettent le moins de dégâts et font le moins de kills. On pourra éventuellement faire le lien ensuite avec les compétences de ces agents, pour voir si le résultat s'explique ou non.
+En prenant en compte seulement les joueurs non pros pour plus de "réalisme", on veut voir si des agents vont avoir une quantité d'éliminations / de dégâts largement supérieure, et voir à l'inverse quels agents mettent le moins de dégâts et font le moins de kills.
+On pourra éventuellement faire le lien ensuite avec les compétences de ces agents, pour voir si le résultat s'explique ou non.
 
-Pour éviter les données de joueurs pros, nous allons utiliser le dataset ["Agents Stats" de blitz.gg](https://blitz.gg/valorant/stats/agents). Pour exploiter les données du site, nous avons réussi à trouver [l'API interne](https://data.v2.iesdev.com/api/v1/query_objects/prod/val/agent_stats?tier=18%2B&queue=competitive&map=ALL&ep_act=ev26actiii) qui renvoie tout un tas de statistiques intéressantes qui ne sont d'ailleurs pas visibles sur la page. Ces statistiques concernent tous les agents sur toutes les maps, pour les matchs en mode compétitif pour les rangs Diamant et +, lors de la dernière saison.
+Pour éviter les données de joueurs pros, nous allons utiliser le dataset ["Agents Stats" de blitz.gg](https://blitz.gg/valorant/stats/agents).
+Pour exploiter les données du site, nous avons réussi à trouver [l'API interne](https://data.v2.iesdev.com/api/v1/query_objects/prod/val/agent_stats?tier=18%2B&queue=competitive&map=ALL&ep_act=ev26actiii) qui renvoie tout un tas de statistiques intéressantes qui ne sont d'ailleurs pas visibles sur la page.
+Ces statistiques concernent tous les agents sur toutes les maps, pour les matchs en mode compétitif pour les rangs Diamant et +, lors de la dernière saison.
 
 ```{r}
 blitzagents <- read_csv("data/blitz_agents_stats.csv")
 head(blitzagents)
 ```
 
-On peut commencer par comparer simplement le nombre de kills pour chaque agent. Seulement, il est possible que tous les agents ne soient pas choisis par les joueurs dans des proportions égales. Si c'est le cas, alors c'est un paramètre qu'il faut prendre en compte.
+On peut commencer par comparer simplement le nombre de kills pour chaque agent.
+Seulement, il est possible que tous les agents ne soient pas choisis par les joueurs dans des proportions égales.
+Si c'est le cas, alors c'est un paramètre qu'il faut prendre en compte.
 Alors commençons par s'intéresser au nombre de kills en fonction du nombre de matchs joués.
 
 ```{r}
@@ -67,7 +77,7 @@ Comme il est difficile de voir réellement les agents sur le graphique, voici le
 
 ```{r}
 ggplot(blitzagents, aes(x = reorder(agent, matchesPlayed), y = matchesPlayed)) +
-  geom_col(fill = "steelblue") +
+  geom_col(fill = "#ff4654") +
   coord_flip() +
   labs(
     x = "Agent",
@@ -78,14 +88,17 @@ ggplot(blitzagents, aes(x = reorder(agent, matchesPlayed), y = matchesPlayed)) +
   theme(axis.text.y = element_text(face = "bold"))
 ```
 
-On remarque tout de suite une forte corrélation entre nombre de kills et nombre de matchs: c'est quasiment une fonction linéaire. Cela montre bien que les agents sont choisis de manière très inégale (et on retient que Jett est le personnage le plus joué de loin), et que l'on ne pourra pas tirer de conclusions intéressantes si on ne prend pas en compte le nombre de matchs pour chaque agent. Il faut se débrouiller pour observer des moyennes ou des ratios de plusieurs façons. Commençons par une statistique importante et connue: le Kills/Deaths ratio, qui nous permettra de voir quels agents meurent plus qu'ils ne tuent en moyenne.
+On remarque tout de suite une forte corrélation entre nombre de kills et nombre de matchs: c'est quasiment une fonction linéaire.
+Cela montre bien que les agents sont choisis de manière très inégale (et on retient que Jett est le personnage le plus joué de loin), et que l'on ne pourra pas tirer de conclusions intéressantes si on ne prend pas en compte le nombre de matchs pour chaque agent.
+Il faut se débrouiller pour observer des moyennes ou des ratios de plusieurs façons.
+Commençons par une statistique importante et connue: le Kills/Deaths ratio, qui nous permettra de voir quels agents meurent plus qu'ils ne tuent en moyenne.
 
 ```{r}
 kdstat <- blitzagents %>%
   mutate(kd = kills / deaths)
 
 ggplot(kdstat, aes(x = reorder(agent, kd), y = kd)) +
-  geom_col(fill = "steelblue") +
+  geom_col(fill = "#ff4654") +
   coord_flip(ylim = c(0.85, 1.15)) +
   labs(
     x = "Agent",
@@ -96,16 +109,19 @@ ggplot(kdstat, aes(x = reorder(agent, kd), y = kd)) +
   theme(axis.text.y = element_text(face = "bold"))
 ```
 
-On remarque que le personnage de Jett a un bon KD, mais ce n'est pas le plus haut non plus. On remarque bien sûr le KD de Chamber, le plus haut et le seul supérieur à 1.1.
+On remarque que le personnage de Jett a un bon KD, mais ce n'est pas le plus haut non plus.
+On remarque bien sûr le KD de Chamber, le plus haut et le seul supérieur à 1.1.
 
-Avec la stat matchesPlayed, on peut essayer de s'intéresser au nombre de kills par match en moyenne pour chaque agent. Cela peut nous permettre de mieux comprendre quels agents ont des styles de jeu plus agressifs. Nous verrons par la même occasion si les tendances précédentes se confirment.
+Avec la stat matchesPlayed, on peut essayer de s'intéresser au nombre de kills par match en moyenne pour chaque agent.
+Cela peut nous permettre de mieux comprendre quels agents ont des styles de jeu plus agressifs.
+Nous verrons par la même occasion si les tendances précédentes se confirment.
 
 ```{r}
 statrounds <- blitzagents %>%
   mutate(killsPerRound = kills / matchesPlayed, deathsPerRound = deaths / matchesPlayed)
 
 ggplot(statrounds, aes(x = reorder(agent, killsPerRound), y = killsPerRound)) +
-  geom_col(fill = "steelblue") +
+  geom_col(fill = "#ff4654") +
   coord_flip(ylim = c(13, 18)) +
   labs(
     x = "Agent",
@@ -116,13 +132,15 @@ ggplot(statrounds, aes(x = reorder(agent, killsPerRound), y = killsPerRound)) +
   theme(axis.text.y = element_text(face = "bold"))
 ```
 
-On retrouve Jett en tête du classement. On a aussi Phoenix, Reyna et Chamber qui avaient tous de bons KD, tandis que Clove est plutôt une surprise puisqu'iel avait un KD dans la moitié la plus basse. Pourtant, Chamber ne se trouve même pas dans le top 5 alors qu'il avait le meilleur KD assez loin devant les autres. Mais le haut KD de Chamber s'explique par son set de compétences, qui servent toutes à mettre des dégâts et teur des adversaires.
+On retrouve Jett en tête du classement.
+On a aussi Phoenix, Reyna et Chamber qui avaient tous de bons KD, tandis que Clove est plutôt une surprise puisqu'iel avait un KD dans la moitié la plus basse.
+Pourtant, Chamber ne se trouve même pas dans le top 5 alors qu'il avait le meilleur KD assez loin devant les autres.
+Mais le haut KD de Chamber s'explique par son set de compétences, qui servent toutes à mettre des dégâts et teur des adversaires.
 
-En somme, Jett a des très bonnes stats dans toutes les données que nous avons explorées. On a remarqué aussi que c'est le personnage le plus populaire, et c'est probablement dû justement à son style de jeu agressif et qui génère des kills que nous avons pu le constater. Les autres personnages avec de bons KD et kills comme Chamber, Phoenix et Reyna font aussi partie des personnages les plus choisis. On peut donc se douter que ce qui fait leur popularité est précisément leur set de compétences qui leur permet d'être des personnages au coeur de l'action régulièrement.
-
-
-
-
+En somme, Jett a des très bonnes stats dans toutes les données que nous avons explorées.
+On a remarqué aussi que c'est le personnage le plus populaire, et c'est probablement dû justement à son style de jeu agressif et qui génère des kills que nous avons pu le constater.
+Les autres personnages avec de bons KD et kills comme Chamber, Phoenix et Reyna font aussi partie des personnages les plus choisis.
+On peut donc se douter que ce qui fait leur popularité est précisément leur set de compétences qui leur permet d'être des personnages au coeur de l'action régulièrement.
 
 # 3. Quels joueurs pros ont la carrière la plus prolifique ?
 
@@ -212,11 +230,7 @@ Le choix de représentation nous amène à observer que les premiers joueurs cha
 Le dernier graphique montre d'ailleurs que chaque joueur n'apparait jamais plusieurs fois dans le top 10.
 Il est donc impossible d'en percevoir l'évolution.
 
-
-
-
-
-# 4. Qui sont les joueurs les plus forts en clutch ? 
+# 4. Qui sont les joueurs les plus forts en clutch ?
 
 Être capable de retourner une situation désespérée est un atout considérable pour un joueur professionnel de Valorant.
 Le clutch est le fait de remporter une manche en étant le dernier membre de son équipe, tout en devant se battre contre plusieurs adversaires.
@@ -294,16 +308,13 @@ En 2021, car le jeu venait de sortir, et donc la scène compétitive comptait mo
 On remarque cependant un point commun chez tous les joueurs présents dans ce tableau : ils jouent principalement des contrôleurs ou sentinelles, c'est à dire des agents servant de soutien aux duellistes.
 On peut expliquer cela car ces personnages sont souvent placés en retrait, et survivent généralement plus longtemps que ceux qui cherchent à se battre.
 
-
-
-
-
 # 5. Quelles cartes sont orientées attaque ou défense ?
 
 Les cartes ne sont pas toujours équilibrées pour les attaquants ou les défenseurs.
 Si l'une d'entre elles favorise les défenseurs, on pourra expliquer en partie leurs victoires répétées.
 
-On étudiera d'abord pour les joueurs normaux, puis on verra si les pros sont aussi sujets à ces déséquilibres. Pour cela, on va étudier les winrates propres à chaque map en fonction des deux camps possibles (Attacker ou Defender).
+On étudiera d'abord pour les joueurs normaux, puis on verra si les pros sont aussi sujets à ces déséquilibres.
+Pour cela, on va étudier les winrates propres à chaque map en fonction des deux camps possibles (Attacker ou Defender).
 
 ## Tous les joueurs
 
@@ -331,6 +342,7 @@ Faisons une visualisation:
 ```{r}
 ggplot(donnees, aes(x = Map, y = WinRate, fill = Side)) +
   geom_col(width = 0.75, position = "dodge") +
+  scale_fill_manual(values = c("#ff4654", rgb(0.17, 0.21, 0.35))) +
   scale_y_continuous(breaks = seq(0, 100, by = 5)) +
   theme(axis.text.x = element_text(angle = 30, hjust = 1, vjust = .5, face = "bold"))
 ```
@@ -377,11 +389,14 @@ Faisons une visualisation similaire à la première:
 ```{r}
 ggplot(data, aes(x = Map, y = WinRate, fill = Side)) +
   geom_col(width = 0.75, position = "dodge") +
+  scale_fill_manual(values = c("#ff4654", rgb(0.17, 0.21, 0.35))) +
   scale_y_continuous(breaks = seq(0, 100, by = 5)) +
   theme(axis.text.x = element_text(angle = 30, hjust = 1, vjust = .5, face = "bold"))
 ```
 
-On remarque qu'il y a plus de maps chez les pros que pour les joueurs publics. C'est sans doute car les maps tournent régulièrement en public comme en tournoi, donc on ne peut pas faire une comparaison pour chaque map ici. Mais c'est tout de même intéressant de toutes les garder pour constater si les écarts persistent ou sont plus impportants en règle générale.
+On remarque qu'il y a plus de maps chez les pros que pour les joueurs publics.
+C'est sans doute car les maps tournent régulièrement en public comme en tournoi, donc on ne peut pas faire une comparaison pour chaque map ici.
+Mais c'est tout de même intéressant de toutes les garder pour constater si les écarts persistent ou sont plus impportants en règle générale.
 
 Etonnamment, la map Abyss qui semblait être la plus équilibrée pour les joueurs lambda, s'avère être bien plus largement déséquilibrée chez les pros, avec des winrates au dehors de la fourchette 45-55%.
 Globalement, il semble y avoir beaucoup plus de déséquilibres sur la scène sportive que dans le jeu en général.
@@ -389,9 +404,19 @@ C'est un résultat surprenant, mais on peut imaginer que c'est parce que les jou
 Par ailleurs, les stats concernant toutes les parties comprennent plusieurs millions de parties de joueurs de niveaux très différents, tandis que les données sur les joueurs pro concernent infiniment moins de parties jouées et de participants.
 Les résultats sont donc peut-être biaisés.
 
+# 6. Qu'est-ce qui compte le plus pour gagner une partie ?
 
+On sait déjà que tuer tous les adversaires permet de gagner une manche, mais on veut étudier si les autres facteurs comme un choix d'agents optimal, ue stratégie précise, ou une bonne gestion de l'économie permet de faire pencher la balance.
+Il faut faire attention avec ces données car certaines peuvent découler directement des autres.
+Par exemple, gagner une manche permet d'avoir plus de crédits à dépenser pour gagner le suivant.
+On pourra voir si ces critères changent entre les joueurs normaux et les pros.
 
+# 7. Quelles sont les meilleures équipes ?
 
+Quelles sont les équipes professionnelles ayant résisté au temps ?
+Celles qui émergent ?
+Celles qui forment les meilleurs talents ?
+Notre réponse sera évidemment subjective, mais on pourra l'argumenter de nombreuses façons.
 
 # 8. Quelles sont les meilleures équipes par année ?
 
@@ -401,9 +426,9 @@ Complémentaire à la question précédente, on pourra ainsi voir l'évolution d
 
 On importe les données des Valorant Champion 2021-2025 en récupérant:
 
--   Le winrate par équipe
+- Le winrate par équipe
 
--   Le nombre de changements au roster entre 2022 et 2025
+- Le nombre de changements au roster entre 2022 et 2025
 
 ```{r}
 resultat_final <- map_df(2021:2025, \(an) {
@@ -468,19 +493,33 @@ ggplot(data_combinee, aes(x = Année, group = Equipe)) +
 
 ## Interprétation
 
-On a filtré les équipes pour n’afficher que les équipes avec le plus de longévité aux Valorant Champions (plus de 3 participations sur 2021-2025). On a choisi de représenter le Winrate (Matchs gagnés/Matchs joués) pour afficher directement la performance.
+On a filtré les équipes pour n’afficher que les équipes avec le plus de longévité aux Valorant Champions (plus de 3 participations sur 2021-2025).
+On a choisi de représenter le Winrate (Matchs gagnés/Matchs joués) pour afficher directement la performance.
 
-Ce que l’on remarque, c’est que certaines équipes arrivent à se qualifier fréquemment, alors que la majorité des équipes qualifiées a 1-2 occurrences mais cela ne les empêche pas de remporter les Valorant Champion tout de même. Concernant les équipes qui se qualifient régulièrement, DRX, FNATIC et Paper Rex semblent se distinguer par des performances qualitatives assez stables à travers les années
+Ce que l’on remarque, c’est que certaines équipes arrivent à se qualifier fréquemment, alors que la majorité des équipes qualifiées a 1-2 occurrences mais cela ne les empêche pas de remporter les Valorant Champion tout de même.
+Concernant les équipes qui se qualifient régulièrement, DRX, FNATIC et Paper Rex semblent se distinguer par des performances qualitatives assez stables à travers les années
 
 Le nombre de changement de joueurs semble indiquer que les changements de joueurs ont pour conséquence de faire baisser les performances de l'équipe, tandis qu'un taux de changement bas est souvent corrélé avec des performances stables sur le long terme.
 
+# 9. Quel est le lien entre nombre de kills et victoire ?
 
+On veut voir si il y a un lien entre le nombre de kills et gagner la manche, ou si la victoire est plutôt liée à la coordination autour de l'objectif.
+On peut étudier la différence entre des joueurs normaux et pros.
 
+# 10. Comment la visée ou le KDA influe sur le rang ?
 
+Sans compter les joueurs pros, qui ont une visée nettement supérieure à celle des joueurs normaux, on verra si augmenter son KDA (ratio d'éliminations sur morts) et sa visée influe sur le rang.
+
+# 11. Impact des parties précédentes sur l'actuelle
+
+Pouvoir étudier l'influence du résultat des parties précédentes sur le winrate de la partie n.
+L'intérêt serait pouvoir de créer un tableau 2x4 surles parties n-1 et n-2 (Depuis Victoire, Victoire / Victoire, Défaite, etc.. vers Victoire/Défaite)
 
 # 12. Quelle est la meilleure composition d'équipe ?
 
-En tant que coach, il est très important d'être à jour sur la méta, c'est à dire savoir quels agents sont forts sur quelles cartes. Plus que cela, on peut observer quelles synergies d'agents sont forts, et à fortiori quelles compositions d'équipes sont à la fois populaires et puissants. Cela est notamment utile pour pouvoir analyser leur plan de jeu afin de le reproduire, ou de le contrer.
+En tant que coach, il est très important d'être à jour sur la méta, c'est à dire savoir quels agents sont forts sur quelles cartes.
+Plus que cela, on peut observer quelles synergies d'agents sont forts, et à fortiori quelles compositions d'équipes sont à la fois populaires et puissants.
+Cela est notamment utile pour pouvoir analyser leur plan de jeu afin de le reproduire, ou de le contrer.
 
 ## Import des données
 
@@ -541,3 +580,35 @@ ggplot(comp_freq, aes(x = reorder(Agents, n), y = n)) +
   ) +
   theme_minimal()
 ```
+
+# 13. Identifier les stratégies
+
+Réussir à comprendre les stratégies par joueur et / ou par équipe.
+C'est à dire comment se comporte(nt) le(s) joueur(s), de façon aggressive ?
+passive ?
+et comment cela impacte leurs performances.
+
+# 15. Travail d'équipe (assists/kill)
+
+Nous aimerions étudier si la performance d'une équipe est liée à la quantité de travail en équipe, ou si des joueurs indépendants permettent d'accomplir des victoires.
+
+# 16. Quels joueurs performent le mieux malgré une défaite ?
+
+Nous souhaiterions étudier si les séries de défaites impactent négativement les performances individuelles, et identifier les exceptions (joueurs qui performent de façon constante malgré les défaites)
+
+# 17. Nemesis (pire ennemi des joueurs)
+
+Identifier les joueurs qui sont le plus tués par d'autres joueurs, et identifier des counters potentiels (couple agent/map)
+
+# 18. Changement de joueurs -\> gagner ?
+
+L'intérêt est de savoir si une équipe qui change souvent de joueurs (roster) subit des modifications importantes sur sa performance, donc identifier l'impact des équipes autour des joueurs(coachs, spécialistes, etc.)
+
+# 19. Synergies entre joueurs
+
+Nous souhaiterions savoir si certains types de joueurs ont tendance à mieux gagner accompagnés de quel type de joueur.
+Exemple : Un joueur agressif est il plus à même de gagner avec d'autres joueurs agressifs ou avec des joueurs plus tempérés ?
+
+# 20. Joueurs les plus adaptables
+
+Nous souhaiterions identifier s'il y a des joueurs qui ont une très bonne adaptabilité en jeu, c'est à dire qui s'intègrent bien dans n'importe quelle configuration d'équipe sans que les performances en soient impactées
