@@ -7,6 +7,12 @@ Pour ce faire, nous utiliserons différents outils pour créer des graphiques si
 
 > Tous les datasets que nous utiliserons se trouvent dans le dossier `/data/`
 
+## ⚠️ IMPORTANT: Comment lire les données
+
+La plupart des données sont accessibles après un simple git clone ou git pull au format csv. Seule l'archive .zip du dataset 3 nécessite d'être extraite, et renommer le dossier résultant avec exactement le même nom que l'archive (sans le .zip): "3. Valorant Champion Tour 2021-2026 Data".
+
+Ainsi, le code devrait compiler et le knit devrait normalement marcher.
+
 
 ## Valorant
 

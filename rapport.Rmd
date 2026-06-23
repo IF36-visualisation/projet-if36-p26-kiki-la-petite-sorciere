@@ -44,7 +44,9 @@ La description détaillée des datasets mobilisés est à retrouver dans le READ
 
 ## ⚠️ IMPORTANT: Comment lire les données
 
-La plupart des données sont accessibles après un simple git clone ou git pull au format csv. Seule'archive .zip du dataset 3 nécessite d'être extraite, et renommer le dossier résultant avec exactement le même nom que l'archive (sans le .zip): "3. Valorant Champion Tour 2021-2026 Data" . Ainsi, le code devrait compiler knit devrait normalement marcher.
+La plupart des données sont accessibles après un simple git clone ou git pull au format csv. Seule l'archive .zip du dataset 3 nécessite d'être extraite, et renommer le dossier résultant avec exactement le même nom que l'archive (sans le .zip): "3. Valorant Champion Tour 2021-2026 Data".
+
+Ainsi, le code devrait compiler et le knit devrait normalement marcher.
 
 # 1. Quelles sont les différences majeures entre les joueurs pros et non pros ?
 
@@ -1023,7 +1025,7 @@ Ilias : J'ai trouvé l'utilisation de R très pertinente pour analyser et travai
 
 # Annexe: répartition des tâches
 
-Elio : Questions 2, 5, 10, 17 et introduction + une partie de la structuration du présent rapport. Description des datasets 5 et 6.
+Elio : Questions 2, 5, 10, 17 et introduction + une partie de la structuration du présent rapport. Description d'une partie des datasets.
 
 Morgane : Soutenance + Questions 1 et 3 + PowerBI + Description des datasets 6 et 7
 
