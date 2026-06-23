@@ -853,14 +853,15 @@ df_duels_global <- map_dfr(annees, ~ {
 top_25_duels <- df_duels_global %>% drop_na(Player, Enemy) %>% arrange(desc(`Player Kills`)) %>% head(25)
 
 
-ggplot(top_25_duels, aes(x = Player, y = Enemy, size = `Player Kills`)) +
-  geom_point(color = "#ff4654", alpha = 0.75) + 
-  geom_text(aes(label = Year), vjust = 0.5, hjust = -0.5, size = 3, color = "gray20") +
+ggplot(top_25_duels, aes(x = Player, y = Enemy, size = `Player Kills`, color = factor(Year))) +
+  geom_point() + 
   scale_size(range = c(2, 12)) +
+  scale_color_brewer(palette = "Set1") +
   labs(
-    title = "Matrice Nemesis (VCT 2021-2026) : Qui martyrise qui ?",
+    title = "Matrice des 25 pires Némésis (VCT 2021-2026)",
     x = "Tueur (Player)",
-    y = "Victime (Enemy)"
+    y = "Victime (Enemy)",
+    color = "Année"
   ) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
@@ -922,7 +923,7 @@ Valorant est un jeu qui change très rapidement, et sur ce projet, nous avons so
 
 ### Mots de la fin : 
 
-Elio : 
+Elio : J'ai beaucoup aimé découvrir la visualisation et la manipulation de données avec R et Tidyverse, qui ont été des outils très efficaces et largement satisfaisants pour mettre en pratique les parties théoriques du cours. L'analyse exploratoire s'est avérée être une démarche très intéressante et engageante. J'aurais aimé pouvoir davantage faire le lien en détail avec les compétences des agents et leur style de jeu, afin de  mieux comprendre certaines dynamiques.
 
 Morgane :
 
