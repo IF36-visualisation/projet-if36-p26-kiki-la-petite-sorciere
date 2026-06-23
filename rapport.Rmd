@@ -42,23 +42,25 @@ Ces innombrables données permettront de répondre à toutes les questions que n
 
 La description détaillée des datasets mobilisés est à retrouver dans le README.md de notre repo.
 
-## ⚠️IMPORTANT: Comment lire les données
+## ⚠️ IMPORTANT: Comment lire les données
 
 La plupart des données sont accessibles après un simple git clone ou git pull au format csv. Seule'archive .zip du dataset 3 nécessite d'être extraite, et renommer le dossier résultant avec exactement le même nom que l'archive (sans le .zip): "3. Valorant Champion Tour 2021-2026 Data" . Ainsi, le code devrait compiler knit devrait normalement marcher.
 
 # 1. Quelles sont les différences majeures entre les joueurs pros et non pros ?
+
 Chaque joueur a ses forces et ses faiblesses, au fur et à mesure de son évolution. Nous nous demanderons donc ce qui démarque un joueur pro d'un joueur amateur, sur quels domaines un joueur professionnel est il plus performant ? Est ce que chaque joueur a sa spécialité poussée au maximum ? Est-ce que certains aspects changent peu entre un joueur professionnel et un joueur amateur ? Pour le savoir nous allons comparer les statistiques de jeu des deux catégories de joueurs.
-```{r}
+
+```{r include=FALSE}
 # Amateur
 amateurs <- read_csv("data/4-Stats and Ranks of 2600 Valorant Players.csv")
 head(amateurs)
 
 #Pro
-perfs_2021 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/archive/vct_2021/players_stats/players_stats.csv")
-perfs_2022 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/archive/vct_2022/players_stats/players_stats.csv")
-perfs_2023 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/archive/vct_2023/players_stats/players_stats.csv")
-perfs_2024 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/archive/vct_2024/players_stats/players_stats.csv")
-perfs_2025 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/archive/vct_2025/players_stats/players_stats.csv")
+perfs_2021 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2021/players_stats/players_stats.csv")
+perfs_2022 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2022/players_stats/players_stats.csv")
+perfs_2023 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2023/players_stats/players_stats.csv")
+perfs_2024 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2024/players_stats/players_stats.csv")
+perfs_2025 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2025/players_stats/players_stats.csv")
 pros <- bind_rows(
   perfs_2021 %>% mutate(annee = 2021),
   perfs_2022 %>% mutate(annee = 2022),
@@ -75,10 +77,12 @@ stats <- bind_rows(
 head(stats)
 
 ```
+
 Tout d'abord, regardons les kills par rapport aux morts des joueurs. Un joueur professionnel meurt il moins souvent qu'un joueur amateur ?
+
 ```{r}
 ggplot(data = pros, aes(x = Kills, y = Deaths)) +
-  geom_point() +
+  geom_point(color = rgb(0.17, 0.21, 0.35)) +
   labs(
     x = "Nombre de Kills",
     y = "Nombre de Morts",
@@ -86,7 +90,7 @@ ggplot(data = pros, aes(x = Kills, y = Deaths)) +
   )
 
 ggplot(data = amateurs, aes(x = kills, y=deaths)) +
-  geom_point() +
+  geom_point(color = rgb(0.17, 0.21, 0.35)) +
   labs(
     x = "Nombre de Kills",
     y = "Nombre de Morts",
@@ -94,12 +98,15 @@ ggplot(data = amateurs, aes(x = kills, y=deaths)) +
   )
 
 ```
+
 On peut observer que les joueurs amateurs ont un ratio Kills/Deaths beaucoup plus disparate que les joueurs professionnels, bien que les deux tendent à tourner autour d'un ratio de 1kills pour 1 mort. Nous allons donc observer la répartition du ratio Kills/Death.
+
 ```{r}
 ggplot(data = amateurs, aes(x = kills/deaths)) +
   geom_density(
     aes(y = after_stat(count)), # Affiche le nombre de personnes
-    fill = "#111c26", 
+    fill = rgb(0.17, 0.21, 0.35), 
+    color = rgb(0.17, 0.21, 0.35),
     linewidth = 1
   ) +
   labs(
@@ -110,7 +117,8 @@ ggplot(data = amateurs, aes(x = kills/deaths)) +
 ggplot(data = pros, aes(x = Kills/Deaths)) +
   geom_density(
     aes(y = after_stat(count)), # Affiche le nombre de personnes
-    fill = "#111c26", 
+    fill = rgb(0.17, 0.21, 0.35), 
+    color = rgb(0.17, 0.21, 0.35),
     linewidth = 1
   ) +
   labs(
@@ -127,11 +135,13 @@ ggplot(data = pros, aes(x = Kills/Deaths)) +
 On peut observer que la majorité des joueurs ont effectivement un ratio Kills/deaths qui tourne autour de 1.On peut également observer qu'il y a davantage de joueurs qui ont un ratio au dela de 1 chez les professionnels.
 
 Nous allons désormais nous concentrer sur une autre statistique importante du jeu : le pourcentage de tirs dans la tete. Cette statistique nous permettra d'observer la précision des joueurs professionnels et amateurs. Nous nous attendons à ce que les joueurs professionnels soient plus précis que les joueurs amateurs.
+
 ```{r}
 ggplot(data = amateurs, aes(x = headshots/100)) +
   geom_density(
     aes(y = after_stat(count)), # Affiche le nombre de personnes
-    fill = "#111c26", 
+    fill = rgb(0.17, 0.21, 0.35), 
+    color = rgb(0.17, 0.21, 0.35),
     linewidth = 1
   ) +
   labs(
@@ -139,11 +149,11 @@ ggplot(data = amateurs, aes(x = headshots/100)) +
     y = "Quantité de personnes",
     title = "Nombre de joueurs par pourcentage de headshots chez les amateurs"
   )
-head(pros)
 ggplot(data = pros %>% mutate(`Headshot %` = parse_number(`Headshot %`)), aes(x = `Headshot %`)) +
   geom_density(
     aes(y = after_stat(count)), # Affiche le nombre de personnes
-    fill = "#111c26", 
+    fill = rgb(0.17, 0.21, 0.35), 
+    color = rgb(0.17, 0.21, 0.35),
     linewidth = 1
   ) +
   labs(
@@ -153,7 +163,10 @@ ggplot(data = pros %>% mutate(`Headshot %` = parse_number(`Headshot %`)), aes(x 
   )
 
 ```
+
 On peut observer que le pourcentage de Headshot semble plus réparti au niveau de 50% pour les joueurs amateurs tandis que les joueurs professionnels tournent davantage autour de 25% de headshots. Cela s'explique notamment car les résultats des joueurs amateurs ont des résultats beaucoup plus disparates du à la différence de niveau et ils sont peu nombreux, avec un maximum d'un peu moins de 125 personnes au niveau du pic alors que les joueurs professionnels sont beaucoup plus nombreux, ils sont 20000 au niveau du pic et les résultats sont globalement plus lisses car les joueurs professionnels ont tous un niveau similaire. Le pourcentage de headshots est également plus bas pour les joueurs professionnels aussi potentiellement car les joueurs professionnels ont des réflexes et des capacités d'esquives plus développées ce qui diminue la probabilité de toucher la tête.
+
+## Interprétation
 
 Pour conclure, les joueurs professionnels ont des résultats plus lisses et un ratio Kills/Deaths légèrement plus important que les amateurs. Leur pourcentage de Headshots est plus faible mais cela peut s'expliquer par les réflexes accrus des joueurs professionnels, facilitant l'esquive et augmentant la difficulté du Headshot.
 
@@ -252,6 +265,8 @@ On a aussi Phoenix, Reyna et Chamber qui avaient tous de bons KD, tandis que Clo
 Pourtant, Chamber ne se trouve même pas dans le top 5 alors qu'il avait le meilleur KD assez loin devant les autres.
 Mais le haut KD de Chamber s'explique par son set de compétences, qui servent toutes à mettre des dégâts et teur des adversaires.
 
+## Interprétation
+
 En somme, Jett a des très bonnes stats dans toutes les données que nous avons explorées.
 On a remarqué aussi que c'est le personnage le plus populaire, et c'est probablement dû justement à son style de jeu agressif et qui génère des kills que nous avons pu le constater.
 Les autres personnages avec de bons KD et kills comme Chamber, Phoenix et Reyna font aussi partie des personnages les plus choisis.
@@ -263,7 +278,7 @@ Dans cette partie, nous allons tenter de répondre à la question suivante : **Q
 
 Dans l'idée, nous souhaitons réaliser un barchart permettant de voir les 10 meilleurs joueurs de chaque année, afin d'en observer l'évolution.
 
-### Graphiques des mailleurs joueurs de chaque année
+### Graphiques des meilleurs joueurs de chaque année
 
 ```{r, include=FALSE, echo=FALSE}
 perfs_2021 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2021/players_stats/players_stats.csv")
@@ -277,7 +292,7 @@ perfs_2025 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2025/p
 # Graphique 2021
 unique_players_2021 <- perfs_2021 %>% filter(!duplicated(Player)) #Suppression des doublons
 top_players_2021 <- head(unique_players_2021 %>% arrange(desc(Rating)), 10) # Récupération des meilleurs joueurs
-ggplot(top_players_2021, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity") + labs(title = "Bar chart des meilleurs joueurs de 2021", x = "Joueur", y = "Rating") #Graphique
+ggplot(top_players_2021, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity", fill = "#ff4654") + labs(title = "Bar chart des meilleurs joueurs de 2021", x = "Joueur", y = "Rating") #Graphique
 
 ```
 
@@ -285,7 +300,7 @@ ggplot(top_players_2021, aes(x = reorder(Player, -Rating), y = Rating)) + geom_b
 # Graphique 2022
 unique_players_2022 <- perfs_2022 %>% filter(!duplicated(Player)) #Suppression des doublons
 top_players_2022 <- head(unique_players_2022 %>% arrange(desc(Rating)), 10) # Récupération des meilleurs joueurs
-ggplot(top_players_2022, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity") + labs(title = "Bar chart des meilleurs joueurs de 2022", x = "Joueur", y = "Rating") #Graphique
+ggplot(top_players_2022, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity", fill = "#ff4654") + labs(title = "Bar chart des meilleurs joueurs de 2022", x = "Joueur", y = "Rating") #Graphique
 
 ```
 
@@ -293,14 +308,14 @@ ggplot(top_players_2022, aes(x = reorder(Player, -Rating), y = Rating)) + geom_b
 # Graphique 2023
 unique_players_2023 <- perfs_2023 %>% filter(!duplicated(Player)) #Suppression des doublons
 top_players_2023 <- head(unique_players_2023 %>% arrange(desc(Rating)), 10) # Récupération des meilleurs joueurs
-ggplot(top_players_2023, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity") + labs(title = "Bar chart des meilleurs joueurs de 2023", x = "Joueur", y = "Rating")#Graphique
+ggplot(top_players_2023, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity", fill = "#ff4654") + labs(title = "Bar chart des meilleurs joueurs de 2023", x = "Joueur", y = "Rating")#Graphique
 ```
 
 ```{r}
 # Graphique 2024
 unique_players_2024 <- perfs_2024 %>% filter(!duplicated(Player)) #Suppression des doublons
 top_players_2024 <- head(unique_players_2024 %>% arrange(desc(Rating)), 10) # Récupération des meilleurs joueurs
-ggplot(top_players_2024, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity") + labs(title = "Bar chart des meilleurs joueurs de 2024", x = "Joueur", y = "Rating") #Graphique
+ggplot(top_players_2024, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity", fill = "#ff4654") + labs(title = "Bar chart des meilleurs joueurs de 2024", x = "Joueur", y = "Rating") #Graphique
 
 ```
 
@@ -308,7 +323,7 @@ ggplot(top_players_2024, aes(x = reorder(Player, -Rating), y = Rating)) + geom_b
 # Graphique 2025
 unique_players_2025 <- perfs_2025 %>% filter(!duplicated(Player)) #Suppression des doublons
 top_players_2025 <- head(unique_players_2025 %>% arrange(desc(Rating)), 10) # Récupération des meilleurs joueurs
-ggplot(top_players_2025, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity") +
+ggplot(top_players_2025, aes(x = reorder(Player, -Rating), y = Rating)) + geom_bar(stat = "identity", fill = "#ff4654") +
 labs(title = "Bar chart des meilleurs joueurs de 2025", x = "Joueur", y = "Rating") #Graphique
 ```
 
@@ -513,25 +528,10 @@ C'est un résultat surprenant, mais on peut imaginer que c'est parce que les jou
 Par ailleurs, les stats concernant toutes les parties comprennent plusieurs millions de parties de joueurs de niveaux très différents, tandis que les données sur les joueurs pro concernent infiniment moins de parties jouées et de participants.
 Les résultats sont donc peut-être biaisés.
 
-# 6. Qu'est-ce qui compte le plus pour gagner une partie ?
 
-On sait déjà que tuer tous les adversaires permet de gagner une manche, mais on veut étudier si les autres facteurs comme un choix d'agents optimal, ue stratégie précise, ou une bonne gestion de l'économie permet de faire pencher la balance.
-Il faut faire attention avec ces données car certaines peuvent découler directement des autres.
-Par exemple, gagner une manche permet d'avoir plus de crédits à dépenser pour gagner le suivant.
-On pourra voir si ces critères changent entre les joueurs normaux et les pros.
+# 7 & 8. Quelles sont les meilleures équipes par année ?
 
-# 7. Quelles sont les meilleures équipes ?
-
-Quelles sont les équipes professionnelles ayant résisté au temps ?
-Celles qui émergent ?
-Celles qui forment les meilleurs talents ?
-Notre réponse sera évidemment subjective, mais on pourra l'argumenter de nombreuses façons.
-
-# 8. Quelles sont les meilleures équipes par année ?
-
-Complémentaire à la question précédente, on pourra ainsi voir l'évolution des équipes, et la corréler aux changements de joueurs ou de coachs, ou bien d'ajouts de cartes ou d'agents, pour voir les causes de ces évolutions.
-
-## Import des données
+Nous répondons aux questions 7 & 8 en simultané dans une question un peu plus grande car nous les considérons très complémentaires et plus faciels à étudier de cette manière.
 
 On importe les données des Valorant Champion 2021-2025 en récupérant:
 
@@ -663,7 +663,7 @@ ggplot(pct_data, aes(x = Total_Kills, y = Pct, color = Outcome, group = Outcome)
   geom_line(size = 1.2) +
   geom_point(size = 3) +
   
-  scale_color_manual(values = c("Win" = "#4D96FF", "Loss" = "#FF6B6B")) +
+  scale_color_manual(values = c("Win" = rgb(0.17, 0.21, 0.35), "Loss" = "#ff4654")) +
   
   scale_x_continuous(limits = c(0, 5), breaks = 0:5) +
   scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 20)) +
@@ -685,6 +685,8 @@ ggplot(pct_data, aes(x = Total_Kills, y = Pct, color = Outcome, group = Outcome)
   )
 
 ```
+
+## Interprétation
 
 Comme on peut le voir dans ce grpahique, le nombre d'éliminations et la victoire sont corrélés de façon particulière.
 Dans le cas d'un coach d'équipe E-Sport, il peut être capital de savoir comment ceux-ci sont liés.
@@ -765,6 +767,8 @@ ggplot(hsk_moyen, aes(x = tier, y = hsk_moyen)) +
 
 On remarque à nouveau une évolution frappante du ratio en fonction du rang.
 
+## Interprétation
+
 Nous pouvons conclure que nos intuitions premières étaient justes: en général, les profils de joueurs ayant des KD élevés et une bonne visée sont systématiquement des joueurs de haut rang; et à l'inverse, ceux avec les KD et les visées moins bonnes se trouvent dans les premiers rangs.
 
 # 11. Impact des parties précédentes sur l'actuelle
@@ -784,7 +788,7 @@ mock_matrix <- data.frame(
 ggplot(mock_matrix, aes(x = Next_Outcome, y = Outcome, fill = Prob)) +
   geom_tile(color = "white", size = 0.5) +
   geom_text(aes(label = sprintf("%.2f", Prob)), color = "black", size = 6, fontface = "bold") +
-  scale_fill_gradient2(low = "#FFFFFF", mid = "#BDF29B", high = "#76ec2a", midpoint = 0.45) +
+  scale_fill_gradient2(low = "#FFFFFF", mid = "#FF949D", high = "#ff4654", midpoint = 0.45) +
   scale_y_discrete(limits = c("Loss", "Win"), labels = c("Loss" = "Depuis une défaite", "Win" = "Depuis une victoire")) +
   scale_x_discrete(limits = c("Win", "Loss"), labels = c("Win" = "Vers une victoire", "Loss" = "Vers une défaite")) +
   labs(
@@ -821,7 +825,7 @@ true_matrix <- correct_sequence %>%
 ggplot(true_matrix, aes(x = Next_Outcome, y = Outcome, fill = Prob)) +
   geom_tile(color = "white", size = 0.5) +
   geom_text(aes(label = sprintf("%.2f", Prob)), color = "black", size = 6, fontface = "bold") +
-  scale_fill_gradient2(low = "#FFFFFF", mid = "#BDF29B", high = "#76ec2a", midpoint = 0.45) +
+  scale_fill_gradient2(low = "#FFFFFF", mid = "#FF949D", high = "#ff4654", midpoint = 0.45) +
   scale_y_discrete(limits = c("Loss", "Win"), labels = c("Loss" = "Depuis une défaite", "Win" = "Depuis une victoire")) +
   scale_x_discrete(limits = c("Win", "Loss"), labels = c("Win" = "Vers une victoire", "Loss" = "Vers une défaite")) +
   labs(
@@ -838,6 +842,8 @@ ggplot(true_matrix, aes(x = Next_Outcome, y = Outcome, fill = Prob)) +
   )
 
 ```
+
+## Interprétation
 
 Comme on peut le voir, contrairement à une matrice avec des évènements à 50% de chance et indépendants, la matrice réelle montre que dans Valorant les équipes qui gagnent ont tendanceà continuer à gagner, et les équipes qui perdent continuent à perdre aussi.
 Cela peut s'expliquer par l'économie, la supériorité technique et l'effet psychologique d'une victoire sur l'équipe.
@@ -895,7 +901,7 @@ comp_freq <- comp_score %>% select(Agents, Map) %>% count(Agents, Map, sort = TR
 view(comp_freq)
 
 ggplot(comp_freq, aes(x = reorder(Agents, n), y = n)) + 
-  geom_col(fill = rgb(0.17, 0.21, 0.35)) +
+  geom_col(fill = "#ff4654") +
   coord_flip() +
   labs(
     title = "Compositions d'équipes les plus récurrentes",
@@ -913,20 +919,6 @@ En observant le graphique sur shiny, on voit qu'en fonction des années et des c
 
 Cependant, on observe que sur toutes les compositions différentes, on a toujours la même répartition d'agents : 1 contrôleur, 1 sentinelle,  1-2 initiateurs, 1-2 duellistes. On comprend ainsi qu'à part de très rares exceptions, c'est la répartition optimale qu'il faut suivre pour avoir de meilleures chances de gagner.
 
-# 13. Identifier les stratégies
-
-Réussir à comprendre les stratégies par joueur et / ou par équipe.
-C'est à dire comment se comporte(nt) le(s) joueur(s), de façon aggressive ?
-passive ?
-et comment cela impacte leurs performances.
-
-# 15. Travail d'équipe (assists/kill)
-
-Nous aimerions étudier si la performance d'une équipe est liée à la quantité de travail en équipe, ou si des joueurs indépendants permettent d'accomplir des victoires.
-
-# 16. Quels joueurs performent le mieux malgré une défaite ?
-
-Nous souhaiterions étudier si les séries de défaites impactent négativement les performances individuelles, et identifier les exceptions (joueurs qui performent de façon constante malgré les défaites)
 
 # 17. Qui est le Némésis de qui ?
 
@@ -935,7 +927,6 @@ Le Némésis d'un joueur représente l'ennemi qui l'a tué le plus de fois en to
 Ici, on souhaite voir avec quels joueurs cette dynamique a été la plus puissante à travers les années. On utilisera le dataset VCT avec les joueurs pros, qui contient des couples joueur/ennemi et le nombre de fois que le joueur a tué l'ennemi, pour chaque année.
 
 Nous allons garder le top 25 des joueurs qui ont tué le plus de fois un ennemi spécifique, toutes années confondues de 2021 à 2026. Cela nous permettra de voir les némésis significatifs de l'histoire de la compétition.
-
 
 ```{r include=FALSE}
 annees <- c("2021", "2022", "2023", "2024", "2025", "2026")
@@ -1005,22 +996,11 @@ ggplot(duels_par_annee, aes(x = factor(Year), y = n)) +
   )
 ```
 
+## Interprétation
+
 L'année 2021 comporte en fait le plus de records de némésis de 2021 à 2026. Cela peut peut-être s'expliquer par le fait qu'avec le temps les joueurs ont progressé, à tel point que le niveau est assez équilibré pour que l'on évite de trop gros écarts de skill entre deux joueurs qui amènerait à de tels récords de kills par un même joueur sur un seul ennemi.
 
 Mais on retient que marteen est le seul responsable des deux records de 2026, qui incluent le plus gros nombre de kills. On peut donc se dire qu'il a totalement dominé la compétition cette année sur ce plan-là, et qu'il a été extrêmement bon pour contrer les joueurs Veqaj et Boaster.
-
-# 18. Changement de joueurs -\> gagner ?
-
-L'intérêt est de savoir si une équipe qui change souvent de joueurs (roster) subit des modifications importantes sur sa performance, donc identifier l'impact des équipes autour des joueurs(coachs, spécialistes, etc.)
-
-# 19. Synergies entre joueurs
-
-Nous souhaiterions savoir si certains types de joueurs ont tendance à mieux gagner accompagnés de quel type de joueur.
-Exemple : Un joueur agressif est il plus à même de gagner avec d'autres joueurs agressifs ou avec des joueurs plus tempérés ?
-
-# 20. Joueurs les plus adaptables
-
-Nous souhaiterions identifier s'il y a des joueurs qui ont une très bonne adaptabilité en jeu, c'est à dire qui s'intègrent bien dans n'importe quelle configuration d'équipe sans que les performances en soient impactées
 
 
 # Conclusion
@@ -1028,6 +1008,8 @@ Nous souhaiterions identifier s'il y a des joueurs qui ont une très bonne adapt
 Au cours de ce rapport, nous avons pu étudier les facettes les plus importantes de la scène compétitive de Valorant, et ainsi extraire les points qui permettent de faire pencher la balance en sa faveur. Nous avons vu que le choix de la carte, des agents et des joueurs était essentiels. Nous avons vu que les changements de joueurs étaient risqués, mais nécessaires pour trouver une équipe fonctionnelle. Malgré tout, même les meilleurs joueurs ne restent pas au sommet bien longtemps, notamment à cause des changements de méta qui favorisent certains styles de jeu.
 
 Valorant est un jeu qui change très rapidement, et sur ce projet, nous avons souvent utilisé les données des 5 dernières années pour être plus exhaustif, mais il aurait été pertinent selon nous de rajouter des graphes qui prennent en compte ces écarts de temps. De plus, Il s'agit d'un jeu très complexe à prendre en main, et les informations que nous avons récupéré ne permettent pas de présenter correctement cette complexité. Par exemple, nous avons beaucoup vu le nom des agents comme Chamber et Jett, mais nous n'avons pas pu expliquer ce qu'ils peuvent faire, ni même à quoi ils ressemblent. Plus d'images auraient été nécessaires pour rendre le rapport plus compréhensible.
+
+Enfin, nous avons choisi tout compte fait d'écarter certaines de nos questions qui étaient quelques fois trop amibitieuses comme la question "Qu'est-ce qui compte le plus pour gagner une partie ?": tout le monde aimerait pouvoir répondre simplement à cette question mais cela risque d'être impossible. De plus, certaines de nos questions nous ont finalement semblé peu pertinentes ou alors nos données n'étaient pas adaptées pour y répondre, comme les questions 14, 15 ou 20. Nous aurions aimé avoir eu plus de temps pour répondre à certaines, et nous aurions aimé trouver des questions plus pertinentes à la base même si cela était compliqué avec une connaissance limitée des données.
 
 ### Mots de la fin : 
 
