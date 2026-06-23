@@ -99,7 +99,7 @@ On peut observer que les joueurs amateurs ont un ratio Kills/Deaths beaucoup plu
 ggplot(data = amateurs, aes(x = kills/deaths)) +
   geom_density(
     aes(y = after_stat(count)), # Affiche le nombre de personnes
-    fill = "blue", 
+    fill = "#111c26", 
     linewidth = 1
   ) +
   labs(
@@ -110,7 +110,7 @@ ggplot(data = amateurs, aes(x = kills/deaths)) +
 ggplot(data = pros, aes(x = Kills/Deaths)) +
   geom_density(
     aes(y = after_stat(count)), # Affiche le nombre de personnes
-    fill = "blue", 
+    fill = "#111c26", 
     linewidth = 1
   ) +
   labs(
@@ -131,7 +131,7 @@ Nous allons désormais nous concentrer sur une autre statistique importante du j
 ggplot(data = amateurs, aes(x = headshots/100)) +
   geom_density(
     aes(y = after_stat(count)), # Affiche le nombre de personnes
-    fill = "blue", 
+    fill = "#111c26", 
     linewidth = 1
   ) +
   labs(
@@ -143,7 +143,7 @@ head(pros)
 ggplot(data = pros %>% mutate(`Headshot %` = parse_number(`Headshot %`)), aes(x = `Headshot %`)) +
   geom_density(
     aes(y = after_stat(count)), # Affiche le nombre de personnes
-    fill = "blue", 
+    fill = "#111c26", 
     linewidth = 1
   ) +
   labs(
@@ -1032,7 +1032,7 @@ Valorant est un jeu qui change très rapidement, et sur ce projet, nous avons so
 
 Elio : 
 
-Morgane :
+Morgane : J'ai beaucoup aimé travailler sur ce sujet même si ma méconnaissance du jeu m'a un peu ralentie. Les autres membres du groupe m'ont beaucoup soutenue et m'ont aidé à comprendre le vocabulaire propre au jeu. Je suis fière d'avoir pu réaliser ce projet qui a été très instructif sur bien des niveaux.
 
 Louis : J'ai beaucoup aimé utiliser R de façon à la fois créative et technique. Utiliser mes compétences pour travailler sur un jeu que j'apprécie m'a motivé pour produire un rapport dont je suis plutôt fier. Les autres membres du groupe m'ont également bien aidé. Je considère ce projet comme une réussite sur tous les niveaux, mais j'aurais aimé avoir plus de temps pour peaufiner quelques détails.
 
@@ -1042,7 +1042,7 @@ Ilias :
 
 Elio : Questions 2, 5, 10, 17 et introduction + une partie de la structuration du présent rapport. Description des datasets 5 et 6.
 
-Morgane :
+Morgane : Soutenance + Questions 1 et 3 + PowerBI + Description des datasets 6 et 7
 
 Louis : Questions 4 et 12 + application shiny + conclusion + relecture interprétations + soutenance
 
