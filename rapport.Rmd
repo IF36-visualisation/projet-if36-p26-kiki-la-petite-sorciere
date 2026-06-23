@@ -22,6 +22,7 @@ library(tidyverse)
 library(ggplot2)
 library(magrittr)
 library(stringr)
+library(scales)
 ```
 
 # Introduction
@@ -46,8 +47,116 @@ La description détaillée des datasets mobilisés est à retrouver dans le READ
 La plupart des données sont accessibles après un simple git clone ou git pull au format csv. Seule'archive .zip du dataset 3 nécessite d'être extraite, et renommer le dossier résultant avec exactement le même nom que l'archive (sans le .zip): "3. Valorant Champion Tour 2021-2026 Data" . Ainsi, le code devrait compiler knit devrait normalement marcher.
 
 # 1. Quelles sont les différences majeures entre les joueurs pros et non pros ?
+Chaque joueur a ses forces et ses faiblesses, au fur et à mesure de son évolution. Nous nous demanderons donc ce qui démarque un joueur pro d'un joueur amateur, sur quels domaines un joueur professionnel est il plus performant ? Est ce que chaque joueur a sa spécialité poussée au maximum ? Est-ce que certains aspects changent peu entre un joueur professionnel et un joueur amateur ? Pour le savoir nous allons comparer les statistiques de jeu des deux catégories de joueurs.
+```{r}
+# Amateur
+amateurs <- read_csv("data/4-Stats and Ranks of 2600 Valorant Players.csv")
+head(amateurs)
 
-...
+#Pro
+perfs_2021 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/archive/vct_2021/players_stats/players_stats.csv")
+perfs_2022 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/archive/vct_2022/players_stats/players_stats.csv")
+perfs_2023 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/archive/vct_2023/players_stats/players_stats.csv")
+perfs_2024 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/archive/vct_2024/players_stats/players_stats.csv")
+perfs_2025 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/archive/vct_2025/players_stats/players_stats.csv")
+pros <- bind_rows(
+  perfs_2021 %>% mutate(annee = 2021),
+  perfs_2022 %>% mutate(annee = 2022),
+  perfs_2023 %>% mutate(annee = 2023),
+  perfs_2024 %>% mutate(annee = 2024),
+  perfs_2025 %>% mutate(annee = 2025)
+)
+head(pros)
+
+stats <- bind_rows(
+  pros %>% mutate(categorie = "pros"),
+  amateurs %>% mutate(categorie = "amateurs")
+)
+head(stats)
+
+```
+Tout d'abord, regardons les kills par rapport aux morts des joueurs. Un joueur professionnel meurt il moins souvent qu'un joueur amateur ?
+```{r}
+ggplot(data = pros, aes(x = Kills, y = Deaths)) +
+  geom_point() +
+  labs(
+    x = "Nombre de Kills",
+    y = "Nombre de Morts",
+    title = "Nombre de Morts par nombre de Kills chez les professionnels"
+  )
+
+ggplot(data = amateurs, aes(x = kills, y=deaths)) +
+  geom_point() +
+  labs(
+    x = "Nombre de Kills",
+    y = "Nombre de Morts",
+    title = "Nombre de Morts par nombre de Kills chez les amateurs"
+  )
+
+```
+On peut observer que les joueurs amateurs ont un ratio Kills/Deaths beaucoup plus disparate que les joueurs professionnels, bien que les deux tendent à tourner autour d'un ratio de 1kills pour 1 mort. Nous allons donc observer la répartition du ratio Kills/Death.
+```{r}
+ggplot(data = amateurs, aes(x = kills/deaths)) +
+  geom_density(
+    aes(y = after_stat(count)), # Affiche le nombre de personnes
+    fill = "blue", 
+    linewidth = 1
+  ) +
+  labs(
+    x = "Ratios Kills/Deaths",
+    y = "Nombre de Joueurs",
+    title = "Répartition du ratio Kills/Death chez les amateurs"
+  )
+ggplot(data = pros, aes(x = Kills/Deaths)) +
+  geom_density(
+    aes(y = after_stat(count)), # Affiche le nombre de personnes
+    fill = "blue", 
+    linewidth = 1
+  ) +
+  labs(
+    x = "Ratios Kills/Deaths",
+    y = "Nombre de Joueurs",
+    title = "Répartition du ratio Kills/Death chez les professionnels"
+    )+
+  scale_x_continuous(
+    limits = c(0, 5),
+    labels = scales::number 
+  )
+```
+
+On peut observer que la majorité des joueurs ont effectivement un ratio Kills/deaths qui tourne autour de 1.On peut également observer qu'il y a davantage de joueurs qui ont un ratio au dela de 1 chez les professionnels.
+
+Nous allons désormais nous concentrer sur une autre statistique importante du jeu : le pourcentage de tirs dans la tete. Cette statistique nous permettra d'observer la précision des joueurs professionnels et amateurs. Nous nous attendons à ce que les joueurs professionnels soient plus précis que les joueurs amateurs.
+```{r}
+ggplot(data = amateurs, aes(x = headshots/100)) +
+  geom_density(
+    aes(y = after_stat(count)), # Affiche le nombre de personnes
+    fill = "blue", 
+    linewidth = 1
+  ) +
+  labs(
+    x = "Pourcentage de headshots",
+    y = "Quantité de personnes",
+    title = "Nombre de joueurs par pourcentage de headshots chez les amateurs"
+  )
+head(pros)
+ggplot(data = pros %>% mutate(`Headshot %` = parse_number(`Headshot %`)), aes(x = `Headshot %`)) +
+  geom_density(
+    aes(y = after_stat(count)), # Affiche le nombre de personnes
+    fill = "blue", 
+    linewidth = 1
+  ) +
+  labs(
+    x = "Pourcentage de Headshots",
+    y = "Quantité de personnes",
+    title = "Nombre de joueurs par pourcentage de Headshots chez les professionnels"
+  )
+
+```
+On peut observer que le pourcentage de Headshot semble plus réparti au niveau de 50% pour les joueurs amateurs tandis que les joueurs professionnels tournent davantage autour de 25% de headshots. Cela s'explique notamment car les résultats des joueurs amateurs ont des résultats beaucoup plus disparates du à la différence de niveau et ils sont peu nombreux, avec un maximum d'un peu moins de 125 personnes au niveau du pic alors que les joueurs professionnels sont beaucoup plus nombreux, ils sont 20000 au niveau du pic et les résultats sont globalement plus lisses car les joueurs professionnels ont tous un niveau similaire. Le pourcentage de headshots est également plus bas pour les joueurs professionnels aussi potentiellement car les joueurs professionnels ont des réflexes et des capacités d'esquives plus développées ce qui diminue la probabilité de toucher la tête.
+
+Pour conclure, les joueurs professionnels ont des résultats plus lisses et un ratio Kills/Deaths légèrement plus important que les amateurs. Leur pourcentage de Headshots est plus faible mais cela peut s'expliquer par les réflexes accrus des joueurs professionnels, facilitant l'esquive et augmentant la difficulté du Headshot.
+
 
 # 2. Quels personnages sont les plus meurtriers ?
 
