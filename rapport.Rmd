@@ -167,7 +167,7 @@ Pour éviter les données de joueurs pros, nous allons utiliser le dataset ["Age
 Pour exploiter les données du site, nous avons réussi à trouver [l'API interne](https://data.v2.iesdev.com/api/v1/query_objects/prod/val/agent_stats?tier=18%2B&queue=competitive&map=ALL&ep_act=ev26actiii) qui renvoie tout un tas de statistiques intéressantes qui ne sont d'ailleurs pas visibles sur la page.
 Ces statistiques concernent tous les agents sur toutes les maps, pour les matchs en mode compétitif pour les rangs Diamant et +, lors de la dernière saison.
 
-```{r}
+```{r, include=FALSE, echo=FALSE}
 blitzagents <- read_csv("data/blitz_agents_stats.csv")
 head(blitzagents)
 ```
@@ -259,27 +259,19 @@ On peut donc se douter que ce qui fait leur popularité est précisément leur s
 
 # 3. Quels joueurs pros ont la carrière la plus prolifique ?
 
-## Introduction
-
 Dans cette partie, nous allons tenter de répondre à la question suivante : **Quels joueurs pros ont la carrière la plus prolifique ?** L'idée de cette question est d'observer les joueurs prometteurs pour voir où est ce qu'on les retrouvera dans d'autres analyses.
-
-## Démarche envisagée
 
 Dans l'idée, nous souhaitons réaliser un barchart permettant de voir les 10 meilleurs joueurs de chaque année, afin d'en observer l'évolution.
 
-## Réalisation
+### Graphiques des mailleurs joueurs de chaque année
 
-### Chargement des datasets
-
-```{r}
+```{r, include=FALSE, echo=FALSE}
 perfs_2021 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2021/players_stats/players_stats.csv")
 perfs_2022 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2022/players_stats/players_stats.csv")
 perfs_2023 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2023/players_stats/players_stats.csv")
 perfs_2024 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2024/players_stats/players_stats.csv")
 perfs_2025 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2025/players_stats/players_stats.csv")
 ```
-
-### Réalisation des graphiques
 
 ```{r}
 # Graphique 2021
@@ -320,11 +312,11 @@ ggplot(top_players_2025, aes(x = reorder(Player, -Rating), y = Rating)) + geom_b
 labs(title = "Bar chart des meilleurs joueurs de 2025", x = "Joueur", y = "Rating") #Graphique
 ```
 
-### Line Chart de l'évolution des meilleurs joueurs
+## Line Chart de l'évolution des meilleurs joueurs
 
 Voyant que les 10 meilleurs joueurs changent régulièrement, nous avons souhaité vérifier si les meilleurs joueurs restent dans le top 10 plusieurs années d'affilée
 
-```{r}
+```{r, include=FALSE, echo=FALSE, error=FALSE, warning=FALSE, message=FALSE}
 top_players <- bind_rows(
   top_players_2021 %>% mutate(annee = 2021),
   top_players_2022 %>% mutate(annee = 2022),
@@ -334,12 +326,12 @@ top_players <- bind_rows(
 )
 ```
 
-```{r}
+```{r, echo=FALSE, error=FALSE, warning=FALSE, message=FALSE}
 ggplot(top_players, aes(x = annee, y = Rating, group = Player)) + geom_line(aes(color=Player)) + geom_point(aes(color=Player)) +
 labs(title = "Bar chart des meilleurs joueurs de 2025", x = "Joueur", y = "Rating", colour = "Player") #Graphique
 ```
 
-## Observations
+## Interprétation
 
 Le choix de représentation nous amène à observer que les premiers joueurs changent chaque année et que donc il est très difficile d'observer la progression de seulement les meilleurs joueurs.
 Le dernier graphique montre d'ailleurs que chaque joueur n'apparait jamais plusieurs fois dans le top 10.
@@ -352,7 +344,7 @@ Le clutch est le fait de remporter une manche en étant le dernier membre de son
 Nous allons voir quels joueurs se retrouvent le plus souvent en situation de clutch (seul contre tous), et lesquels s'en sortent le mieux.
 Nous utiliserons la [source n°3](https://www.kaggle.com/datasets/ryanluong1/valorant-champion-tour-2021-2023-data)
 
-```{r préparation des données, include=FALSE, echo=FALSE}
+```{r préparation des données, include=FALSE, echo=FALSE, message=FALSE}
 # Récupérer les données
 df2021 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2021/players_stats/players_stats.csv")
 df2022 <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2022/players_stats/players_stats.csv")
@@ -379,7 +371,7 @@ df <- df %>% arrange(desc(`Clutch Success %`))
 df <- df %>% mutate(`Clutches lost` = `Clutches played` - `Clutches won`)
 ```
 
-```{r visu1}
+```{r visu1, echo=FALSE}
 top5 <- df %>%
   group_by(annee, Player) %>%
   summarise(
@@ -431,7 +423,7 @@ Si l'une d'entre elles favorise les défenseurs, on pourra expliquer en partie l
 On étudiera d'abord pour les joueurs normaux, puis on verra si les pros sont aussi sujets à ces déséquilibres.
 Pour cela, on va étudier les winrates propres à chaque map en fonction des deux camps possibles (Attacker ou Defender).
 
-## Tous les joueurs
+## Pour tous les joueurs
 
 Commençons par étudier les données concernant les joueurs lambda grâce à [cette ressource](https://blitz.gg/valorant/stats/maps?act=ev25actvi) qui nous donne les taux de victoire pour les côtés attaquant et défenseur sur chaque map pour toute une saison de 2025.
 
@@ -467,7 +459,7 @@ On remarque que la map Bind a le plus gros écart, avec un winrate en défense p
 A l'inverse, la map Abyss semble la plus équilibrée ici, suivie de près par Corrode.
 Elles semblent avoir tous leurs winrates entre 49 et 51%.
 
-## Joueurs professionnels
+## Pour les joueurs professionnels
 
 Voyons maintenant si les joueurs professsionnels ont des résultats similaires, ou s'ils ont peut-être plus d'écarts.
 
@@ -509,6 +501,8 @@ ggplot(data, aes(x = Map, y = WinRate, fill = Side)) +
   theme(axis.text.x = element_text(angle = 30, hjust = 1, vjust = .5, face = "bold"))
 ```
 
+## Interprétation
+
 On remarque qu'il y a plus de maps chez les pros que pour les joueurs publics.
 C'est sans doute car les maps tournent régulièrement en public comme en tournoi, donc on ne peut pas faire une comparaison pour chaque map ici.
 Mais c'est tout de même intéressant de toutes les garder pour constater si les écarts persistent ou sont plus impportants en règle générale.
@@ -545,7 +539,7 @@ On importe les données des Valorant Champion 2021-2025 en récupérant:
 
 - Le nombre de changements au roster entre 2022 et 2025
 
-```{r}
+```{r, include=FALSE}
 resultat_final <- map_df(2021:2025, \(an) {
   read.csv(sprintf("data/3. Valorant Champion Tour 2021-2026 Data/vct_%d/matches/overview.csv", an)) %>%
     filter(Tournament == paste("Valorant Champions", an)) %>%
@@ -584,8 +578,6 @@ data_combinee <- tableau_final %>%
 
 ```
 
-Affichage des données
-
 ```{r}
 ggplot(data_combinee, aes(x = Année, group = Equipe)) +
   geom_area(aes(y = Changements / 11), fill = "orchid4", alpha = 0.2) + 
@@ -621,11 +613,7 @@ Le nombre de changement de joueurs semble indiquer que les changements de joueur
 On veut voir si il y a un lien entre le nombre de kills et gagner la manche, ou si la victoire est plutôt liée à la coordination autour de l'objectif.
 On peut étudier la différence entre des joueurs normaux et pros.
 
-```{r}
-library(dplyr)
-library(purrr)
-library(readr)
-
+```{r, include=FALSE, echo=FALSE, error=FALSE, warning=FALSE}
 base_path <- "./data/3. Valorant Champion Tour 2021-2026 Data"
 years     <- 2021:2026
 folders   <- file.path(base_path, paste0("vct_", years))
@@ -664,11 +652,7 @@ final_display <- round_outcome %>%
 
 ```
 
-```{r}
-
-library(ggplot2)
-library(dplyr)
-
+```{r, echo=FALSE, error=FALSE, warning=FALSE}
 pct_data <- final_display %>%
   group_by(Outcome, Total_Kills) %>%
   summarise(Count = n(), .groups = "drop_last") %>%
@@ -716,7 +700,7 @@ Pour cela, nous pouvons utiliser le dataset Stats and Ranks of 2600 Valorant Pla
 
 On peut commencer par visualiser le KD moyen pour chaque rang.
 
-```{r}
+```{r, echo=FALSE, error=FALSE, warning=FALSE, message=FALSE}
 players <- read_csv("data/4-Stats and Ranks of 2600 Valorant Players.csv")
 
 players$tier <- factor(
@@ -761,7 +745,7 @@ Ici, les données que l'on peut utiliser pour mesurer la qualité très globale 
 En faisant un ratio headshots / kills, on peut avoir une idée globale de à quel point un joueur vise bien.
 Utilisons donc ce ratio et faisons un graphique similaire avec celui-ci.
 
-```{r}
+```{r, echo=FALSE}
 hsk_moyen <- players %>%
   mutate(hsk = headshots / kills) %>%
   group_by(tier) %>%
@@ -789,9 +773,6 @@ Pouvoir étudier l'influence du résultat des parties précédentes sur le winra
 L'intérêt serait pouvoir de créer un tableau 2x4 surles parties n-1 et n-2 (Depuis Victoire, Victoire / Victoire, Défaite, etc.. vers Victoire/Défaite)
 
 ```{r}
-library(dplyr)
-library(ggplot2)
-
 set.seed(42)
 
 mock_matrix <- data.frame(
@@ -868,15 +849,13 @@ En tant que coach, il est très important d'être à jour sur la méta, c'est à
 Plus que cela, on peut observer quelles synergies d'agents sont forts, et à fortiori quelles compositions d'équipes sont à la fois populaires et puissants.
 Cela est notamment utile pour pouvoir analyser leur plan de jeu afin de le reproduire, ou de le contrer.
 
-## Import des données
-
-On importe les données des Valorant Champion 2021-2026 en récupérant:
+On importe les données des Valorant Champion 2025 en récupérant:
 
 - Le score de chaque équipe sur chaque carte à chaque rencontre
 
 - Les statistiques de chaque joueur de chaque sur chaque carte et rencontre
 
-```{r}
+```{r, include=FALSE}
 maps_scores <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2026/matches/maps_scores.csv")
 overview <- read_csv("data/3. Valorant Champion Tour 2021-2026 Data/vct_2026/matches/overview.csv")
 
@@ -910,8 +889,6 @@ comp_score <- players_score %>%
   }))
 ```
 
-## Affichage des données
-
 ```{r}
 comp_freq <- comp_score %>% select(Agents, Map) %>% count(Agents, Map, sort = TRUE) %>% group_by(Agents) %>% arrange(desc(n)) %>% head(15)
 
@@ -927,6 +904,14 @@ ggplot(comp_freq, aes(x = reorder(Agents, n), y = n)) +
   ) +
   theme_minimal()
 ```
+
+## Interprétation
+
+Nous pouvons voir sur ce graphique que certains agents sont surreprésentés par rapport à d'autres : On voit de nombreux Yoru, Viper et Omen, sans avoir la moindre trace de Chamber ou Gekko. On voit donc que certains agents sont plus "Méta" que d'autres, c'est à dire plus appréciés et plus à même de faire gagner leur équipe.
+
+En observant le graphique sur shiny, on voit qu'en fonction des années et des cartes, les agents changent beaucoup, et que certaines compositions sont absolument dominantes par rapport à d'autres. Pour gagner, il suffit donc d'observer les compositions les plus jouées sur chaque carte en 2026, et de trouver une stratégie pour les contrer.
+
+Cependant, on observe que sur toutes les compositions différentes, on a toujours la même répartition d'agents : 1 contrôleur, 1 sentinelle,  1-2 initiateurs, 1-2 duellistes. On comprend ainsi qu'à part de très rares exceptions, c'est la répartition optimale qu'il faut suivre pour avoir de meilleures chances de gagner.
 
 # 13. Identifier les stratégies
 
@@ -1035,3 +1020,30 @@ Exemple : Un joueur agressif est il plus à même de gagner avec d'autres joueur
 # 20. Joueurs les plus adaptables
 
 Nous souhaiterions identifier s'il y a des joueurs qui ont une très bonne adaptabilité en jeu, c'est à dire qui s'intègrent bien dans n'importe quelle configuration d'équipe sans que les performances en soient impactées
+
+
+# Conclusion
+
+Au cours de ce rapport, nous avons pu étudier les facettes les plus importantes de la scène compétitive de Valorant, et ainsi extraire les points qui permettent de faire pencher la balance en sa faveur. Nous avons vu que le choix de la carte, des agents et des joueurs était essentiels. Nous avons vu que les changements de joueurs étaient risqués, mais nécessaires pour trouver une équipe fonctionnelle. Malgré tout, même les meilleurs joueurs ne restent pas au sommet bien longtemps, notamment à cause des changements de méta qui favorisent certains styles de jeu.
+
+Valorant est un jeu qui change très rapidement, et sur ce projet, nous avons souvent utilisé les données des 5 dernières années pour être plus exhaustif, mais il aurait été pertinent selon nous de rajouter des graphes qui prennent en compte ces écarts de temps. De plus, Il s'agit d'un jeu très complexe à prendre en main, et les informations que nous avons récupéré ne permettent pas de présenter correctement cette complexité. Par exemple, nous avons beaucoup vu le nom des agents comme Chamber et Jett, mais nous n'avons pas pu expliquer ce qu'ils peuvent faire, ni même à quoi ils ressemblent. Plus d'images auraient été nécessaires pour rendre le rapport plus compréhensible.
+
+### Mots de la fin : 
+
+Elio : 
+
+Morgane :
+
+Louis : J'ai beaucoup aimé utiliser R de façon à la fois créative et technique. Utiliser mes compétences pour travailler sur un jeu que j'apprécie m'a motivé pour produire un rapport dont je suis plutôt fier. Les autres membres du groupe m'ont également bien aidé. Je considère ce projet comme une réussite sur tous les niveaux, mais j'aurais aimé avoir plus de temps pour peaufiner quelques détails.
+
+Ilias :
+
+# Annexe: répartition des tâches
+
+Elio : Questions 2, 5, 10, 17 et introduction + une partie de la structuration du présent rapport. Description des datasets 5 et 6.
+
+Morgane :
+
+Louis : Questions 4 et 12 + application shiny + conclusion + relecture interprétations + soutenance
+
+Ilias :
