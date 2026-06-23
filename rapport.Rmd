@@ -41,6 +41,10 @@ Ces innombrables données permettront de répondre à toutes les questions que n
 
 La description détaillée des datasets mobilisés est à retrouver dans le README.md de notre repo.
 
+## ⚠️IMPORTANT: Comment lire les données
+
+La plupart des données sont accessibles après un simple git clone ou git pull au format csv. Seule'archive .zip du dataset 3 nécessite d'être extraite, et renommer le dossier résultant avec exactement le même nom que l'archive (sans le .zip): "3. Valorant Champion Tour 2021-2026 Data" . Ainsi, le code devrait compiler knit devrait normalement marcher.
+
 # 1. Quelles sont les différences majeures entre les joueurs pros et non pros ?
 
 ...
@@ -830,9 +834,85 @@ Nous aimerions étudier si la performance d'une équipe est liée à la quantit�
 
 Nous souhaiterions étudier si les séries de défaites impactent négativement les performances individuelles, et identifier les exceptions (joueurs qui performent de façon constante malgré les défaites)
 
-# 17. Nemesis (pire ennemi des joueurs)
+# 17. Qui est le Némésis de qui ?
 
-Identifier les joueurs qui sont le plus tués par d'autres joueurs, et identifier des counters potentiels (couple agent/map)
+Le Némésis d'un joueur représente l'ennemi qui l'a tué le plus de fois en tournoi, c'est-à-dire en quelque sorte son pire ennemi.
+
+Ici, on souhaite voir avec quels joueurs cette dynamique a été la plus puissante à travers les années. On utilisera le dataset VCT avec les joueurs pros, qui contient des couples joueur/ennemi et le nombre de fois que le joueur a tué l'ennemi, pour chaque année.
+
+Nous allons garder le top 25 des joueurs qui ont tué le plus de fois un ennemi spécifique, toutes années confondues de 2021 à 2026. Cela nous permettra de voir les némésis significatifs de l'histoire de la compétition.
+
+
+```{r include=FALSE}
+annees <- c("2021", "2022", "2023", "2024", "2025", "2026")
+
+df_duels_global <- map_dfr(annees, ~ {
+  
+  chemin <- paste0("data/3. Valorant Champion Tour 2021-2026 Data/vct_", .x, "/matches/kills.csv")
+  
+  if (file.exists(chemin)) {
+    message("Chargement de l'année : ", .x)
+    
+    read_csv(chemin) %>% 
+      mutate(Year = as.numeric(.x)) 
+  } else {
+    message("⚠️ Fichier introuvable pour l'année : ", .x)
+    NULL
+  }
+})
+```
+
+```{r}
+
+top_25_duels <- df_duels_global %>% drop_na(Player, Enemy) %>% arrange(desc(`Player Kills`)) %>% head(25)
+
+
+ggplot(top_25_duels, aes(x = Player, y = Enemy, size = `Player Kills`)) +
+  geom_point(color = "#ff4654", alpha = 0.75) + 
+  geom_text(aes(label = Year), vjust = 0.5, hjust = -0.5, size = 3, color = "gray20") +
+  scale_size(range = c(2, 12)) +
+  labs(
+    title = "Matrice Nemesis (VCT 2021-2026) : Qui martyrise qui ?",
+    x = "Tueur (Player)",
+    y = "Victime (Enemy)"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Tout d'abord, on remarque que le grand gagnant est marteen, qui a tué Veqaj bien 31 fois lors d'un même tournoi, et détient donc le record absolu. De plus, marteen a aussi tué Boaster 27 fois cette même année.
+On peut remarquer aussi que le seul joueur apparaissant à la fois en tant que tueur et victime est Meteor. Il a tué Bazzi 30 fois en 2022, et il a aussi été tué par trent 27 fois en 2025.
+
+L'année 2021 semble avoir été très dure pour doma qui a été tué 27 fois par deux joueurs différents, Jamppi et ScreaM. ScreaM a d'ailleurs été très fort cette année là car il a aussi tué Derke 27 fois.
+
+On retiendra de ce graphique particulièrement les joueurs ScreaM et marteen, qui sont les deux seuls joueurs à apparaître deux fois en tant que tueurs. A l'inverse, doma est le seul à apparaître deux fois en tant que victime.
+
+Bien que les gros records comme celui de marteen datent généralement des dernières années, l'année 2021 semble avoir été particulièrement meurtrière concernant certains joueurs. C'est ce que nous allons chercher à étudier, en voyant la distribution de ce top 25 de némésis parmi les années 2021 à 2026.
+
+```{r}
+duels_par_annee <- top_25_duels %>%
+  count(Year)
+
+ggplot(duels_par_annee, aes(x = factor(Year), y = n)) +
+  geom_col(fill = "#ff4654") + 
+  geom_text(aes(label = scales::comma(n)), vjust = -0.5, fontface = "bold", size = 4) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)), breaks = seq(0, 10, by = 2)) +
+  labs(
+    title = "Nombre de records du top 25 par année",
+    x = "Année",
+    y = "Nombre de records"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(size = 11, face = "bold"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+```
+
+L'année 2021 comporte en fait le plus de records de némésis de 2021 à 2026. Cela peut peut-être s'expliquer par le fait qu'avec le temps les joueurs ont progressé, à tel point que le niveau est assez équilibré pour que l'on évite de trop gros écarts de skill entre deux joueurs qui amènerait à de tels récords de kills par un même joueur sur un seul ennemi.
+
+Mais on retient que marteen est le seul responsable des deux records de 2026, qui incluent le plus gros nombre de kills. On peut donc se dire qu'il a totalement dominé la compétition cette année sur ce plan-là, et qu'il a été extrêmement bon pour contrer les joueurs Veqaj et Boaster.
 
 # 18. Changement de joueurs -\> gagner ?
 
