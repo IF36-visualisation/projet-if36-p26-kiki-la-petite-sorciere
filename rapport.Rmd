@@ -1019,7 +1019,7 @@ Morgane : J'ai beaucoup aimé travailler sur ce sujet même si ma méconnaissanc
 
 Louis : J'ai beaucoup aimé utiliser R de façon à la fois créative et technique. Utiliser mes compétences pour travailler sur un jeu que j'apprécie m'a motivé pour produire un rapport dont je suis plutôt fier. Les autres membres du groupe m'ont également bien aidé. Je considère ce projet comme une réussite sur tous les niveaux, mais j'aurais aimé avoir plus de temps pour peaufiner quelques détails.
 
-Ilias :
+Ilias : J'ai trouvé l'utilisation de R très pertinente pour analyser et travailler sur un cas technique comme celui des jeux de données Valorant sélectionnés. J'aurais aimé pouvoir analyser plus en détail les jeux de données, et pouvoir arriver à des conclusions expertes, et plus "intéressantes", mais cela nécessite des connaissances en analyse statistique et une connaissance du jeu qui vont au-delà des attentes dece cours. Il pourrait être intéressant de les creuser dans le cadre d'un projet personnel.
 
 # Annexe: répartition des tâches
 
@@ -1029,4 +1029,4 @@ Morgane : Soutenance + Questions 1 et 3 + PowerBI + Description des datasets 6 e
 
 Louis : Questions 4 et 12 + application shiny + conclusion + relecture interprétations + soutenance
 
-Ilias :
+Ilias : Questions 7&8, 9, 11.
